@@ -6,6 +6,7 @@ import 'package:dokan_koi/screens/otp/otp_screen.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
+import '../../home/home_screen.dart';
 
 class CompleteProfileForm extends StatefulWidget {
   @override
@@ -52,9 +53,8 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           DefaultButton(
             text: "continue",
             press: () {
-              if (_formKey.currentState!.validate()) {
-                Navigator.pushNamed(context, OtpScreen.routeName);
-              }
+              Navigator.pushNamed(context, HomeScreen.routeName);
+              //Todo: Update Profile Information to firebase
             },
           ),
         ],
@@ -64,12 +64,12 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
   TextFormField buildAddressFormField() {
     return TextFormField(
-      onSaved: (newValue) => address = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kAddressNullError);
         }
-        return null;
+        address=value;
+        return;
       },
       validator: (value) {
         if (value!.isEmpty) {
@@ -93,12 +93,12 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   TextFormField buildPhoneNumberFormField() {
     return TextFormField(
       keyboardType: TextInputType.phone,
-      onSaved: (newValue) => phoneNumber = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPhoneNumberNullError);
         }
-        return null;
+        phoneNumber=value;
+        return;
       },
       validator: (value) {
         if (value!.isEmpty) {
@@ -120,7 +120,9 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
   TextFormField buildLastNameFormField() {
     return TextFormField(
-      onSaved: (newValue) => lastName = newValue,
+      onChanged: (value){
+        lastName = value;
+      },
       decoration: InputDecoration(
         labelText: "Last Name",
         hintText: "Enter your last name",
@@ -134,12 +136,12 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
   TextFormField buildFirstNameFormField() {
     return TextFormField(
-      onSaved: (newValue) => firstName = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kNamelNullError);
         }
-        return null;
+        value=firstName!;
+        return;
       },
       validator: (value) {
         if (value!.isEmpty) {
