@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:dokan_koi/models/Product.dart';
-import 'package:dokan_koi/screens/details/details_screen.dart';
+import 'package:dokan_koi/models/shops.dart';
+import 'package:dokan_koi/screens/Shopfollow/shopscreen.dart';
 
 import '../constants.dart';
 import '../size_config.dart';
 
-class ProductCard extends StatelessWidget {
-  const ProductCard({
+class Newcard extends StatelessWidget {
+  const Newcard({
     Key? key,
     this.width = 140,
     this.aspectRetio = 1.02,
@@ -26,8 +26,8 @@ class ProductCard extends StatelessWidget {
         child: GestureDetector(
           onTap: () => Navigator.pushNamed(
             context,
-            DetailsScreen.routeName,
-            arguments: ProductDetailsArguments(product: product),
+            DetailsScreen3.routeName,
+            arguments: ProductDetailsArguments3(product: product),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,19 +49,20 @@ class ProductCard extends StatelessWidget {
               const SizedBox(height: 10),
               Text(
                 product.title,
-                style: TextStyle(color: Colors.black),
+                style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 15),
                 maxLines: 2,
               ),
+              const SizedBox(height: 5),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "\$${product.price}",
-                    style: TextStyle(
-                      fontSize: getProportionateScreenWidth(18),
-                      fontWeight: FontWeight.w600,
-                      color: Colors.green,
-                    ),
+                  OutlinedButton(
+                    child: Text('Follow'),
+                    style: OutlinedButton.styleFrom(
+                      primary: Colors.white,
+                      backgroundColor: kPrimaryColor,
+                      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                    ), onPressed: () {  },
                   ),
                   InkWell(
                     borderRadius: BorderRadius.circular(50),
@@ -93,4 +94,3 @@ class ProductCard extends StatelessWidget {
     );
   }
 }
-
