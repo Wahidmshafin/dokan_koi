@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:dokan_koi/components/custom_surfix_icon.dart';
 import 'package:dokan_koi/components/default_button.dart';
@@ -7,6 +8,7 @@ import 'package:dokan_koi/screens/otp/otp_screen.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
 import '../../home/home_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CompleteProfileForm extends StatefulWidget {
   @override
@@ -20,6 +22,9 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   String? lastName;
   String? phoneNumber;
   String? address;
+  final auth=FirebaseAuth.instance;
+  final profile= FirebaseFirestore.instance.collection('profile');
+
 
   void addError({String? error}) {
     if (!errors.contains(error))
@@ -52,9 +57,20 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
             text: "continue",
-            press: () {
-              Navigator.pushNamed(context, HomeScreen.routeName);
-              //Todo: Update Profile Information to firebase
+            press: () async{
+              print(profile.doc());
+              try {
+                await profile.doc(auth.currentUser?.uid).set({
+                  "fname": firstName,
+                  "lname": lastName,
+                  "phone": phoneNumber,
+                  "address": address
+                });
+                Navigator.pushNamed(context, HomeScreen.routeName);
+              }catch(e)
+              {
+                print(e);
+              }
             },
           ),
         ],
@@ -140,7 +156,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         if (value.isNotEmpty) {
           removeError(error: kNamelNullError);
         }
-        value=firstName!;
+        firstName=value;
         return;
       },
       validator: (value) {
