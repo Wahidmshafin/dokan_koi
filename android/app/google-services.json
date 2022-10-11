@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "152029150475",
+    "project_id": "ponno-c4613",
+    "storage_bucket": "ponno-c4613.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:152029150475:android:d8beb9b2fe998a59c9760e",
+        "android_client_info": {
+          "package_name": "com.example.dokan_koi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "152029150475-as8daptcn42a5g0f8ik3ldhut3l8i9g1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6e98nYwCdXLCc3NxPvhyMJqnXxiyF_NY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "152029150475-as8daptcn42a5g0f8ik3ldhut3l8i9g1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "152029150475-booka67fat5dcbn4gpmogan7frc442pg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tablecreate"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
