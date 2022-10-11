@@ -1,3 +1,5 @@
+import 'package:dokan_koi/helper/keyboard.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:dokan_koi/components/custom_surfix_icon.dart';
 import 'package:dokan_koi/components/default_button.dart';
@@ -6,6 +8,9 @@ import 'package:dokan_koi/components/no_account_text.dart';
 import 'package:dokan_koi/size_config.dart';
 
 import '../../../constants.dart';
+import 'package:get/get.dart';
+
+import '../../splash/splash_screen.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -49,7 +54,8 @@ class ForgotPassForm extends StatefulWidget {
 class _ForgotPassFormState extends State<ForgotPassForm> {
   final _formKey = GlobalKey<FormState>();
   List<String> errors = [];
-  String? email;
+  String email="";
+  final auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -58,7 +64,6 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
         children: [
           TextFormField(
             keyboardType: TextInputType.emailAddress,
-            onSaved: (newValue) => email = newValue,
             onChanged: (value) {
               if (value.isNotEmpty && errors.contains(kEmailNullError)) {
                 setState(() {
@@ -70,7 +75,8 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
                   errors.remove(kInvalidEmailError);
                 });
               }
-              return null;
+              email=value;
+              return;
             },
             validator: (value) {
               if (value!.isEmpty && !errors.contains(kEmailNullError)) {
@@ -85,7 +91,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
               }
               return null;
             },
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: "Email",
               hintText: "Enter your email",
               // If  you are using latest version of flutter then lable text and hint text shown like this
@@ -99,10 +105,35 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
           SizedBox(height: SizeConfig.screenHeight * 0.1),
           DefaultButton(
             text: "Continue",
-            press: () {
-              if (_formKey.currentState!.validate()) {
-                // Do what you want to do
-              }
+            press: () async{
+                try {
+                  print(email);
+                  await auth.sendPasswordResetEmail(email: email);
+                  KeyboardUtil.hideKeyboard(context);
+                  showDialog(
+                      context: context,
+                      builder: (context){
+                        return AlertDialog(
+                          title: Text("Email Sent Successfully",),
+                          content: Text("Please check your Email to reset your password"),
+                          actions: [
+                            TextButton(
+                                onPressed: (){
+                          Navigator.popUntil(context,
+                              ModalRoute.withName(SplashScreen.routeName));
+                        },
+                                child: Text("Ok"),
+                            ),
+                          ],
+                        );
+                      }
+                  );
+                }on FirebaseAuthException catch(e){
+
+                    print(e);
+                    if(!errors.contains("Account doesn't exist"))
+                    errors.add("Account doesn't exist");
+                }
             },
           ),
           SizedBox(height: SizeConfig.screenHeight * 0.1),
