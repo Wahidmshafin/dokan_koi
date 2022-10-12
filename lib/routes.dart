@@ -1,6 +1,7 @@
 import 'package:dokan_koi/screens/cart/cart_screen.dart';
 import 'package:dokan_koi/screens/complete_profile/complete_profile_screen.dart';
 import 'package:dokan_koi/screens/details/details_screen.dart';
+import 'package:dokan_koi/screens/newdetails/newproductsscreen.dart';
 import 'package:dokan_koi/screens/forgot_password/forgot_password_screen.dart';
 import 'package:dokan_koi/screens/home/home_screen.dart';
 import 'package:dokan_koi/screens/login_success/login_success_screen.dart';
@@ -10,6 +11,7 @@ import 'package:dokan_koi/screens/sign_in/sign_in_screen.dart';
 import 'package:dokan_koi/screens/splash/splash_screen.dart';
 import 'package:flutter/widgets.dart';
 import 'screens/sign_up/sign_up_screen.dart';
+import 'package:dokan_koi/screens/Shopfollow/shopscreen.dart';
 
 // We use name route
 // All our routes will be available here
@@ -22,7 +24,10 @@ final Map<String, WidgetBuilder> routes = {
   CompleteProfileScreen.routeName: (context) => CompleteProfileScreen(),
   OtpScreen.routeName: (context) => OtpScreen(),
   HomeScreen.routeName: (context) => HomeScreen(),
+  DetailsScreen3.routeName: (context) => DetailsScreen3(),
+  DetailsScreen2.routeName: (context) => DetailsScreen2(),
   DetailsScreen.routeName: (context) => DetailsScreen(),
+
   CartScreen.routeName: (context) => CartScreen(),
   ProfileScreen.routeName: (context) => ProfileScreen(),
 };

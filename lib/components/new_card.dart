@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:dokan_koi/models/Product.dart';
-import 'package:dokan_koi/screens/details/details_screen.dart';
+import 'package:dokan_koi/models/newproduct.dart';
+import 'package:dokan_koi/screens/newdetails/newproductsscreen.dart';
 
 import '../constants.dart';
 import '../size_config.dart';
 
-class ProductCard extends StatelessWidget {
-  const ProductCard({
+class Newcard extends StatelessWidget {
+  const Newcard({
     Key? key,
     this.width = 140,
     this.aspectRetio = 1.02,
@@ -26,8 +26,8 @@ class ProductCard extends StatelessWidget {
         child: GestureDetector(
           onTap: () => Navigator.pushNamed(
             context,
-            DetailsScreen.routeName,
-            arguments: ProductDetailsArguments(product: product),
+            DetailsScreen2.routeName,
+            arguments: ProductDetailsArguments2(product: product),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,4 +93,3 @@ class ProductCard extends StatelessWidget {
     );
   }
 }
-
