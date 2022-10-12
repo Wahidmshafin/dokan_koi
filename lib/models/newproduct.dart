@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Product {
   final int id;
-  final String title, description;
+  final String title, description,shopname;
   final List<String> images;
   final List<Color> colors;
   final double rating, price;
@@ -10,6 +10,7 @@ class Product {
 
   Product({
     required this.id,
+    required this.shopname,
     required this.images,
     required this.colors,
     this.rating = 0.0,
@@ -39,6 +40,7 @@ List<Product> demoProducts = [
       Colors.white,
     ],
     title: "Wireless Controller for PS4™",
+    shopname: "Shafin Store",
     price: 164.99,
     description: description,
     rating: 4.8,
@@ -47,6 +49,7 @@ List<Product> demoProducts = [
   ),
   Product(
     id: 2,
+    shopname: "Shafin Store",
     images: [
       "assets/images/Image Popular Product 2.png",
     ],
@@ -64,6 +67,7 @@ List<Product> demoProducts = [
   ),
   Product(
     id: 3,
+    shopname: "Shafin Store",
     images: [
       "assets/images/glap.png",
     ],
@@ -82,6 +86,7 @@ List<Product> demoProducts = [
   ),
   Product(
     id: 4,
+    shopname: "Shafin Store",
     images: [
       "assets/images/wireless headset.png",
     ],
