@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dokan_koi/models/newproduct.dart';
 import 'package:dokan_koi/screens/newdetails/newproductsscreen.dart';
+import 'package:dokan_koi/components/star.dart';
 
 import '../constants.dart';
 import '../size_config.dart';
@@ -9,7 +10,7 @@ import '../size_config.dart';
 class Newcard extends StatelessWidget {
   const Newcard({
     Key? key,
-    this.width = 140,
+    this.width = 220,
     this.aspectRetio = 1.02,
     required this.product,
   }) : super(key: key);
@@ -29,64 +30,91 @@ class Newcard extends StatelessWidget {
             DetailsScreen2.routeName,
             arguments: ProductDetailsArguments2(product: product),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AspectRatio(
-                aspectRatio: 1.02,
-                child: Container(
-                  padding: EdgeInsets.all(getProportionateScreenWidth(20)),
-                  decoration: BoxDecoration(
-                    color: kSecondaryColor.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Hero(
-                    tag: product.id.toString(),
-                    child: Image.asset(product.images[0]),
-                  ),
+          child: AspectRatio(
+            aspectRatio: 1.02,
+            child: Container(
+              padding: EdgeInsets.only(top:getProportionateScreenWidth(10)),
+              decoration: BoxDecoration(
+                color: kSecondaryColor.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Hero(
+                tag: product.id.toString(),
+                child: Column(
+                  children: [
+                    Stack(
+                        children: <Widget>[
+                          Center(child: Image.asset(product.images[0],height: 100,)),
+                          Starrating(rating: product.rating),
+                        ]
+                    ),
+
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white70,
+                        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15),bottomRight:Radius.circular(15), ),
+                      ),
+                      width: double.infinity,
+                      height: MediaQuery.of(context).size.height-678-9.5,
+                      child: Column(
+                        children: [
+                          Spacer(),
+                          Text(
+                            product.title,
+                            style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20),
+                            maxLines: 2,
+                          ),
+                          Text(product.address,textAlign: TextAlign.center,maxLines: 1,),
+                          Spacer(),
+                          // OutlinedButton(
+                          //   child: Text('Follow',textAlign: TextAlign.center,),
+                          //   style: OutlinedButton.styleFrom(
+                          //     foregroundColor: Colors.white, backgroundColor: Colors.teal,
+                          //     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                          //   ), onPressed: () {  },
+                          // ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "   890m away",
+                                style: TextStyle(
+                                  fontSize: getProportionateScreenWidth(14),
+                                  //fontWeight: FontWeight.w600,
+                                  color: kPrimaryColor,
+                                ),
+                              ),
+                              InkWell(
+                                borderRadius: BorderRadius.circular(50),
+                                onTap: () {},
+                                child: Container(
+                                  padding: EdgeInsets.all(getProportionateScreenWidth(9)),
+                                  height: getProportionateScreenWidth(35),
+                                  width: getProportionateScreenWidth(35),
+                                  decoration: BoxDecoration(
+                                    color: product.isFavourite
+                                        ? kPrimaryColor.withOpacity(0.15)
+                                        : kSecondaryColor.withOpacity(0.1),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: SvgPicture.asset(
+                                    "assets/icons/Heart Icon_2.svg",
+                                    color: product.isFavourite
+                                        ? Color(0xFFFF4848)
+                                        : Color(0xFFDBDEE4),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+
+                  ],
                 ),
               ),
-              const SizedBox(height: 10),
-              Text(
-                product.title,
-                style: TextStyle(color: Colors.black),
-                maxLines: 2,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "\$${product.price}",
-                    style: TextStyle(
-                      fontSize: getProportionateScreenWidth(18),
-                      fontWeight: FontWeight.w600,
-                      color: Colors.green,
-                    ),
-                  ),
-                  InkWell(
-                    borderRadius: BorderRadius.circular(50),
-                    onTap: () {},
-                    child: Container(
-                      padding: EdgeInsets.all(getProportionateScreenWidth(8)),
-                      height: getProportionateScreenWidth(28),
-                      width: getProportionateScreenWidth(28),
-                      decoration: BoxDecoration(
-                        color: product.isFavourite
-                            ? kPrimaryColor.withOpacity(0.15)
-                            : kSecondaryColor.withOpacity(0.1),
-                        shape: BoxShape.circle,
-                      ),
-                      child: SvgPicture.asset(
-                        "assets/icons/Heart Icon_2.svg",
-                        color: product.isFavourite
-                            ? Color(0xFFFF4848)
-                            : Color(0xFFDBDEE4),
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            ],
+            ),
           ),
         ),
       ),

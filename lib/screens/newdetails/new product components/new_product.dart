@@ -12,7 +12,7 @@ class NewProducts extends StatelessWidget {
         Padding(
           padding:
           EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-          child: SectionTitle(title: "New Products", press: () {}),
+          child: SectionTitle(title: "New Shops", press: () {}),
         ),
         SizedBox(height: getProportionateScreenWidth(20)),
         SingleChildScrollView(
