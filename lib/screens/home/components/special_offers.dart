@@ -26,11 +26,12 @@ class SpecialOffers extends StatelessWidget {
           child: Row(
             children: [
               SpecialOfferCard(
-                image: "assets/images/Image Banner 2.png",
-                category: "Smartphone",
-                numOfBrands: 18,
+                image: "assets/images/Image Banner 3.png",
+                category: "Fashion",
+                numOfBrands: 24,
                 press: () {},
               ),
+              SizedBox(width: getProportionateScreenWidth(20)),
               SpecialOfferCard(
                 image: "assets/images/Image Banner 3.png",
                 category: "Fashion",
@@ -117,3 +118,6 @@ class SpecialOfferCard extends StatelessWidget {
     );
   }
 }
+
+
+
