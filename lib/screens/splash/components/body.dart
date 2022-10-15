@@ -1,3 +1,5 @@
+import 'package:dokan_koi/screens/home/home_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:dokan_koi/constants.dart';
 import 'package:dokan_koi/screens/sign_in/sign_in_screen.dart';
@@ -14,14 +16,15 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   int currentPage = 0;
+  final auth=FirebaseAuth.instance;
   List<Map<String, String>> splashData = [
     {
-      "text": "Welcome to Tokoto, Let’s shop!",
+      "text": "Welcome to Dokan Koi, Let's find your shop",
       "image": "assets/images/splash_1.png"
     },
     {
       "text":
-          "We help people conect with store \naround United State of America",
+      "Don't know where to find product? \nWe will help you!!",
       "image": "assets/images/splash_2.png"
     },
     {
@@ -29,6 +32,18 @@ class _BodyState extends State<Body> {
       "image": "assets/images/splash_3.png"
     },
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    auth.authStateChanges().listen((event) {
+      if(event!=null)
+      {
+        Navigator.pushNamed(context, HomeScreen.routeName);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:dokan_koi/components/custom_surfix_icon.dart';
 import 'package:dokan_koi/components/default_button.dart';
@@ -6,6 +7,8 @@ import 'package:dokan_koi/screens/otp/otp_screen.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
+import '../../home/home_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CompleteProfileForm extends StatefulWidget {
   @override
@@ -19,6 +22,9 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   String? lastName;
   String? phoneNumber;
   String? address;
+  final auth=FirebaseAuth.instance;
+  final profile= FirebaseFirestore.instance.collection('profile');
+
 
   void addError({String? error}) {
     if (!errors.contains(error))
@@ -51,9 +57,19 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
             text: "continue",
-            press: () {
-              if (_formKey.currentState!.validate()) {
-                Navigator.pushNamed(context, OtpScreen.routeName);
+            press: () async{
+              print(profile.doc());
+              try {
+                await profile.doc(auth.currentUser?.uid).set({
+                  "fname": firstName,
+                  "lname": lastName,
+                  "phone": phoneNumber,
+                  "address": address
+                });
+                Navigator.pushNamed(context, HomeScreen.routeName);
+              }catch(e)
+              {
+                print(e);
               }
             },
           ),
@@ -64,12 +80,12 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
   TextFormField buildAddressFormField() {
     return TextFormField(
-      onSaved: (newValue) => address = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kAddressNullError);
         }
-        return null;
+        address=value;
+        return;
       },
       validator: (value) {
         if (value!.isEmpty) {
@@ -93,12 +109,12 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   TextFormField buildPhoneNumberFormField() {
     return TextFormField(
       keyboardType: TextInputType.phone,
-      onSaved: (newValue) => phoneNumber = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPhoneNumberNullError);
         }
-        return null;
+        phoneNumber=value;
+        return;
       },
       validator: (value) {
         if (value!.isEmpty) {
@@ -120,7 +136,9 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
   TextFormField buildLastNameFormField() {
     return TextFormField(
-      onSaved: (newValue) => lastName = newValue,
+      onChanged: (value){
+        lastName = value;
+      },
       decoration: InputDecoration(
         labelText: "Last Name",
         hintText: "Enter your last name",
@@ -134,12 +152,12 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
   TextFormField buildFirstNameFormField() {
     return TextFormField(
-      onSaved: (newValue) => firstName = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kNamelNullError);
         }
-        return null;
+        firstName=value;
+        return;
       },
       validator: (value) {
         if (value!.isEmpty) {

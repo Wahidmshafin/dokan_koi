@@ -20,7 +20,7 @@ class HomeHeader extends StatelessWidget {
       ),
       child: Padding(
         padding:
-        EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+        EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(15)),
         child: Column(
           children: [
             Row(

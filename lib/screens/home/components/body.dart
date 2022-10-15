@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../../size_config.dart';
@@ -9,6 +10,7 @@ import 'special_offers.dart';
 import '../../newdetails/new product components/new_product.dart';
 import '../../Shopfollow/Shop Components/shops.dart';
 class Body extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -21,8 +23,6 @@ class Body extends StatelessWidget {
             SpecialOffers(),
             SizedBox(height: getProportionateScreenWidth(30)),
             NewProducts(),
-            SizedBox(height: getProportionateScreenWidth(30)),
-            PopularProducts(),
             SizedBox(height: getProportionateScreenWidth(30)),
             Shops(),
             SizedBox(height: getProportionateScreenWidth(30)),
