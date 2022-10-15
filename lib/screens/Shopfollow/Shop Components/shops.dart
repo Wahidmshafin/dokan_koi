@@ -12,7 +12,7 @@ class Shops extends StatelessWidget {
         Padding(
           padding:
           EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-          child: SectionTitle(title: "Shops to Follow", press: () {}),
+          child: SectionTitle(title: "Popular Shops", press: () {}),
         ),
         SizedBox(height: getProportionateScreenWidth(20)),
         SingleChildScrollView(
