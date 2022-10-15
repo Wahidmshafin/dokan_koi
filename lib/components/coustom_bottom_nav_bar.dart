@@ -1,3 +1,4 @@
+import 'package:dokan_koi/screens/mystore/mystore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dokan_koi/screens/home/home_screen.dart';
@@ -39,30 +40,45 @@ class CustomBottomNavBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               IconButton(
-                icon: SvgPicture.asset(
-                  "assets/icons/Shop Icon.svg",
+                icon:Icon(Icons.home,
                   color: MenuState.home == selectedMenu
                       ? kPrimaryColor
-                      : inActiveIconColor,
-                ),
+                      : inActiveIconColor),
+                // SvgPicture.asset(
+                //   "assets/icons/Shop Icon.svg",
+                //   color: MenuState.home == selectedMenu
+                //       ? kPrimaryColor
+                //       : inActiveIconColor,
+                // ),
                 onPressed: () =>
                     Navigator.pushNamed(context, HomeScreen.routeName),
               ),
               IconButton(
-                icon: SvgPicture.asset("assets/icons/Heart Icon.svg"),
+                icon: Icon(Icons.favorite_border_outlined,
+                    color: MenuState.favourite == selectedMenu
+                        ? kPrimaryColor
+                        : inActiveIconColor),//SvgPicture.asset("assets/icons/Heart Icon.svg"),
                 onPressed: () {},
               ),
               IconButton(
-                icon: SvgPicture.asset("assets/icons/Chat bubble Icon.svg"),
-                onPressed: () {},
+                icon: Icon(Icons.store_mall_directory_outlined,
+                  color: MenuState.mystore == selectedMenu
+                      ? kPrimaryColor
+                      : inActiveIconColor),
+                onPressed:  () =>
+                    Navigator.pushNamed(context, MyStore.routeName),
               ),
               IconButton(
-                icon: SvgPicture.asset(
-                  "assets/icons/User Icon.svg",
+                icon:Icon(Icons.person,
                   color: MenuState.profile == selectedMenu
                       ? kPrimaryColor
-                      : inActiveIconColor,
-                ),
+                      : inActiveIconColor),
+                // SvgPicture.asset(
+                //   "assets/icons/User Icon.svg",
+                //   color: MenuState.profile == selectedMenu
+                //       ? kPrimaryColor
+                //       : inActiveIconColor,
+                // ),
                 onPressed: () =>
                     Navigator.pushNamed(context, ProfileScreen.routeName),
               ),
