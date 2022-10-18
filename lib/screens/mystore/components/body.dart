@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:dokan_koi/components/default_button.dart';
 import 'package:dokan_koi/models/Product.dart';
 import 'package:dokan_koi/size_config.dart';
+import 'listview.dart';
 
 
 class Body extends StatelessWidget {
@@ -14,9 +15,10 @@ class Body extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: getProportionateScreenHeight(20)),
+           // SizedBox(height: getProportionateScreenHeight(20)),
             StoreHeader(),
-            SizedBox(height: getProportionateScreenWidth(10)),
+            //SizedBox(height: getProportionateScreenWidth(10)),
+            storedescription(),
           ],
         ),
       ),
