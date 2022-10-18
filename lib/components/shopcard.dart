@@ -48,65 +48,67 @@ class Newcard extends StatelessWidget {
                         ]
                     ),
 
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white70,
-                        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15),bottomRight:Radius.circular(15), ),
-                      ),
-                      width: double.infinity,
-                      height: MediaQuery.of(context).size.height-678-9.5,
-                      child: Column(
-                        children: [
-                          Spacer(),
-                          Text(
-                            product.title,
-                            style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20),
-                            maxLines: 2,
-                          ),
-                          Text(product.address,textAlign: TextAlign.center,maxLines: 1,),
-                          Spacer(),
-                          // OutlinedButton(
-                          //   child: Text('Follow',textAlign: TextAlign.center,),
-                          //   style: OutlinedButton.styleFrom(
-                          //     foregroundColor: Colors.white, backgroundColor: Colors.teal,
-                          //     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
-                          //   ), onPressed: () {  },
-                          // ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "   890m away",
-                                style: TextStyle(
-                                  fontSize: getProportionateScreenWidth(14),
-                                  //fontWeight: FontWeight.w600,
-                                  color: kPrimaryColor,
-                                ),
-                              ),
-                              InkWell(
-                                borderRadius: BorderRadius.circular(50),
-                                onTap: () {},
-                                child: Container(
-                                  padding: EdgeInsets.all(getProportionateScreenWidth(9)),
-                                  height: getProportionateScreenWidth(35),
-                                  width: getProportionateScreenWidth(35),
-                                  decoration: BoxDecoration(
-                                    color: product.isFavourite
-                                        ? kPrimaryColor.withOpacity(0.15)
-                                        : kSecondaryColor.withOpacity(0.1),
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: SvgPicture.asset(
-                                    "assets/icons/Heart Icon_2.svg",
-                                    color: product.isFavourite
-                                        ? Color(0xFFFF4848)
-                                        : Color(0xFFDBDEE4),
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white70,
+                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15),bottomRight:Radius.circular(15), ),
+                        ),
+                        // width: double.infinity,
+                        // height: MediaQuery.of(context).size.height-678-9.5,
+                        child: Column(
+                          children: [
+                            Spacer(),
+                            Text(
+                              product.title,
+                              style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20),
+                              maxLines: 2,
+                            ),
+                            Text(product.address,textAlign: TextAlign.center,maxLines: 1,),
+                            Spacer(),
+                            // OutlinedButton(
+                            //   child: Text('Follow',textAlign: TextAlign.center,),
+                            //   style: OutlinedButton.styleFrom(
+                            //     foregroundColor: Colors.white, backgroundColor: Colors.teal,
+                            //     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                            //   ), onPressed: () {  },
+                            // ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "   890m away",
+                                  style: TextStyle(
+                                    fontSize: getProportionateScreenWidth(14),
+                                    //fontWeight: FontWeight.w600,
+                                    color: kPrimaryColor,
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
+                                InkWell(
+                                  borderRadius: BorderRadius.circular(50),
+                                  onTap: () {},
+                                  child: Container(
+                                    padding: EdgeInsets.all(getProportionateScreenWidth(9)),
+                                    height: getProportionateScreenWidth(35),
+                                    width: getProportionateScreenWidth(35),
+                                    decoration: BoxDecoration(
+                                      color: product.isFavourite
+                                          ? kPrimaryColor.withOpacity(0.15)
+                                          : kSecondaryColor.withOpacity(0.1),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: SvgPicture.asset(
+                                      "assets/icons/Heart Icon_2.svg",
+                                      color: product.isFavourite
+                                          ? Color(0xFFFF4848)
+                                          : Color(0xFFDBDEE4),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
 
