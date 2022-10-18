@@ -1,3 +1,5 @@
+import 'package:dokan_koi/constants.dart';
+import 'package:dokan_koi/screens/mystore/components/shop_add_button.dart';
 import 'package:dokan_koi/screens/mystore/components/store_header.dart';
 import 'package:flutter/material.dart';
 import 'package:dokan_koi/components/default_button.dart';
@@ -16,10 +18,17 @@ class Body extends StatelessWidget {
           children: [
             SizedBox(height: getProportionateScreenHeight(20)),
             StoreHeader(),
-            SizedBox(height: getProportionateScreenWidth(10)),
+            SizedBox(height: getProportionateScreenWidth(30)),
+            Image.asset("assets/images/storefront.jpg"),
+            SizedBox(height: getProportionateScreenHeight(20)),
+            AddShop(),
+
           ],
         ),
       ),
     );
   }
+
 }
+
+

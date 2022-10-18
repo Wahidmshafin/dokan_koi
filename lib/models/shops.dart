@@ -24,7 +24,7 @@ class Product {
 
 List<Product> demoProducts = [
   Product(
-    address: "146a Thakurpara Road, Comilla  fhkashdkjfshadklhglsshfs",
+    address: "146a Thakurpara Road, Comilla",
     id: 1,
     images: [
       "assets/images/ps4_console_white_1.png",
