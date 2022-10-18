@@ -16,7 +16,7 @@ class StoreHeader extends StatelessWidget {
       padding: EdgeInsets.all(getProportionateScreenWidth(12)),
       decoration: BoxDecoration(
         color: Colors.greenAccent,
-        borderRadius: BorderRadius.circular(15),
+        //borderRadius: BorderRadius.circular(15),
       ),
       child: Padding(
         padding:
@@ -28,7 +28,6 @@ class StoreHeader extends StatelessWidget {
               children: [
                 Title(color: Colors.red, child: Text('Dokan Koi?',
                   style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.white),),),
-                SizedBox(width: 50,),
                 IconBtnWithCounter(
 
                   svgSrc: "assets/icons/Bell.svg",
@@ -37,7 +36,7 @@ class StoreHeader extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 10,),
+            //SizedBox(height: 10,),
           ],
         ),
       ),

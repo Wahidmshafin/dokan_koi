@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
 class Product {
-  final int id;
-  final String title, location,time,address;
+  final int id,tfo,tpo;
+  final String title, location,time,address,description;
   final List<String> images;
   final double rating;
   final bool isFavourite, isPopular;
 
   Product({
+    required this.description,
     required this.id,
     required this.address,
     required this.images,
@@ -17,6 +18,8 @@ class Product {
     this.isPopular = false,
     required this.title,
     required this.location,
+    required this.tfo,
+    required this.tpo,
   });
 }
 
@@ -24,8 +27,11 @@ class Product {
 
 List<Product> demoProducts = [
   Product(
-    address: "146a Thakurpara Road, Comilla",
+    description: "shbfjksahfdjkdashfjkh ufshgisahdio; uidfhkiashiodsj uifsahyoisah uisdhfisahf uisahdfiosa sadihfioas sihfioash asyfhoiash sdyioas ufioasugouiohfiosadhoisfdh uisdhfoiusaud uhfsdu iuhsdus ,yui isahfisfkjskkjfk",
+    address: "146a Thakurpara Road, Comilla  fhkashdkjfshadklhglsshfs",
     id: 1,
+    tfo: 213,
+    tpo: 321,
     images: [
       "assets/images/ps4_console_white_1.png",
     ],
@@ -36,9 +42,11 @@ List<Product> demoProducts = [
     isFavourite: true,
     isPopular: true,
   ),
-  Product(
+  Product(    description: "shbfjksahfdjkdashfjkh ufshgisahdio; uidfhkiashiodsj uifsahyoisah uisdhfisahf uisahdfiosa sadihfioas sihfioash asyfhoiash sdyioas ufioasugouiohfiosadhoisfdh uisdhfoiusaud uhfsdu iuhsdus ,yui isahfisfkjskkjfk",
     address: "146a Thakurpara Road, Comilla",
     id: 2,
+    tfo: 213,
+    tpo: 321,
     images: [
       "assets/images/Image Popular Product 2.png",
     ],
@@ -51,6 +59,9 @@ List<Product> demoProducts = [
   Product(
     address: "146a Thakurpara Road, Comilla dfsdahfkjdhs",
     id: 3,
+    tfo: 213,
+    tpo: 321,
+    description: "shbfjksahfdjkdashfjkh ufshgisahdio; uidfhkiashiodsj uifsahyoisah uisdhfisahf uisahdfiosa sadihfioas sihfioash asyfhoiash sdyioas ufioasugouiohfiosadhoisfdh uisdhfoiusaud uhfsdu iuhsdus ,yui isahfisfkjskkjfk",
     time: "09:00-19:30",
     images: [
       "assets/images/glap.png",
@@ -64,6 +75,9 @@ List<Product> demoProducts = [
   Product(
     address: "146a Thakurpara Road, Comilla",
     id: 4,
+    tfo: 213,
+    tpo: 321,
+    description: "shbfjksahfdjkdashfjkh ufshgisahdio; uidfhkiashiodsj uifsahyoisah uisdhfisahf uisahdfiosa sadihfioas sihfioash asyfhoiash sdyioas ufioasugouiohfiosadhoisfdh uisdhfoiusaud uhfsdu iuhsdus ,yui isahfisfkjskkjfk",
     time: "09:00-19:30",
     images: [
       "assets/images/wireless headset.png",

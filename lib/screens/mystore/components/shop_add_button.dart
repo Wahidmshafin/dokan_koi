@@ -1,3 +1,4 @@
+import 'package:dokan_koi/screens/mystore/components/store_header.dart';
 import 'package:flutter/material.dart';
 import 'package:dokan_koi/screens/cart/cart_screen.dart';
 
@@ -69,7 +70,7 @@ class _AddShopState extends State<AddShop> {
         builder: (BuildContext ctx) {
           return Form(
             child: Container(
-              height: getProportionateScreenHeight(600),
+              // height: getProportionateScreenHeight(600),
               padding: EdgeInsets.only(
                 top: 30,
                 left: 20,
@@ -79,6 +80,22 @@ class _AddShopState extends State<AddShop> {
               child: ListView(
                 children: [
                   SizedBox(height: getProportionateScreenHeight(10)),
+                  TextButton(
+                      onPressed: (){
+
+                      },
+                      child: Column(
+                        children: [
+                          Image.asset("assets/images/frontStore.jpg"),
+                          Text("Upload Store Picture",
+                          style: TextStyle(
+                            color: Colors.black38
+                          ),
+                          ),
+                        ],
+                      ),
+                  ),
+                  SizedBox(height: getProportionateScreenHeight(30)),
                   storeNameFormField(),
                   SizedBox(height: getProportionateScreenHeight(30)),
                   storeDescriptionFormField(),
