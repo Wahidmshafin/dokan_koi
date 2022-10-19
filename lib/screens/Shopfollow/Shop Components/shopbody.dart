@@ -1,3 +1,4 @@
+import 'package:dokan_koi/screens/Shopfollow/Shop%20Components/all_products.dart';
 import 'package:flutter/material.dart';
 import 'package:dokan_koi/components/default_button.dart';
 import 'package:dokan_koi/models/shops.dart';
@@ -18,7 +19,10 @@ class Body extends StatelessWidget {
         children: [
           ProductDescription(
             product: product,
-            pressOnSeeMore: () {},
+            pressOnSeeMore: () {
+              print("nothing wrong");
+              Navigator.pushNamed(context, AllProducts.routeName);
+            },
           ),
         ],
       ),

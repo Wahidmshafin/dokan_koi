@@ -28,7 +28,8 @@ List<Product> demoProducts = [
   Product(
     id: 1,
     qty: 213,
-    images: [
+    images:
+    [
       "assets/images/ps4_console_white_1.png",
       "assets/images/ps4_console_white_2.png",
       "assets/images/ps4_console_white_3.png",

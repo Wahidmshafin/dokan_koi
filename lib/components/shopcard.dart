@@ -54,8 +54,6 @@ class Newcard extends StatelessWidget {
                           color: Colors.white70,
                           borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15),bottomRight:Radius.circular(15), ),
                         ),
-                        // width: double.infinity,
-                        // height: MediaQuery.of(context).size.height-678-9.5,
                         child: Column(
                           children: [
                             Spacer(),

@@ -10,7 +10,7 @@ import '../size_config.dart';
 class Newcard extends StatelessWidget {
   const Newcard({
     Key? key,
-    this.width = 220,
+    this.width = 230,
     this.aspectRetio = 1.02,
     required this.product,
   }) : super(key: key);
@@ -63,7 +63,7 @@ class Newcard extends StatelessWidget {
                               style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20),
                               maxLines: 2,
                             ),
-                            Text(product.address,textAlign: TextAlign.center,maxLines: 1,),
+                            Text(product.address,textAlign: TextAlign.center,maxLines: 2,),
                             Spacer(),
                             // OutlinedButton(
                             //   child: Text('Follow',textAlign: TextAlign.center,),
