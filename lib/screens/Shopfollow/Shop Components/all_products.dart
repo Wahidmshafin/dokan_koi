@@ -49,6 +49,7 @@ class _AllProductsState extends State<AllProducts> {
                       {
                         log("Hello WOrld");
                         return Container(
+                          height: getProportionateScreenHeight(650),
                           child: ListView.builder(
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
