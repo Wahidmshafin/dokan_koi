@@ -1,4 +1,5 @@
 import 'package:dokan_koi/screens/mystore/components/store_header.dart';
+import 'package:dokan_koi/screens/shopmodify/shopmodify.dart';
 import 'package:flutter/material.dart';
 import 'package:dokan_koi/screens/cart/cart_screen.dart';
 
@@ -115,6 +116,8 @@ class _AddShopState extends State<AddShop> {
                   ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).pop();
+                        Navigator.pushNamed(context, ShopModify.routeName)
+
                       },
                       style: ElevatedButton.styleFrom(
                         minimumSize: Size(getProportionateScreenWidth(200),

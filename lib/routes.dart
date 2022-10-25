@@ -9,6 +9,7 @@ import 'package:dokan_koi/screens/home/home_screen.dart';
 import 'package:dokan_koi/screens/login_success/login_success_screen.dart';
 import 'package:dokan_koi/screens/otp/otp_screen.dart';
 import 'package:dokan_koi/screens/profile/profile_screen.dart';
+import 'package:dokan_koi/screens/shopmodify/shopmodify.dart';
 import 'package:dokan_koi/screens/sign_in/sign_in_screen.dart';
 import 'package:dokan_koi/screens/splash/splash_screen.dart';
 import 'package:flutter/widgets.dart';
@@ -31,6 +32,7 @@ final Map<String, WidgetBuilder> routes = {
   DetailsScreen.routeName: (context) => DetailsScreen(),
   MyStore.routeName: (context) => MyStore(),
   AllProducts.routeName: (context)=>AllProducts(),
+  ShopModify.routeName: (context)=>ShopModify(),
 
   CartScreen.routeName: (context) => CartScreen(),
   ProfileScreen.routeName: (context) => ProfileScreen(),

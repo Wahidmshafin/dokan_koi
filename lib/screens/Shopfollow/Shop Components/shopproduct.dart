@@ -19,19 +19,17 @@ class ShopProducts extends StatelessWidget {
             if(streamSnapshot.hasData)
             {
               return SingleChildScrollView(
-
-                child: Column(
-                  children: [
-                    ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: streamSnapshot.data!.docs.length,
-                        itemBuilder: (context, index) => ProductCard(
-                            title: streamSnapshot.data!.docs[index]['title'],
-                            price: streamSnapshot.data!.docs[index]['price'],
-                            qty: streamSnapshot.data!.docs[index]['qty'],
-                            image: streamSnapshot.data!.docs[index]['image'])
-                    ),
-                  ],
+                child: Container(
+                  height: getProportionateScreenHeight(600),
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: streamSnapshot.data!.docs.length,
+                      itemBuilder: (context, index) => ProductCard(
+                          title: streamSnapshot.data!.docs[index]['title'],
+                          price: streamSnapshot.data!.docs[index]['price'],
+                          qty: streamSnapshot.data!.docs[index]['qty'],
+                          image: streamSnapshot.data!.docs[index]['image'])
+                  ),
                 ),
               );
             }
