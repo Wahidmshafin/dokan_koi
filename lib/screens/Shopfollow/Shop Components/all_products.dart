@@ -55,6 +55,7 @@ class _AllProductsState extends State<AllProducts> {
                             scrollDirection: Axis.vertical,
                             itemCount: streamSnapshot.data!.docs.length,
                             itemBuilder: (context, index) => ProductCard(
+                                id: streamSnapshot.data!.docs[index].id,
                                 title: streamSnapshot.data!.docs[index]['title'],
                                 price: streamSnapshot.data!.docs[index]['price'],
                                 qty: streamSnapshot.data!.docs[index]['qty'],

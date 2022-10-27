@@ -116,7 +116,7 @@ class _AddShopState extends State<AddShop> {
                   ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).pop();
-                        Navigator.pushNamed(context, ShopModify.routeName)
+                        Navigator.pushNamed(context, ShopModify.routeName);
 
                       },
                       style: ElevatedButton.styleFrom(

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dokan_koi/constants.dart';
@@ -5,9 +6,9 @@ import 'package:dokan_koi/constants.dart';
 import '../../../size_config.dart';
 
 class CustomAppBar extends StatelessWidget {
-  final double rating;
-
-  CustomAppBar({required this.rating});
+  var rating;
+  CustomAppBar({required this.rating}){
+  }
 
   @override
   // AppBar().preferredSize.height provide us the height that appy on our app bar
