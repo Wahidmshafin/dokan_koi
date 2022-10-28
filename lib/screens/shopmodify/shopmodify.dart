@@ -19,7 +19,7 @@ class ShopModify extends StatelessWidget {
         if(snapshot.hasData) {
           final data = snapshot.data!.data();
           return Scaffold(
-            backgroundColor: Colors.white.withOpacity(0.97),
+            backgroundColor: Colors.grey.withOpacity(0.09),
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(AppBar().preferredSize.height),
               child: CustomAppBar(rating: data!['rating']),
@@ -28,10 +28,10 @@ class ShopModify extends StatelessWidget {
                 description: data['description'],
                 address: data['address'],
                 images: [data['images']],
-                rating: data['rating'].toDouble(),
                 title: data['name'],
                 district: data['district'],
                 subDistrict: data['subDistrict'],
+                rating: data['rating'].toDouble(),
             ),
             ),
           );

@@ -74,7 +74,7 @@ class _AddShopState extends State<AddShop> {
         style: ElevatedButton.styleFrom(
           minimumSize: Size(getProportionateScreenWidth(200),
               getProportionateScreenHeight(50)),
-          backgroundColor: Colors.orange,
+          backgroundColor: kPrimaryColor,
           shape: StadiumBorder(),
         ),
         child: Text("Create Shop",
