@@ -13,7 +13,7 @@ class ProductCard extends StatelessWidget {
     required this.price,
     required this.qty,
     required this.image,
-
+    required this.id,
     //required this.product,
   }) : super(key: key);
 
@@ -23,6 +23,7 @@ class ProductCard extends StatelessWidget {
   final String title;
   final int price;
   final int qty;
+  final String id;
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +33,9 @@ class ProductCard extends StatelessWidget {
           width: double.infinity,
           child: GestureDetector(
           onTap: () => Navigator.pushNamed(
-      context,
-      DetailsScreen.routeName,
-      // arguments: ProductDetailsArguments(product: product),
+            context,
+            DetailsScreen.routeName,
+            arguments: ProductDetailsArguments(id: id),
     ),
     child: Container(
         width: double.infinity,

@@ -1,5 +1,7 @@
+import 'package:dokan_koi/models/Product.dart';
 import 'package:dokan_koi/screens/mystore/components/store_header.dart';
 import 'package:dokan_koi/screens/shopmodify/shopmodify.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:dokan_koi/screens/cart/cart_screen.dart';
 
@@ -9,6 +11,7 @@ import '../../../size_config.dart';
 import '../../home/components/icon_btn_with_counter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 
 class AddShop extends StatefulWidget {
@@ -27,6 +30,8 @@ class _AddShopState extends State<AddShop> {
   String storeSubDistrict="";
   String storeDistrict="";
   String storePhone="";
+  FirebaseAuth auth = FirebaseAuth.instance;
+  final shop= FirebaseFirestore.instance.collection('shop');
 
   void addError({String? error}) {
     if (!errors.contains(error))
@@ -41,7 +46,24 @@ class _AddShopState extends State<AddShop> {
         errors.remove(error);
       });
   }
-
+  Future<void> createShop() async{
+    try {
+      print(auth.currentUser?.uid);
+      await shop.doc(auth.currentUser?.uid).set({
+        "name": storeName,
+        "description": storeDescription,
+        "phone": storePhone,
+        "address": storeAddress,
+        "district": storeDistrict,
+        "subDistrict": storeSubDistrict,
+        "type":storeType,
+      });
+      print("pressed");
+    }catch(e)
+    {
+      addError(error: "Please Fill up all info");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,9 +137,8 @@ class _AddShopState extends State<AddShop> {
                   SizedBox(height: getProportionateScreenHeight(20)),
                   ElevatedButton(
                       onPressed: () {
+                        createShop();
                         Navigator.of(context).pop();
-                        Navigator.pushNamed(context, ShopModify.routeName)
-
                       },
                       style: ElevatedButton.styleFrom(
                         minimumSize: Size(getProportionateScreenWidth(200),
@@ -195,6 +216,7 @@ class _AddShopState extends State<AddShop> {
       ),
     );
   }
+
 
   DropdownButtonFormField<String> storeTypeFormField() {
     return DropdownButtonFormField<String>(
