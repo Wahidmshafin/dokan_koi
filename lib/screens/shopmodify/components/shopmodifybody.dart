@@ -1,12 +1,16 @@
+import 'package:dokan_koi/constants.dart';
 import 'package:dokan_koi/models/product.dart';
+import 'package:dokan_koi/screens/shopmodify/components/ShopEdit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dokan_koi/size_config.dart';
 
 import '../../../models/Store.dart';
+import '../../Shopfollow/Shop Components/all_products.dart';
 import '../../Shopfollow/Shop Components/roundedcontainer.dart';
 import '../../Shopfollow/Shop Components/shopproduct.dart';
 import '../../home/components/section_title.dart';
+import '../../mystore/mystore.dart';
 
 
 class Body extends StatelessWidget {
@@ -21,7 +25,7 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListView(
       children: [
         TopRoundedContainer(
           color:  Colors.white,
@@ -31,105 +35,59 @@ class Body extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                CircleAvatar(
+                  backgroundImage:  AssetImage("assets/images/${store.images[0]}"),
+                  backgroundColor: Colors.greenAccent.withOpacity(0.2),
+                  radius: 40,
+                ),
+                SizedBox(height: 30,),
+                Text(store.title,style: TextStyle(fontSize: 27,fontWeight: FontWeight.bold,color: Colors.black.withOpacity(0.8)
+                ),maxLines: 4,),
+                SizedBox(height: 20,),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    CircleAvatar(
-                      backgroundImage:  AssetImage("assets/images/${store.images[0]}"),
-                      backgroundColor: Colors.white,
-                      radius: 30,
-                    ),
-                    SizedBox(width: 10,),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(store.title,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.green),),
-                        Text("treadly.app"),
-                      ],
-                    ),
-                    Spacer(),
                     OutlinedButton(
                       style: OutlinedButton.styleFrom(
-                        backgroundColor: Colors.teal, //<-- SEE HERE
+                       // backgroundColor: Colors.teal,
                         shape:
                         RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                       ),
-                      onPressed: (){}, child: Text("Follow",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 15),),)
+                      onPressed: (){Navigator.pushNamed(context, shopedit.routeName);}, child: Text(" Edit Store ",style: TextStyle(color: kPrimaryColor,fontWeight: FontWeight.bold,fontSize: 15),),),
+                    SizedBox(width: 20,),
+                    OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        backgroundColor: Colors.teal,
+                        shape:
+                        RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                      ),
+                      onPressed: (){}, child: Text("View Store",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 15),),),
                   ],
                 ),
-                SizedBox(height: 30,),
-                Text(store.description,style: TextStyle(fontSize: 15,color: Colors.grey
-                ),maxLines: 4,),
-                SizedBox(height: 30,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      //color: Colors.grey,
-                      padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20),vertical: getProportionateScreenHeight(3)),
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),
-                          color: Colors.grey.shade300),
-                      child: Row(
-                        children: [
-                          Text("Groceries"),
-                          SizedBox(width: 5,),
-                          Icon(Icons.close),
-                        ],
-                      ),
-
-                    ),
-                    SizedBox(width: 10,),
-                    Container(
-                      //color: Colors.grey,
-                      padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20),vertical: getProportionateScreenHeight(5)),
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),
-                          color: Colors.grey.shade300),
-                      child: Row(
-                        children: [
-                          Text("Groceries"),
-                          SizedBox(width: 5,),
-                          Icon(Icons.close),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 30,),
-
+                SizedBox(height: 10,),
 
               ],
             ),
           ),
         ),
-        SizedBox(height: 20,),
+        SizedBox(height: 03,),
         Container(
           decoration: BoxDecoration(color: Colors.white,
-              borderRadius: BorderRadius.circular(20)),
-          child: Padding(
-            padding: const EdgeInsets.all(30.0),
-            child: Row(
-              children: [
-                Column(
-                  children: [
-                    Text("Total Followers",style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
-                   Text(store.tfo.toString(),style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
-                  ],
-                ),
-                Spacer(),
-                Column(
-                  children: [
-                    Text("Total Products",style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
-                    Text(store.tpo.toString(),style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
-                  ],
-                ),
-              ],
-            ),
+             // borderRadius: BorderRadius.circular(20)
+             ),
+          child: TextButton(
+            child: Text("Remove Store",style: TextStyle(color: Colors.grey,fontSize: 18,fontWeight: FontWeight.w600),),
+            onPressed: () {  },
+
           ),
         ),
         SizedBox(height: 20,),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-          child: SectionTitle(title: "Products", press: pressOnSeeMore!),
+          child: SectionTitle(title: "Products", press: (){
+            Navigator.pushNamed(context, AllProducts.routeName);
+          }),
         ),
         SizedBox(height: 10,),
         ShopProducts(),

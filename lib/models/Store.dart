@@ -11,7 +11,7 @@ class Store {
     required this.description,
     required this.address,
     required this.images,
-    this.rating=5.00,
+    required this.rating,
     this.isFavourite = false,
     this.isPopular = false,
     required this.title,

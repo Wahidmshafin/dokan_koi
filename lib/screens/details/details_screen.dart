@@ -27,12 +27,12 @@ class DetailsScreen extends StatelessWidget {
             body: Body(product: Product(id: 1,
                 qty: data['qty'],
                 images: [data['image']],
-                colors: [
-                  Color(0xFFF6625E),
-                  Color(0xFF836DB8),
-                  Color(0xFFDECB9C),
-                  Colors.white,
-                ],
+                // colors: [
+                //   Color(0xFFF6625E),
+                //   Color(0xFF836DB8),
+                //   Color(0xFFDECB9C),
+                //   Colors.white,
+                // ],
                 title: data['title'],
                 price: data['price'].toDouble(),
                 description: data['description'])),

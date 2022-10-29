@@ -1,17 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:dokan_koi/components/default_button.dart';
 import 'package:dokan_koi/models/Product.dart';
 import 'package:dokan_koi/size_config.dart';
-
-import 'color_dots.dart';
 import 'product_description.dart';
 import 'top_rounded_container.dart';
 import 'product_images.dart';
 
 class Body extends StatelessWidget {
   final Product product;
-
-  const Body({Key? key, required this.product}) : super(key: key);
+  final CollectionReference _products =
+  FirebaseFirestore.instance.collection('cart');
+   Body({Key? key, required this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class Body extends StatelessWidget {
                 color: Color(0xFFF6F7F9),
                 child: Column(
                   children: [
-                    ColorDots(product: product),
+                  //  ColorDots(product: product),
                     TopRoundedContainer(
                       color: Colors.white,
                       child: Padding(
@@ -42,7 +42,10 @@ class Body extends StatelessWidget {
                         ),
                         child: DefaultButton(
                           text: "Add To Cart",
-                          press: () {},
+                          press: () {
+                            _products.add({"title": product.title, "price": product.price.toInt(), "qty":product.qty, "image":product.images[0].toString()});
+                            Navigator.of(context).pop();
+                          },
                         ),
                       ),
                     ),
