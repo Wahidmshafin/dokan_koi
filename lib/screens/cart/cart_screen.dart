@@ -9,7 +9,7 @@ class CartScreen extends StatelessWidget {
   static String routeName = "/cart";
   final CollectionReference _products =
   FirebaseFirestore.instance.collection('cart');
-  int documents = _products.snapshots().length;
+  // int documents = _products.snapshots().length;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

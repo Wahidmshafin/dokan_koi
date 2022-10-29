@@ -31,11 +31,12 @@ class CartCard extends StatelessWidget {
       child:SizedBox(
         width: double.infinity,
         child: GestureDetector(
-          onTap: () => Navigator.pushNamed(
-            context,
-            DetailsScreen.routeName,
-            arguments: ProductDetailsArguments(id: id),
-          ),
+          onTap: (){}, 
+          // => Navigator.pushNamed(
+          //   context,
+          //   DetailsScreen.routeName,
+          //   arguments: ProductDetailsArguments(id: id),
+          // ),
           child: Container(
             width: double.infinity,
             height: 120,
