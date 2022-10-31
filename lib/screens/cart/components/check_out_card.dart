@@ -6,8 +6,11 @@ import '../../../constants.dart';
 import '../../../size_config.dart';
 
 class CheckoutCard extends StatelessWidget {
-  const CheckoutCard({
+
+  int total;
+  CheckoutCard({
     Key? key,
+    required this.total
   }) : super(key: key);
 
   @override
@@ -68,7 +71,7 @@ class CheckoutCard extends StatelessWidget {
                     text: "Total:\n",
                     children: [
                       TextSpan(
-                        text: "\$337.15",
+                        text: "\$$total",
                         style: TextStyle(fontSize: 16, color: Colors.black),
                       ),
                     ],
