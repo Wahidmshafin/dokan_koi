@@ -1,15 +1,21 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dokan_koi/screens/details/details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dokan_koi/components/default_button.dart';
-
+import '../../../routes.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
+import '../../home/home_screen.dart';
+import '../../splash/splash_screen.dart';
+import '../../Cart Splash/splash.dart';
 
 class CheckoutCard extends StatelessWidget {
   const CheckoutCard({
     Key? key,
   }) : super(key: key);
-
+  final CollectionReference _products =
+  FirebaseFirestore.instance.collection('cart');
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -78,7 +84,10 @@ class CheckoutCard extends StatelessWidget {
                   width: getProportionateScreenWidth(190),
                   child: DefaultButton(
                     text: "Check Out",
-                    press: () {},
+                    press: () {
+                      Navigator.pushNamed(context, ordsuc.routeName);
+
+                    },
                   ),
                 ),
               ],
