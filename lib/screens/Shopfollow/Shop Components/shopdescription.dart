@@ -127,7 +127,7 @@ class ProductDescription extends StatelessWidget {
         SizedBox(height: 20,),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-          child: SectionTitle(title: "Products", press: (){}),
+          child: SectionTitle(title: "Products", press: pressOnSeeMore!),
         ),
         SizedBox(height: 10,),
         ShopProducts(),

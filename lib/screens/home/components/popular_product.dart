@@ -23,8 +23,8 @@ class PopularProducts extends StatelessWidget {
               ...List.generate(
                 demoProducts.length,
                 (index) {
-                  if (demoProducts[index].isPopular)
-                    return ProductCard(product: demoProducts[index]);
+                  // if (demoProducts[index].isPopular)
+                    // return ProductCard(product: demoProducts[index]);
 
                   return SizedBox
                       .shrink(); // here by default width and height is 0

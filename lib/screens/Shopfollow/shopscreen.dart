@@ -13,10 +13,6 @@ class DetailsScreen3 extends StatelessWidget {
     ModalRoute.of(context)!.settings.arguments as ProductDetailsArguments3;
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(0.97),
-      // appBar: PreferredSize(
-      //   preferredSize: Size.fromHeight(AppBar().preferredSize.height),
-      //   child: CustomAppBar(rating: agrs.product.rating),
-      // ),
       body: Body(product: agrs.product),
     );
   }

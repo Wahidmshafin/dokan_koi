@@ -1,3 +1,4 @@
+import 'package:dokan_koi/screens/Shopfollow/Shop%20Components/all_products.dart';
 import 'package:dokan_koi/screens/cart/cart_screen.dart';
 import 'package:dokan_koi/screens/complete_profile/complete_profile_screen.dart';
 import 'package:dokan_koi/screens/details/details_screen.dart';
@@ -8,6 +9,8 @@ import 'package:dokan_koi/screens/home/home_screen.dart';
 import 'package:dokan_koi/screens/login_success/login_success_screen.dart';
 import 'package:dokan_koi/screens/otp/otp_screen.dart';
 import 'package:dokan_koi/screens/profile/profile_screen.dart';
+import 'package:dokan_koi/screens/shopmodify/components/ShopEdit.dart';
+import 'package:dokan_koi/screens/shopmodify/shopmodify.dart';
 import 'package:dokan_koi/screens/sign_in/sign_in_screen.dart';
 import 'package:dokan_koi/screens/splash/splash_screen.dart';
 import 'package:flutter/widgets.dart';
@@ -29,6 +32,9 @@ final Map<String, WidgetBuilder> routes = {
   DetailsScreen2.routeName: (context) => DetailsScreen2(),
   DetailsScreen.routeName: (context) => DetailsScreen(),
   MyStore.routeName: (context) => MyStore(),
+  shopedit.routeName: (context) => shopedit(),
+  AllProducts.routeName: (context)=>AllProducts(),
+  ShopModify.routeName: (context)=>ShopModify(),
 
   CartScreen.routeName: (context) => CartScreen(),
   ProfileScreen.routeName: (context) => ProfileScreen(),
