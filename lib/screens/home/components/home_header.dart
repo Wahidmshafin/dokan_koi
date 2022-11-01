@@ -1,5 +1,5 @@
-import 'package:dokan_koi/screens/cart/components/cartbody.dart';
 import 'package:flutter/material.dart';
+import 'package:dokan_koi/screens/cart/cart_screen.dart';
 
 import '../../../size_config.dart';
 import 'icon_btn_with_counter.dart';
@@ -31,7 +31,7 @@ class HomeHeader extends StatelessWidget {
                 SizedBox(width: 50,),
                 IconBtnWithCounter(
                   svgSrc: "assets/icons/Cart Icon.svg",
-                  press: () => Navigator.pushNamed(context, CartItems.routeName),
+                  press: () => Navigator.pushNamed(context, CartScreen.routeName),
                 ),
                 IconBtnWithCounter(
 
