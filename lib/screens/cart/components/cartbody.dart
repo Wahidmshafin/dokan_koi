@@ -18,7 +18,7 @@ class _CartItemsState extends State<CartItems> {
   final CollectionReference _products =
   FirebaseFirestore.instance.collection('cart');
   var total=0;
-
+  var v=0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
