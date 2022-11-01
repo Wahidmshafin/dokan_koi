@@ -1,12 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dokan_koi/models/Cart.dart';
-
+import 'cartbody.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
 import '../../details/details_screen.dart';
 
 class CartCard extends StatelessWidget {
-  const CartCard({
+   CartCard({
     Key? key,
     required this.title,
     required this.price,
@@ -14,8 +16,8 @@ class CartCard extends StatelessWidget {
     required this.image,
     required this.id,
     //required this.product,
-  }) : super(key: key);
-
+  }) : super(key: key);final CollectionReference _products =
+  FirebaseFirestore.instance.collection('cart');
   // final double width, aspectRetio;
   //final Product product;
   final String image;
@@ -24,47 +26,50 @@ class CartCard extends StatelessWidget {
   final int qty;
   final String id;
 
+   Future<void> _add(String productId) async {
+     await _products.doc(productId).update({"qty":qty+1});
+   }
+   Future<void> _delete(String productId) async {
+     await _products.doc(productId).update({"qty":qty-1});
+   }
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all( getProportionateScreenWidth(15)),
       child:SizedBox(
         width: double.infinity,
-        child: GestureDetector(
-          onTap: (){}, 
-          // => Navigator.pushNamed(
-          //   context,
-          //   DetailsScreen.routeName,
-          //   arguments: ProductDetailsArguments(id: id),
-          // ),
-          child: Container(
-            width: double.infinity,
-            height: 120,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(30),
-            ),
-            child: Row(
-              children: [
-                // Image.asset(product.images[0],height: 100,width: 100,),
-                Image.asset("assets/images/$image",height: 100,width: 100,),
-                //Spacer(),
-                SizedBox(width: getProportionateScreenWidth(20),),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Text(product.title,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17),maxLines: 1,overflow: TextOverflow.fade,softWrap: false,),
-                    // Text("Price: \৳${product.price}"),
-                    // Text("Qty: ${product.qty.toString()}"),
-                    Text(title,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,),maxLines: 1,overflow: TextOverflow.fade,softWrap: false,),
-                    Text("Price: \৳${price}"),
-                    Text("Qty: ${qty.toString()}"),
-                  ],
-                ),
-              ],
-            ),
-
+        child: Container(
+          width: double.infinity,
+          height: 120,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(30),
           ),
+          child: Row(
+            children: [
+              Image.asset("assets/images/$image",height: 100,width: 100,),
+              SizedBox(width: getProportionateScreenWidth(20),),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(title,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,),maxLines: 1,overflow: TextOverflow.fade,softWrap: false,),
+                  Text("Price: \৳${price}"),
+                  Row(
+                    children: [
+                      OutlinedButton(onPressed: () { _add(id);},
+                      child: Icon(CupertinoIcons.plus,size: 16,color: kPrimaryColor,)),
+                      SizedBox(width: 5,),
+                      Text("Qty: ${qty.toString()}"),
+                      SizedBox(width: 5,),
+                      OutlinedButton(onPressed: () { if(qty!=1){_delete(id);} },
+                      child: Icon(CupertinoIcons.minus,size: 16,color: Colors.redAccent,)),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+
         ),
       ),
     );

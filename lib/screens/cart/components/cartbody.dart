@@ -19,6 +19,7 @@ class _CartItemsState extends State<CartItems> {
   FirebaseFirestore.instance.collection('cart');
   var total=0;
 
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,6 +53,7 @@ class _CartItemsState extends State<CartItems> {
                 bottomNavigationBar: CheckoutCard(total: total,),
                 body: SingleChildScrollView(
                   child: Container(
+                    color: Colors.grey.withOpacity(0.05),
                     height: getProportionateScreenHeight(600),
                     child: ListView.builder(
                         shrinkWrap: true,
@@ -92,3 +94,4 @@ class _CartItemsState extends State<CartItems> {
     );
   }
 }
+
