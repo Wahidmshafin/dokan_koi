@@ -8,7 +8,7 @@ import 'check_out_card.dart';
 
 class CartItems extends StatefulWidget {
   static String routeName = "/cart";
-
+  var v=0;
   @override
   State<CartItems> createState() => _CartItemsState();
 }
