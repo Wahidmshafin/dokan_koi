@@ -11,11 +11,8 @@ import '../../splash/splash_screen.dart';
 import '../../Cart Splash/splash.dart';
 
 class CheckoutCard extends StatelessWidget {
-
-  int total;
-  CheckoutCard({
+  const CheckoutCard({
     Key? key,
-    required this.total
   }) : super(key: key);
   final CollectionReference _products =
   FirebaseFirestore.instance.collection('cart');
@@ -77,7 +74,7 @@ class CheckoutCard extends StatelessWidget {
                     text: "Total:\n",
                     children: [
                       TextSpan(
-                        text: "\$$total",
+                        text: "\$337.15",
                         style: TextStyle(fontSize: 16, color: Colors.black),
                       ),
                     ],
