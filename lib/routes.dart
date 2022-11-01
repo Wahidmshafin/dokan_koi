@@ -1,5 +1,5 @@
 import 'package:dokan_koi/screens/Shopfollow/Shop%20Components/all_products.dart';
-import 'package:dokan_koi/screens/cart/components/cartbody.dart';
+import 'package:dokan_koi/screens/cart/cart_screen.dart';
 import 'package:dokan_koi/screens/complete_profile/complete_profile_screen.dart';
 import 'package:dokan_koi/screens/details/details_screen.dart';
 import 'package:dokan_koi/screens/mystore/mystore.dart';
@@ -36,6 +36,6 @@ final Map<String, WidgetBuilder> routes = {
   AllProducts.routeName: (context)=>AllProducts(),
   ShopModify.routeName: (context)=>ShopModify(),
 
-  CartItems.routeName: (context) => CartItems(),
+  CartScreen.routeName: (context) => CartScreen(),
   ProfileScreen.routeName: (context) => ProfileScreen(),
 };
