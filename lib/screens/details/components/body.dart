@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:dokan_koi/components/default_button.dart';
 import 'package:dokan_koi/models/Product.dart';
@@ -9,6 +10,7 @@ import 'product_images.dart';
 
 class Body extends StatelessWidget {
   final Product product;
+  FirebaseAuth auth = FirebaseAuth.instance;
   final CollectionReference _products =
   FirebaseFirestore.instance.collection('cart');
    Body({Key? key, required this.product}) : super(key: key);
@@ -43,7 +45,7 @@ class Body extends StatelessWidget {
                         child: DefaultButton(
                           text: "Add To Cart",
                           press: () {
-                            _products.add({"title": product.title, "price": product.price.toInt(), "qty":1, "image":product.images[0].toString(), "uid":product.id});
+                            _products.add({"title": product.title, "price": product.price.toInt(), "qty":1, "image":product.images[0].toString(), "sid":product.id, "uid":auth.currentUser?.uid,});
                             print(product.id);
                             Navigator.of(context).pop();
                           },

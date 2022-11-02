@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dokan_koi/screens/details/details_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dokan_koi/components/default_button.dart';
@@ -17,6 +18,7 @@ class CheckoutCard extends StatelessWidget {
     Key? key,
     required this.total
   }) : super(key: key);
+  FirebaseAuth  auth = FirebaseAuth.instance;
   final CollectionReference _products =
   FirebaseFirestore.instance.collection('cart');
   final CollectionReference _orders =
@@ -90,13 +92,10 @@ class CheckoutCard extends StatelessWidget {
                   child: DefaultButton(
                     text: "Check Out",
                     press: () {
-                      _products.snapshots().forEach((element) {
+                      _products.where("uid",isEqualTo: auth.currentUser?.uid).snapshots().forEach((element) {
                           var v= element.docs.asMap().forEach((key, value) {
-                            print(value.data());
-                            _orders.add(value.data());
+                           _orders.add(value.data());
                           });
-
-
                       });
                       Navigator.pushNamed(context, ordsuc.routeName);
 

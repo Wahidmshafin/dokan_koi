@@ -1,6 +1,7 @@
 import 'package:dokan_koi/constants.dart';
 import 'package:dokan_koi/models/product.dart';
 import 'package:dokan_koi/screens/shopmodify/components/ShopEdit.dart';
+import 'package:dokan_koi/screens/shopmodify/components/myorders.dart';
 import 'package:dokan_koi/screens/shopmodify/components/myproduct.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -63,7 +64,7 @@ class Body extends StatelessWidget {
                         shape:
                         RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                       ),
-                      onPressed: (){}, child: Text("View Store",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 15),),),
+                      onPressed: (){Navigator.pushNamed(context, MyOrders.routeName);}, child: Text("My Orders",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 15),),),
                   ],
                 ),
                 SizedBox(height: 10,),

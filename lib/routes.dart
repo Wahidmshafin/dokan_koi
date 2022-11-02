@@ -3,6 +3,7 @@ import 'package:dokan_koi/screens/cart/components/cartbody.dart';
 import 'package:dokan_koi/screens/Cart Splash/splash.dart';
 import 'package:dokan_koi/screens/complete_profile/complete_profile_screen.dart';
 import 'package:dokan_koi/screens/details/details_screen.dart';
+import 'package:dokan_koi/screens/shopmodify/components/myorders.dart';
 import 'package:dokan_koi/screens/shopmodify/components/myproduct.dart';
 import 'package:dokan_koi/screens/mystore/mystore.dart';
 import 'package:dokan_koi/screens/newdetails/newproductsscreen.dart';
@@ -12,6 +13,7 @@ import 'package:dokan_koi/screens/login_success/login_success_screen.dart';
 import 'package:dokan_koi/screens/otp/otp_screen.dart';
 import 'package:dokan_koi/screens/profile/profile_screen.dart';
 import 'package:dokan_koi/screens/shopmodify/components/ShopEdit.dart';
+import 'package:dokan_koi/screens/shopmodify/components/print.dart';
 import 'package:dokan_koi/screens/shopmodify/shopmodify.dart';
 import 'package:dokan_koi/screens/sign_in/sign_in_screen.dart';
 import 'package:dokan_koi/screens/splash/splash_screen.dart';
@@ -34,11 +36,13 @@ final Map<String, WidgetBuilder> routes = {
   DetailsScreen2.routeName: (context) => DetailsScreen2(),
   DetailsScreen.routeName: (context) => DetailsScreen(),
   ordsuc.routeName: (context)=>ordsuc(),
+  Print.routeName: (context)=>Print(),
   MyStore.routeName: (context) => MyStore(),
   shopedit.routeName: (context) => shopedit(),
   AllProducts.routeName: (context)=>AllProducts(),
   MyProducts.routeName: (context)=>MyProducts(),
   ShopModify.routeName: (context)=>ShopModify(),
+  MyOrders.routeName: (context)=>MyOrders(),
   CartItems.routeName: (context) => CartItems(),
   ProfileScreen.routeName: (context) => ProfileScreen(),
 };
