@@ -64,7 +64,7 @@ class Newcard extends StatelessWidget {
                               style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20),
                               maxLines: 2,
                             ),
-                            Text(store.address,textAlign: TextAlign.center,maxLines: 2,),
+                            Text("${store.address}, ${store.subDistrict}",textAlign: TextAlign.center,maxLines: 2,),
                             Spacer(),
                             // OutlinedButton(
                             //   child: Text('Follow',textAlign: TextAlign.center,),
