@@ -29,7 +29,9 @@ class _CartItemsState extends State<CartItems> {
             if(streamSnapshot.hasData)
             { for (var element in streamSnapshot.data!.docs) {
               var va = element.data() as Map<String, dynamic>;
-              total += va["price"] as int;
+              var qtr=va["qty"] as int;
+              var price =va["price"] as int;
+              total += (qtr*price);
             }
             print(total);
             return Scaffold(

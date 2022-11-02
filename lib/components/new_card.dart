@@ -5,30 +5,31 @@ import 'package:dokan_koi/screens/newdetails/newproductsscreen.dart';
 import 'package:dokan_koi/components/star.dart';
 
 import '../constants.dart';
+import '../models/Store.dart';
 import '../size_config.dart';
 
 class Newcard extends StatelessWidget {
   const Newcard({
     Key? key,
-    this.width = 230,
+    this.width = 250,
     this.aspectRetio = 1.02,
-    required this.product,
+    required this.store,
   }) : super(key: key);
 
   final double width, aspectRetio;
-  final Product product;
+  final Store store;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(left: getProportionateScreenWidth(20)),
       child: SizedBox(
-        width: getProportionateScreenWidth(width),
+        width: width,
         child: GestureDetector(
           onTap: () => Navigator.pushNamed(
             context,
             DetailsScreen2.routeName,
-            arguments: ProductDetailsArguments2(product: product),
+            arguments: ProductDetailsArguments2(store: store),
           ),
           child: AspectRatio(
             aspectRatio: 1.02,
@@ -39,13 +40,13 @@ class Newcard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Hero(
-                tag: product.id.toString(),
+                tag: store.id.toString(),
                 child: Column(
                   children: [
                     Stack(
                         children: <Widget>[
-                          Center(child: Image.asset(product.images[0],height: 100,)),
-                          Starrating(rating: product.rating),
+                          Center(child: Image.asset("assets/images/glap.png",height: getProportionateScreenHeight(100),)),
+                          Starrating(rating: store.rating),
                         ]
                     ),
 
@@ -59,11 +60,11 @@ class Newcard extends StatelessWidget {
                           children: [
                             Spacer(),
                             Text(
-                              product.title,
+                              store.title,
                               style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20),
                               maxLines: 2,
                             ),
-                            Text(product.address,textAlign: TextAlign.center,maxLines: 2,),
+                            Text(store.address,textAlign: TextAlign.center,maxLines: 2,),
                             Spacer(),
                             // OutlinedButton(
                             //   child: Text('Follow',textAlign: TextAlign.center,),
@@ -91,14 +92,14 @@ class Newcard extends StatelessWidget {
                                     height: getProportionateScreenWidth(35),
                                     width: getProportionateScreenWidth(35),
                                     decoration: BoxDecoration(
-                                      color: product.isFavourite
+                                      color: store.isFavourite
                                           ? kPrimaryColor.withOpacity(0.15)
                                           : kSecondaryColor.withOpacity(0.1),
                                       shape: BoxShape.circle,
                                     ),
                                     child: SvgPicture.asset(
                                       "assets/icons/Heart Icon_2.svg",
-                                      color: product.isFavourite
+                                      color: store.isFavourite
                                           ? Color(0xFFFF4848)
                                           : Color(0xFFDBDEE4),
                                     ),

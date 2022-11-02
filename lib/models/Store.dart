@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Store {
-  final int tfo,tpo;
+  final int tfo,tpo,id;
   final String title, district,address,description, subDistrict;
   final List<String> images;
   final double rating;
@@ -12,12 +12,13 @@ class Store {
     required this.address,
     required this.images,
     required this.rating,
-    this.isFavourite = false,
+    this.isFavourite = true,
     this.isPopular = false,
     required this.title,
     required this.district,
     required this.subDistrict,
     this.tfo=0,
     this.tpo=0,
+    this.id=0,
   });
 }
