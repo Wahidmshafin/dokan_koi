@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../models/Store.dart';
 import '../../models/newproduct.dart';
 import 'package:dokan_koi/screens/newdetails/new product components/body2.dart';
 import '../details/components/custom_app_bar.dart';
@@ -17,13 +18,13 @@ class DetailsScreen2 extends StatelessWidget {
       //   preferredSize: Size.fromHeight(AppBar().preferredSize.height),
       //   child: CustomAppBar(rating: agrs.product.rating),
       // ),
-      body: Body(product: agrs.product),
+      body: Body(store: agrs.store),
     );
   }
 }
 
 class ProductDetailsArguments2 {
-  final Product product;
+  final Store store;
 
-  ProductDetailsArguments2({required this.product});
+  ProductDetailsArguments2({required this.store});
 }

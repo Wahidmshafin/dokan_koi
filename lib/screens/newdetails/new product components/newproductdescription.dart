@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dokan_koi/models/newproduct.dart';
 import 'package:dokan_koi/screens/Shopfollow/Shop Components/roundedcontainer.dart';
+import '../../../models/Store.dart';
 import '../../home/components/section_title.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
@@ -10,11 +11,11 @@ import 'package:dokan_koi/screens/Shopfollow/Shop Components/shopproduct.dart';
 class ProductDescription extends StatelessWidget {
   const ProductDescription({
     Key? key,
-    required this.product,
+    required this.store,
     this.pressOnSeeMore,
   }) : super(key: key);
 
-  final Product product;
+  final Store store;
   final GestureTapCallback? pressOnSeeMore;
 
   @override
@@ -32,7 +33,7 @@ class ProductDescription extends StatelessWidget {
                 Row(
                   children: [
                     CircleAvatar(
-                      backgroundImage:  AssetImage(product.images[0]),
+                      backgroundImage:  AssetImage(store.images[0]),
                       backgroundColor: Colors.white,
                       radius: 30,
                     ),
@@ -41,7 +42,7 @@ class ProductDescription extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(product.title,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.green),),
+                        Text(store.title,style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.green),),
                         Text("treadly.app"),
                       ],
                     ),
@@ -56,7 +57,7 @@ class ProductDescription extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 30,),
-                Text(product.description,style: TextStyle(fontSize: 15,color: Colors.grey
+                Text(store.description,style: TextStyle(fontSize: 15,color: Colors.grey
                 ),maxLines: 4,),
                 SizedBox(height: 30,),
                 Row(
@@ -110,14 +111,14 @@ class ProductDescription extends StatelessWidget {
                 Column(
                   children: [
                     Text("Total Followers",style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
-                    Text(product.tfo.toString(),style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
+                    Text(store.tfo.toString(),style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
                   ],
                 ),
                 Spacer(),
                 Column(
                   children: [
                     Text("Total Products",style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
-                    Text(product.tpo.toString(),style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),
+                    Text(store.tpo.toString(),style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),

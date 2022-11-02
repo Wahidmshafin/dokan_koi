@@ -17,28 +17,30 @@ class Body extends StatelessWidget {
   final _auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
+    bool bo=false;
      return StreamBuilder(
        stream: _shop.doc(_auth.currentUser?.uid).snapshots(),
        builder: (context, snapshot) {
-         if(!snapshot.hasData) {
-           return SafeArea(
-             child: SingleChildScrollView(
-               child: Column(
-                 children: [
-                   // SizedBox(height: getProportionateScreenHeight(20)),
-                   StoreHeader(),
-                   SizedBox(height: getProportionateScreenWidth(30)),
-                   Image.asset("assets/images/storefront.jpg"),
-                   SizedBox(height: getProportionateScreenHeight(20)),
-                   AddShop(),
-                 ],
-               ),
-             ),
-           );
+         if(snapshot.data?.exists??false) {
+           return ShopModify();
          }
          else
            {
-             return ShopModify();
+
+             return SafeArea(
+               child: SingleChildScrollView(
+                 child: Column(
+                   children: [
+                     // SizedBox(height: getProportionateScreenHeight(20)),
+                     StoreHeader(),
+                     SizedBox(height: getProportionateScreenWidth(30)),
+                     Image.asset("assets/images/storefront.jpg"),
+                     SizedBox(height: getProportionateScreenHeight(20)),
+                     AddShop(),
+                   ],
+                 ),
+               ),
+             );
            }
        }
      );

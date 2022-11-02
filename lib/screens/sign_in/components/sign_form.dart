@@ -78,10 +78,20 @@ class _SignFormState extends State<SignForm> {
                   Navigator.pushNamed(context, SplashScreen.routeName);
                 }
               }
-              catch(e)
+              on FirebaseAuthException catch(e)
               {
-                print(e);
-                addError(error: "Please Sign up first");
+                if(errors.isNotEmpty){
+                  errors.clear();
+                }
+                if(e.code=="wrong-password")
+                  {
+                    addError(error: "Wrong Password");
+                  }
+                else
+                  {
+                    addError(error: "Sign In first");
+                  }
+
               }
             },
           ),
