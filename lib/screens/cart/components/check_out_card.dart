@@ -19,6 +19,8 @@ class CheckoutCard extends StatelessWidget {
   }) : super(key: key);
   final CollectionReference _products =
   FirebaseFirestore.instance.collection('cart');
+  final CollectionReference _orders =
+  FirebaseFirestore.instance.collection('Orders');
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -88,6 +90,14 @@ class CheckoutCard extends StatelessWidget {
                   child: DefaultButton(
                     text: "Check Out",
                     press: () {
+                      _products.snapshots().forEach((element) {
+                          var v= element.docs.asMap().forEach((key, value) {
+                            print(value.data());
+                            _orders.add(value.data());
+                          });
+
+
+                      });
                       Navigator.pushNamed(context, ordsuc.routeName);
 
                     },

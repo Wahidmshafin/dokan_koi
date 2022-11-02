@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dokan_koi/screens/cart/components/cart_card.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../../size_config.dart';
@@ -18,12 +19,13 @@ class _CartItemsState extends State<CartItems> {
   final CollectionReference _products =
   FirebaseFirestore.instance.collection('cart');
   var total=0;
+  FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder(
-          stream: _products.snapshots(),
+          stream: _products.where("uid", isEqualTo: auth.currentUser?.uid).snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
             total =0;
             if(streamSnapshot.hasData)
