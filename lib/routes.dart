@@ -3,6 +3,7 @@ import 'package:dokan_koi/screens/cart/components/cartbody.dart';
 import 'package:dokan_koi/screens/Cart Splash/splash.dart';
 import 'package:dokan_koi/screens/complete_profile/complete_profile_screen.dart';
 import 'package:dokan_koi/screens/details/details_screen.dart';
+import 'package:dokan_koi/screens/shopmodify/components/myproduct.dart';
 import 'package:dokan_koi/screens/mystore/mystore.dart';
 import 'package:dokan_koi/screens/newdetails/newproductsscreen.dart';
 import 'package:dokan_koi/screens/forgot_password/forgot_password_screen.dart';
@@ -36,6 +37,7 @@ final Map<String, WidgetBuilder> routes = {
   MyStore.routeName: (context) => MyStore(),
   shopedit.routeName: (context) => shopedit(),
   AllProducts.routeName: (context)=>AllProducts(),
+  MyProducts.routeName: (context)=>MyProducts(),
   ShopModify.routeName: (context)=>ShopModify(),
   CartItems.routeName: (context) => CartItems(),
   ProfileScreen.routeName: (context) => ProfileScreen(),

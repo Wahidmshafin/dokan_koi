@@ -4,6 +4,7 @@ import 'package:dokan_koi/models/newproduct.dart';
 import 'package:dokan_koi/size_config.dart';
 import '../../../models/Store.dart';
 import '../../Shopfollow/Shop Components/all_products.dart';
+import '../../details/details_screen.dart';
 import 'newproductdescription.dart';
 import '../new product components/newtoproundedcontainer.dart';
 import 'newproductimage.dart';
@@ -22,7 +23,7 @@ class Body extends StatelessWidget {
           ProductDescription(
             store: store,
             pressOnSeeMore: () {
-              Navigator.pushNamed(context, AllProducts.routeName);
+              Navigator.pushNamed(context, AllProducts.routeName,arguments: ProductDetailsArguments(id: store.id));
             },
           ),
         ],

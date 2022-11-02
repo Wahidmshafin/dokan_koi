@@ -20,17 +20,17 @@ class PopularProducts extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           child: Row(
             children: [
-              ...List.generate(
-                demoProducts.length,
-                (index) {
-                  // if (demoProducts[index].isPopular)
-                    // return ProductCard(product: demoProducts[index]);
-
-                  return SizedBox
-                      .shrink(); // here by default width and height is 0
-                },
-              ),
-              SizedBox(width: getProportionateScreenWidth(20)),
+              // ...List.generate(
+              //   demoProducts.length,
+              //   (index) {
+              //     // if (demoProducts[index].isPopular)
+              //       // return ProductCard(product: demoProducts[index]);
+              //
+              //     return SizedBox
+              //         .shrink(); // here by default width and height is 0
+              //   },
+              // ),
+              // SizedBox(width: getProportionateScreenWidth(20)),
             ],
           ),
         )

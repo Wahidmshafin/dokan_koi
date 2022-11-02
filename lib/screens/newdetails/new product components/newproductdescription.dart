@@ -133,7 +133,7 @@ class ProductDescription extends StatelessWidget {
           child: SectionTitle(title: "Products", press: pressOnSeeMore!),
         ),
         SizedBox(height: 10,),
-        ShopProducts(),
+        ShopProducts(id:store.id),
       ],
     );
   }

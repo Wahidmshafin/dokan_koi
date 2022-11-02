@@ -34,6 +34,7 @@ class NewProducts extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       itemCount: streamSnapshot.data!.docs.length,
                       itemBuilder: (context,index)=>Newcard(store: Store(
+                          id: streamSnapshot.data!.docs[index]['id'],
                           description: streamSnapshot.data!.docs[index]['description'],
                           address: streamSnapshot.data!.docs[index]['address'],
                           images: [streamSnapshot.data!.docs[index]['images']],

@@ -27,7 +27,8 @@ class _CartItemsState extends State<CartItems> {
           builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
             total =0;
             if(streamSnapshot.hasData)
-            { for (var element in streamSnapshot.data!.docs) {
+            {
+              for (var element in streamSnapshot.data!.docs) {
               var va = element.data() as Map<String, dynamic>;
               var qtr=va["qty"] as int;
               var price =va["price"] as int;
@@ -88,6 +89,7 @@ class _CartItemsState extends State<CartItems> {
               ),
             );
             }
+
             return const Center(
                 child: CircularProgressIndicator());
           }

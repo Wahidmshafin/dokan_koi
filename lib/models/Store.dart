@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Store {
-  final int tfo,tpo,id;
-  final String title, district,address,description, subDistrict;
+  final int tfo,tpo;
+  final String title, district,address,description, subDistrict, id;
   final List<String> images;
   final double rating;
   final bool isFavourite, isPopular;
@@ -19,6 +19,6 @@ class Store {
     required this.subDistrict,
     this.tfo=0,
     this.tpo=0,
-    this.id=0,
+    required this.id,
   });
 }

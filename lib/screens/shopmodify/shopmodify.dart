@@ -25,6 +25,7 @@ class ShopModify extends StatelessWidget {
               child: CustomAppBar(rating: data!['rating']),
             ),
             body: Body(store: Store(
+                id:data['id'],
                 description: data['description'],
                 address: data['address'],
                 images: [data['images']],

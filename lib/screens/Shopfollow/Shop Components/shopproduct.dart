@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:dokan_koi/components/product_card.dart';
 import 'package:dokan_koi/models/Product.dart';
@@ -7,14 +8,18 @@ import '../../../size_config.dart';
 
 class ShopProducts extends StatelessWidget {
 
-  final CollectionReference _products =
+  FirebaseAuth auth = FirebaseAuth.instance;
+  final _products =
   FirebaseFirestore.instance.collection('product');
+  String id;
+  ShopProducts({super.key,required this.id });
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       child: StreamBuilder(
-          stream: _products.snapshots(),
+          stream: _products.where("id",isEqualTo: id).snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
             if(streamSnapshot.hasData)
             {

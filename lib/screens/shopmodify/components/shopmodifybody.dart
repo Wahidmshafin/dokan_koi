@@ -1,6 +1,7 @@
 import 'package:dokan_koi/constants.dart';
 import 'package:dokan_koi/models/product.dart';
 import 'package:dokan_koi/screens/shopmodify/components/ShopEdit.dart';
+import 'package:dokan_koi/screens/shopmodify/components/myproduct.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dokan_koi/size_config.dart';
@@ -86,11 +87,11 @@ class Body extends StatelessWidget {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
           child: SectionTitle(title: "Products", press: (){
-            Navigator.pushNamed(context, AllProducts.routeName);
+            Navigator.pushNamed(context, MyProducts.routeName);
           }),
         ),
         SizedBox(height: 10,),
-        ShopProducts(),
+        ShopProducts(id:store.id),
       ],
     );
   }

@@ -57,7 +57,8 @@ class _AddShopState extends State<AddShop> {
         "subDistrict": storeSubDistrict,
         "type":storeType,
         "rating":1.00,
-        "images":"tshirt.png"
+        "images":"tshirt.png",
+        "id":auth.currentUser?.uid,
       });
       print("pressed");
     }catch(e)
