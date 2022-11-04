@@ -90,12 +90,21 @@ class CheckoutCard extends StatelessWidget {
                 SizedBox(
                   width: getProportionateScreenWidth(190),
                   child: DefaultButton(
-                    text: "Check Out",
+                    text:"Check Out",
                     press: () {
-                      _products.where("uid",isEqualTo: auth.currentUser?.uid).snapshots().forEach((element) {
-                          var v= element.docs.asMap().forEach((key, value) {
-                           _orders.add(value.data());
-                          });
+                      // _products.where("uid",isEqualTo: auth.currentUser?.uid).snapshots().forEach((element) {
+                      //     element.docs.asMap().forEach((key, value) {
+                      //       print("eta ken print hoi");
+                      //       _orders.add(value.data());
+                      //       _products.doc(value.id).delete();
+                      //     });
+                      // });
+                      _products.where("uid",isEqualTo: auth.currentUser?.uid).get().then((value) => {
+                        value.docs.forEach((element) {
+                          print("eta ken hoi?");
+                          _orders.add(element.data());
+                          _products.doc(element.id).delete();
+                        })
                       });
                       Navigator.pushNamed(context, ordsuc.routeName);
 

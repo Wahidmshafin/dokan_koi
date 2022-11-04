@@ -1,10 +1,38 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 
-class ProfilePic extends StatelessWidget {
-  const ProfilePic({
+class ProfilePic extends StatefulWidget {
+   ProfilePic({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<ProfilePic> createState() => _ProfilePicState();
+}
+
+class _ProfilePicState extends State<ProfilePic> {
+
+  File? image;
+
+  Future getImage() async{
+    print("hoi na ken");
+    try{
+      final tmp=await ImagePicker().pickImage(source: ImageSource.gallery);
+      if(tmp==null)
+      {
+        return;
+      }
+      setState(() {
+        image=File(tmp.path);
+      });
+    }
+    catch(e){
+        print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +43,10 @@ class ProfilePic extends StatelessWidget {
         fit: StackFit.expand,
         clipBehavior: Clip.none,
         children: [
-          CircleAvatar(
-            backgroundImage: AssetImage("assets/images/Profile Image.png"),
-          ),
+          image==null?
+          const CircleAvatar(
+            backgroundImage: AssetImage("assets/images/user.png"),
+          ): CircleAvatar(backgroundImage: FileImage(image!)),
           Positioned(
             right: -16,
             bottom: 0,
@@ -33,7 +62,7 @@ class ProfilePic extends StatelessWidget {
                   primary: Colors.white,
                   backgroundColor: Color(0xFFF5F6F9),
                 ),
-                onPressed: () {},
+                onPressed: getImage,
                 child: SvgPicture.asset("assets/icons/Camera Icon.svg"),
               ),
             ),

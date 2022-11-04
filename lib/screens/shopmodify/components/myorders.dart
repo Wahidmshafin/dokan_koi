@@ -65,12 +65,12 @@ class MyOrders extends StatelessWidget {
                               style: BorderStyle.solid,
                               width: 2),
                               children: [
-                                TableRow( children: [
-                                Column(children:[Text(streamSnapshot.data!.docs[index]['uid'], style: TextStyle(fontSize: 20.0))]),
-                              Column(children:[Text(streamSnapshot.data!.docs[index]['title'], style: TextStyle(fontSize: 20.0))]),
-                              Column(children:[Text(streamSnapshot.data!.docs[index]['qty'].toString(), style: TextStyle(fontSize: 20.0))]),
-                              Column(children:[Text(streamSnapshot.data!.docs[index]['price'].toString(), style: TextStyle(fontSize: 20.0))]),
-                              ]),
+                                TableRow( children: [Column(children:[Text(streamSnapshot.data!.docs[index]['uid'], style: TextStyle(fontSize: 20.0))]),
+                                Column(children:[Text(streamSnapshot.data!.docs[index]['title'], style: TextStyle(fontSize: 20.0))]),
+                                Column(children:[Text(streamSnapshot.data!.docs[index]['qty'].toString(), style: TextStyle(fontSize: 20.0))]),
+                                Column(children:[Text(streamSnapshot.data!.docs[index]['price'].toString(), style: TextStyle(fontSize: 20.0))]),
+                              ]
+                                ),
                               ],
                               ),
                             ),
