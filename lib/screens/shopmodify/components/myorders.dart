@@ -42,66 +42,64 @@ class MyOrders extends StatelessWidget {
                   padding: EdgeInsets.all(8.0),
                   height: getProportionateScreenHeight(630),
                   width: 600,
-                  child: StreamBuilder(
-                      stream: _products
-                          .where("sid", isEqualTo: auth.currentUser?.uid)
-                          .snapshots(),
-                      builder:
-                          (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
-                        if (streamSnapshot.hasData) {
-                          return Container(
-                            height: getProportionateScreenHeight(650),
-                            color: Colors.white,
-                            child: ListView.builder(
-                                shrinkWrap: true,
-                                scrollDirection: Axis.vertical,
-                                itemCount: streamSnapshot.data!.docs.length,
-                                itemBuilder: (context, index) =>
+                  child: Column(
+                    children: [
+                      Table(
+                        defaultColumnWidth: FixedColumnWidth(146.0),
+                        border: TableBorder.all(
+                            color: Colors.black,
+                            style: BorderStyle.solid,
+                            width: 2),
+                        children: [
+                          TableRow( children: [
+                            Column(children:[Text("User",style: TextStyle(fontSize: 20.0)),]),
+                            Column(children:[Text("Product",style: TextStyle(fontSize: 20.0)),]),
+                            Column(children:[Text("Quantity",style: TextStyle(fontSize: 20.0)),]),
+                            Column(children:[Text("Price",style: TextStyle(fontSize: 20.0)),]),
 
-                               Table(
-                              defaultColumnWidth: FixedColumnWidth(120.0),
-                              border: TableBorder.all(
-                              color: Colors.black,
-                              style: BorderStyle.solid,
-                              width: 2),
-                              children: [
-                                TableRow( children: [
-                                Column(children:[Text(streamSnapshot.data!.docs[index]['uid'], style: TextStyle(fontSize: 20.0))]),
-                              Column(children:[Text(streamSnapshot.data!.docs[index]['title'], style: TextStyle(fontSize: 20.0))]),
-                              Column(children:[Text(streamSnapshot.data!.docs[index]['qty'].toString(), style: TextStyle(fontSize: 20.0))]),
-                              Column(children:[Text(streamSnapshot.data!.docs[index]['price'].toString(), style: TextStyle(fontSize: 20.0))]),
-                              ]),
-                              ],
-                              ),
+
+                          ]),
+                        ],
+                      ),
+                      StreamBuilder(
+                          stream: _products
+                              .where("sid", isEqualTo: auth.currentUser?.uid)
+                              .snapshots(),
+                          builder:
+                              (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+                            if (streamSnapshot.hasData) {
+                              return Container(
+                                height: getProportionateScreenHeight(550),
+                                color: Colors.white,
+                                child: ListView.builder(
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: streamSnapshot.data!.docs.length,
+                                    itemBuilder: (context, index) =>
+
+                                   Table(
+                                  defaultColumnWidth: FixedColumnWidth(120.0),
+                                  border: TableBorder.all(
+                                  color: Colors.black,
+                                  style: BorderStyle.solid,
+                                  width: 2),
+                                  children: [
+                                    TableRow( children: [
+                                    Column(children:[Text(streamSnapshot.data!.docs[index]['user'], style: TextStyle(fontSize: 20.0))]),
+                                  Column(children:[Text(streamSnapshot.data!.docs[index]['title'], style: TextStyle(fontSize: 20.0))]),
+                                  Column(children:[Text(streamSnapshot.data!.docs[index]['qty'].toString(), style: TextStyle(fontSize: 20.0))]),
+                                  Column(children:[Text((streamSnapshot.data!.docs[index]['price']*streamSnapshot.data!.docs[index]['qty']).toString(), style: TextStyle(fontSize: 20.0))]),
+                                  ]),
+                                  ],
+                                  ),
+                                ),
+                              );
+                            }
+                        return const Center(child: CircularProgressIndicator());
+                          }
                             ),
-    //
-            //
-            //               Column(
-            //                 children: [
-            //                   ListView.builder(
-            //                       shrinkWrap: true,
-            //                       scrollDirection: Axis.vertical,
-            //                       itemCount: streamSnapshot.data!.docs.length,
-            //                       itemBuilder: (context, index) => OrderCard(
-            //                           uid: streamSnapshot.data!.docs[index]
-            //                               ['uid'],
-            //                           title: streamSnapshot.data!.docs[index]
-            //                               ['title'],
-            //                           price: streamSnapshot.data!.docs[index]
-            //                               ['price'],
-            //                           qty: streamSnapshot.data!.docs[index]
-            //                               ['qty'],
-            //                           image: streamSnapshot.data!.docs[index]
-            //                               ['image'])),
-            //                 ],
-            //               ),
-                          );
-                        }
-
-            //
-                    return const Center(child: CircularProgressIndicator());
-                      }
-                        ),
+                    ],
+                  ),
                 ),
                 Center(child: ElevatedButton(style: ElevatedButton.styleFrom(
                   primary: Colors.green, // Background color
