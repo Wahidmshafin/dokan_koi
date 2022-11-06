@@ -12,8 +12,9 @@ import 'package:dokan_koi/screens/home/home_screen.dart';
 import 'package:dokan_koi/screens/login_success/login_success_screen.dart';
 import 'package:dokan_koi/screens/otp/otp_screen.dart';
 import 'package:dokan_koi/screens/profile/profile_screen.dart';
-import 'package:dokan_koi/screens/shopmodify/components/ShopEdit.dart';
+import 'package:dokan_koi/screens/shopmodify/components/shopeditbody.dart';
 import 'package:dokan_koi/screens/shopmodify/components/print.dart';
+import 'package:dokan_koi/screens/shopmodify/shopedit.dart';
 import 'package:dokan_koi/screens/shopmodify/shopmodify.dart';
 import 'package:dokan_koi/screens/sign_in/sign_in_screen.dart';
 import 'package:dokan_koi/screens/splash/splash_screen.dart';
@@ -38,7 +39,7 @@ final Map<String, WidgetBuilder> routes = {
   ordsuc.routeName: (context)=>ordsuc(),
   Print.routeName: (context)=>Print(),
   MyStore.routeName: (context) => MyStore(),
-  shopedit.routeName: (context) => shopedit(),
+  ShopEdit.routeName: (context) => ShopEdit(),
   AllProducts.routeName: (context)=>AllProducts(),
   MyProducts.routeName: (context)=>MyProducts(),
   ShopModify.routeName: (context)=>ShopModify(),
