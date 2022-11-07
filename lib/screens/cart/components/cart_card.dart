@@ -16,7 +16,8 @@ class CartCard extends StatelessWidget {
     required this.image,
     required this.id,
     //required this.product,
-  }) : super(key: key);final CollectionReference _products =
+  }) : super(key: key);
+   final CollectionReference _products =
   FirebaseFirestore.instance.collection('cart');
   // final double width, aspectRetio;
   //final Product product;
@@ -28,9 +29,11 @@ class CartCard extends StatelessWidget {
 
    Future<void> _add(String productId) async {
      await _products.doc(productId).update({"qty":qty+1});
+     print(productId);
    }
    Future<void> _delete(String productId) async {
      await _products.doc(productId).update({"qty":qty-1});
+     print(productId);
    }
   @override
   Widget build(BuildContext context) {

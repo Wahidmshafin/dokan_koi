@@ -57,7 +57,6 @@ class MyOrders extends StatelessWidget {
                             Column(children:[Text("Quantity",style: TextStyle(fontSize: 20.0)),]),
                             Column(children:[Text("Price",style: TextStyle(fontSize: 20.0)),]),
 
-
                           ]),
                         ],
                       ),
@@ -97,6 +96,7 @@ class MyOrders extends StatelessWidget {
                             }
                         return const Center(child: CircularProgressIndicator());
                           }
+
                             ),
                     ],
                   ),
