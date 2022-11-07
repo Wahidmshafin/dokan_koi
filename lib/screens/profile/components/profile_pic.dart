@@ -61,6 +61,7 @@ class _ProfilePicState extends State<ProfilePic> {
 
   @override
   Widget build(BuildContext context) {
+    print("Eta ki abe ase?");
     return StreamBuilder(
       stream: cloud.collection("profile").doc(auth.currentUser?.uid).snapshots(),
       builder: (context, snapshot) {
