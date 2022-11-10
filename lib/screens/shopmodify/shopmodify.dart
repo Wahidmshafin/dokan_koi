@@ -31,7 +31,7 @@ class ShopModify extends StatelessWidget {
                 id:data['id'],
                 description: data['description'],
                 address: data['address'],
-                images: [data['images']],
+                images: [data['image']],
                 title: data['name'],
                 district: data['district'],
                 subDistrict: data['subDistrict'],
