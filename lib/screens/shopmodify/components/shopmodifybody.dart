@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dokan_koi/constants.dart';
 import 'package:dokan_koi/models/product.dart';
@@ -5,9 +7,13 @@ import 'package:dokan_koi/screens/shopmodify/components/shopeditbody.dart';
 import 'package:dokan_koi/screens/shopmodify/components/myorders.dart';
 import 'package:dokan_koi/screens/shopmodify/components/myproduct.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:dokan_koi/size_config.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../../components/form_error.dart';
 import '../../../models/Store.dart';
@@ -18,9 +24,8 @@ import '../../home/components/section_title.dart';
 import '../../mystore/mystore.dart';
 import '../shopedit.dart';
 
-
 class Body extends StatefulWidget {
-   Body({
+  Body({
     Key? key,
     required this.store,
     this.pressOnSeeMore,
@@ -34,24 +39,60 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-
   FirebaseAuth auth = FirebaseAuth.instance;
-  final shop= FirebaseFirestore.instance.collection('shop');
+  final shop = FirebaseFirestore.instance.collection('shop');
   final List<String?> errors = [];
-  String storeName ="";
-  String storeDescription="";
-  String storeType='Grocery';
-  String storeAddress="";
-  String storeSubDistrict="";
-  String storeDistrict="";
-  String storePhone="";
+  String storeName = "";
+  String storeDescription = "";
+  String storeType = 'Grocery';
+  String storeAddress = "";
+  String storeSubDistrict = "";
+  String storeDistrict = "";
+  String storePhone = "";
 
   String? initname;
   String? initdes;
   String? initadd;
   String? initsub;
   String? initdis;
-  //Int? initphn;
+
+
+  String? image;
+  var fileImage;
+  FirebaseStorage storage = FirebaseStorage.instance;
+
+  Future getImage() async{
+    print("hoi na ken");
+    var tmpImage;
+    try{
+      final tmp=await ImagePicker().pickImage(source: ImageSource.gallery);
+      if(tmp==null)
+      {
+        return;
+      }
+      try{
+        await storage.ref("shop/${auth.currentUser?.uid}").delete();
+        await storage.ref("shop/${auth.currentUser?.uid}").putFile(File(tmp.path));
+        tmpImage=await storage.ref("shop/${auth.currentUser?.uid}").getDownloadURL();
+        shop.doc(auth.currentUser?.uid).update({"image":tmpImage});
+      }
+      on FirebaseException catch(e){
+        print(e.message);
+      }
+
+      setState(() {
+        image=tmpImage;
+        fileImage=File(tmp.path);
+        print(image);
+        print("File ${fileImage}");
+      });
+
+
+    }
+    catch(e){
+      print(e);
+    }
+  }
 
   void addError({String? error}) {
     if (!errors.contains(error))
@@ -67,16 +108,31 @@ class _BodyState extends State<Body> {
       });
   }
 
-  void init() async{
-    initname=await shop.doc(auth.currentUser?.uid).get().then((value) => value.get('name'));
-    initdes=await shop.doc(auth.currentUser?.uid).get().then((value) => value.get('description'));
-    initadd=await shop.doc(auth.currentUser?.uid).get().then((value) => value.get('address'));
-    initsub=await shop.doc(auth.currentUser?.uid).get().then((value) => value.get('subDistrict'));
-    initdis=await shop.doc(auth.currentUser?.uid).get().then((value) => value.get('district'));
-   // initphn=await shop.doc(auth.currentUser?.uid).get().then((value) => value.get('phone'));
+  void init() async {
+    initname = await shop
+        .doc(auth.currentUser?.uid)
+        .get()
+        .then((value) => value.get('name'));
+    initdes = await shop
+        .doc(auth.currentUser?.uid)
+        .get()
+        .then((value) => value.get('description'));
+    initadd = await shop
+        .doc(auth.currentUser?.uid)
+        .get()
+        .then((value) => value.get('address'));
+    initsub = await shop
+        .doc(auth.currentUser?.uid)
+        .get()
+        .then((value) => value.get('subDistrict'));
+    initdis = await shop
+        .doc(auth.currentUser?.uid)
+        .get()
+        .then((value) => value.get('district'));
+    // initphn=await shop.doc(auth.currentUser?.uid).get().then((value) => value.get('phone'));
   }
 
-  Future<void> createShop() async{
+  Future<void> createShop() async {
     try {
       print(auth.currentUser?.uid);
       await shop.doc(auth.currentUser?.uid).update({
@@ -86,19 +142,17 @@ class _BodyState extends State<Body> {
         "address": storeAddress,
         "district": storeDistrict,
         "subDistrict": storeSubDistrict,
-        "type":storeType,
-        "rating":1.00,
-        "images":"tshirt.png",
-        "id":auth.currentUser?.uid,
+        "type": storeType,
+        "rating": 1.00,
+        "images": "tshirt.png",
+        "id": auth.currentUser?.uid,
       });
 
       print("pressed");
-    }catch(e)
-    {
+    } catch (e) {
       addError(error: "Please Fill up all info");
     }
   }
-
 
   Future<void> _update() async {
     await showModalBottomSheet(
@@ -108,26 +162,19 @@ class _BodyState extends State<Body> {
           return Form(
             child: Container(
               // height: getProportionateScreenHeight(600),
-              padding: EdgeInsets.only(
-                  top: 30,
-                  left: 20,
-                  right: 20,
-                  bottom: 20
-              ),
+              padding:
+                  EdgeInsets.only(top: 30, left: 20, right: 20, bottom: 20),
               child: ListView(
                 children: [
                   SizedBox(height: getProportionateScreenHeight(10)),
                   TextButton(
-                    onPressed: (){
-
-                    },
+                    onPressed: () {},
                     child: Column(
                       children: [
                         Image.asset("assets/images/frontStore.jpg"),
-                        Text("Upload Store Picture",
-                          style: TextStyle(
-                              color: Colors.black38
-                          ),
+                        Text(
+                          "Upload Store Picture",
+                          style: TextStyle(color: Colors.black38),
                         ),
                       ],
                     ),
@@ -150,7 +197,7 @@ class _BodyState extends State<Body> {
                   FormError(errors: errors),
                   SizedBox(height: getProportionateScreenHeight(20)),
                   ElevatedButton(
-                      onPressed: (){
+                      onPressed: () {
                         createShop();
                         Navigator.of(context).pop();
                       },
@@ -160,20 +207,16 @@ class _BodyState extends State<Body> {
                         backgroundColor: kPrimaryColor,
                         shape: StadiumBorder(),
                       ),
-                      child: Text("Update Shop",
-                        style: TextStyle(
-                            fontSize: 20
-                        ),
-                      )
-                  ),
+                      child: Text(
+                        "Update Shop",
+                        style: TextStyle(fontSize: 20),
+                      )),
                 ],
               ),
             ),
           );
-        }
-    );
+        });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -181,77 +224,160 @@ class _BodyState extends State<Body> {
     return ListView(
       children: [
         TopRoundedContainer(
-          color:  Colors.white,
+          color: Colors.white,
           child: Padding(
             padding: const EdgeInsets.only(left: 30.0, right: 30.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                CircleAvatar(
-                  backgroundImage:  AssetImage("assets/images/${widget.store.images[0]}"),
-                  backgroundColor: Colors.greenAccent.withOpacity(0.2),
-                  radius: 40,
+                Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    // CircleAvatar(
+                    //   backgroundImage: NetworkImage(
+                    //     widget.store.images[0],
+                    //   ),
+                    //   radius: 60,
+                    // ),
+                    CachedNetworkImage(imageUrl: widget.store.images[0],
+                      imageBuilder: (context, provider)=>CircleAvatar(
+                        backgroundImage: provider,
+                        radius: 60,
+                      ),
+                      placeholder: (context, test)=>SizedBox(
+                          height: getProportionateScreenWidth(90),
+                          width: getProportionateScreenWidth(90),
+                          child: const CircularProgressIndicator()),
+                    ),
+                    Positioned(
+                      right: -16,
+                      bottom: 0,
+                      child: SizedBox(
+                        height: 46,
+                        width: 46,
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(40),
+                              side: BorderSide(color: Colors.white),
+                            ),
+                            primary: Colors.white,
+                            backgroundColor: Color(0xFFF5F6F9),
+                          ),
+                          onPressed: getImage,
+                          child: SvgPicture.asset("assets/icons/Camera Icon.svg"),
+                        ),
+                      ),
+                    )
+                  ],
                 ),
-                SizedBox(height: 30,),
-                Text(widget.store.title,style: TextStyle(fontSize: 27,fontWeight: FontWeight.bold,color: Colors.black.withOpacity(0.8)
-                ),maxLines: 4,),
-                SizedBox(height: 20,),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  widget.store.title,
+                  style: TextStyle(
+                      fontSize: 27,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black.withOpacity(0.8)),
+                  maxLines: 4,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     OutlinedButton(
                       style: OutlinedButton.styleFrom(
-                       // backgroundColor: Colors.teal,
-                        shape:
-                        RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                        // backgroundColor: Colors.teal,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
                       ),
-                      onPressed: (){_update();}, child: Text(" Edit Store ",style: TextStyle(color: kPrimaryColor,fontWeight: FontWeight.bold,fontSize: 15),),),
-                    SizedBox(width: 20,),
+                      onPressed: () {
+                        _update();
+                      },
+                      child: Text(
+                        " Edit Store ",
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
                     OutlinedButton(
                       style: OutlinedButton.styleFrom(
                         backgroundColor: Colors.teal,
-                        shape:
-                        RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
                       ),
-                      onPressed: (){Navigator.pushNamed(context, MyOrders.routeName);}, child: Text("My Orders",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 15),),),
+                      onPressed: () {
+                        Navigator.pushNamed(context, MyOrders.routeName);
+                      },
+                      child: Text(
+                        "My Orders",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15),
+                      ),
+                    ),
                   ],
                 ),
-                SizedBox(height: 10,),
-
+                SizedBox(
+                  height: 10,
+                ),
               ],
             ),
           ),
         ),
-        SizedBox(height: 03,),
+        SizedBox(
+          height: 03,
+        ),
         Container(
-          decoration: BoxDecoration(color: Colors.white,
-             // borderRadius: BorderRadius.circular(20)
-             ),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            // borderRadius: BorderRadius.circular(20)
+          ),
           child: TextButton(
-            child: Text("Remove Store",style: TextStyle(color: Colors.grey,fontSize: 18,fontWeight: FontWeight.w600),),
-            onPressed: () {  },
-
+            child: Text(
+              "Remove Store",
+              style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600),
+            ),
+            onPressed: () {},
           ),
         ),
-        SizedBox(height: 20,),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-          child: SectionTitle(title: "Products", press: (){
-            Navigator.pushNamed(context, MyProducts.routeName);
-          }),
+        SizedBox(
+          height: 20,
         ),
-        SizedBox(height: 10,),
-        ShopProducts(id:widget.store.id),
+        Padding(
+          padding:
+              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+          child: SectionTitle(
+              title: "Products",
+              press: () {
+                Navigator.pushNamed(context, MyProducts.routeName);
+              }),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        ShopProducts(id: widget.store.id),
       ],
     );
   }
 
-
   TextFormField storeNameFormField() {
     return TextFormField(
-      initialValue: initname??"",
+      initialValue: initname ?? "",
       //  print(name);
       onChanged: (value) {
         if (value.isNotEmpty) {
@@ -263,7 +389,6 @@ class _BodyState extends State<Body> {
       validator: (value) {
         if (value!.isEmpty) {
           addError(error: kNamelNullError);
-
         }
         return null;
       },
@@ -280,7 +405,7 @@ class _BodyState extends State<Body> {
 
   TextFormField storeDescriptionFormField() {
     return TextFormField(
-      initialValue: initdes??"",
+      initialValue: initdes ?? "",
       maxLines: 2,
       minLines: 1,
       onChanged: (value) {
@@ -293,7 +418,6 @@ class _BodyState extends State<Body> {
       validator: (value) {
         if (value!.isEmpty) {
           addError(error: kNamelNullError);
-
         }
         return null;
       },
@@ -307,7 +431,6 @@ class _BodyState extends State<Body> {
       ),
     );
   }
-
 
   DropdownButtonFormField<String> storeTypeFormField() {
     return DropdownButtonFormField<String>(
@@ -323,22 +446,32 @@ class _BodyState extends State<Body> {
       },
       elevation: 4,
       menuMaxHeight: getProportionateScreenHeight(300),
-      items: <String>['Grocery', 'Electronics', 'BookStore', 'Medicine', 'Cloths', 'Salon', 'Hardware', 'Departmental', 'Tailor']
-          .map<DropdownMenuItem<String>>((String value) {
+      items: <String>[
+        'Grocery',
+        'Electronics',
+        'BookStore',
+        'Medicine',
+        'Cloths',
+        'Salon',
+        'Hardware',
+        'Departmental',
+        'Tailor'
+      ].map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
           child: Text(value),
         );
       }).toList(),
       icon: Icon(Icons.arrow_drop_down),
-      decoration: InputDecoration(labelText: "Store Type", floatingLabelBehavior: FloatingLabelBehavior.always),
+      decoration: InputDecoration(
+          labelText: "Store Type",
+          floatingLabelBehavior: FloatingLabelBehavior.always),
     );
   }
 
-
   TextFormField storeAddressFormField() {
     return TextFormField(
-      initialValue: initadd??"",
+      initialValue: initadd ?? "",
       maxLines: 2,
       minLines: 1,
       onChanged: (value) {
@@ -365,10 +498,9 @@ class _BodyState extends State<Body> {
     );
   }
 
-
   TextFormField storeSubDistrictFormField() {
     return TextFormField(
-      initialValue: initsub??"",
+      initialValue: initsub ?? "",
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kNamelNullError);
@@ -379,7 +511,6 @@ class _BodyState extends State<Body> {
       validator: (value) {
         if (value!.isEmpty) {
           addError(error: kNamelNullError);
-
         }
         return null;
       },
@@ -394,11 +525,9 @@ class _BodyState extends State<Body> {
     );
   }
 
-
-
   TextFormField storeDistrictFormField() {
     return TextFormField(
-      initialValue: initdis??"",
+      initialValue: initdis ?? "",
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kNamelNullError);
@@ -409,7 +538,6 @@ class _BodyState extends State<Body> {
       validator: (value) {
         if (value!.isEmpty) {
           addError(error: kNamelNullError);
-
         }
         return null;
       },
@@ -424,7 +552,6 @@ class _BodyState extends State<Body> {
     );
   }
 
-
   TextFormField storePhoneFormField() {
     return TextFormField(
       keyboardType: TextInputType.phone,
@@ -438,7 +565,6 @@ class _BodyState extends State<Body> {
       validator: (value) {
         if (value!.isEmpty) {
           addError(error: kNamelNullError);
-
         }
         return null;
       },
@@ -452,8 +578,4 @@ class _BodyState extends State<Body> {
       ),
     );
   }
-
-
-
-
 }

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dokan_koi/components/default_button.dart';
 import 'package:dokan_koi/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -123,18 +124,17 @@ class _MyProductsState extends State<MyProducts> {
                 ),
                 SizedBox(height: getProportionateScreenHeight(20)),
                 TextField(
-                  controller: _imageController,
-                  decoration: const InputDecoration(labelText: 'Image'),
-                ),
-                SizedBox(
-                  height: getProportionateScreenHeight(20),
-                ),
-                TextField(
                   controller: _descriptionController,
                   decoration: const InputDecoration(labelText: 'Description'),
                 ),
                 SizedBox(
                   height: getProportionateScreenHeight(20),
+                ),
+                Center(
+                  child: DefaultButton(
+                    press: (){},
+                    text: "Product Image",
+                  ),
                 ),
                 Center(
                   child: TextButton(
@@ -149,7 +149,7 @@ class _MyProductsState extends State<MyProducts> {
                       int.parse(_priceController.text);
 
                       if (price != null) {
-                        await _products.add({"title": title, "price": price, "qty":quantity, "image":image, "id": auth.currentUser?.uid, "description":description, "rating":0.00});
+                        await _products.add({"title": title, "price": price, "qty":quantity, "image":"glap.png", "id": auth.currentUser?.uid, "description":description, "rating":0.00});
 
                         _titleController.text = '';
                         _priceController.text = '';

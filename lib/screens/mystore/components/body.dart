@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dokan_koi/constants.dart';
 import 'package:dokan_koi/screens/mystore/components/shop_add_button.dart';
 import 'package:dokan_koi/screens/mystore/components/store_header.dart';
+import 'package:dokan_koi/screens/shopmodify/components/edit_form.dart';
 import 'package:dokan_koi/screens/shopmodify/shopmodify.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -26,21 +27,7 @@ class Body extends StatelessWidget {
          }
          else
            {
-
-             return SafeArea(
-               child: SingleChildScrollView(
-                 child: Column(
-                   children: [
-                     // SizedBox(height: getProportionateScreenHeight(20)),
-                     StoreHeader(),
-                     SizedBox(height: getProportionateScreenWidth(30)),
-                     Image.asset("assets/images/storefront.jpg"),
-                     SizedBox(height: getProportionateScreenHeight(20)),
-                     AddShop(),
-                   ],
-                 ),
-               ),
-             );
+             return ShopForm();
            }
        }
      );

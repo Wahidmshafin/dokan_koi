@@ -7,6 +7,9 @@ import '../../models/product.dart';
 import 'components/shopmodifybody.dart';
 import '../details/components/custom_app_bar.dart';
 import 'package:dokan_koi/components/coustom_bottom_nav_bar.dart';
+
+
+
 class ShopModify extends StatelessWidget {
   static String routeName = "/shopmodify";
   final _shop = FirebaseFirestore.instance.collection('shop');
@@ -28,7 +31,7 @@ class ShopModify extends StatelessWidget {
                 id:data['id'],
                 description: data['description'],
                 address: data['address'],
-                images: [data['images']],
+                images: [data['image']],
                 title: data['name'],
                 district: data['district'],
                 subDistrict: data['subDistrict'],
