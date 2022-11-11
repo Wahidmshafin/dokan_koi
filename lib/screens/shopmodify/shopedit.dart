@@ -9,6 +9,7 @@ class ShopEdit extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+      backgroundColor: Colors.white.withOpacity(0.97),
       body: shopeditbody(),
       //bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.mystore),
     );
