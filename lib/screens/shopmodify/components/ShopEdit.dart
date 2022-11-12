@@ -68,10 +68,11 @@ class _AddShopState extends State<shopedit> {
                               fontWeight: FontWeight.bold,
                               color: Colors.black
                           ),),
-                       // Spacer(),
-                        Flexible(
+                        Spacer(),
+                        SizedBox(
+                          width: getProportionateScreenWidth(200),
                           child: TextField(
-                            textAlign: TextAlign.left,
+                            textAlign: TextAlign.end,
                             minLines: 1,
                             maxLines: 2,
                             controller: _nameController,
@@ -85,8 +86,10 @@ class _AddShopState extends State<shopedit> {
                         ),
                       ],
                     ),
-                    Divider(color: kPrimaryColor,
-                      thickness: 0.7,
+                    Container(
+                      height: 1,
+                      color: kPrimaryColor,
+                      width: getProportionateScreenWidth(330),
                     ),
                     Row(
                       children: [
@@ -96,8 +99,11 @@ class _AddShopState extends State<shopedit> {
                               fontWeight: FontWeight.bold,
                               color: Colors.black
                           ),),
-                        Flexible(
+                        Spacer(),
+                        SizedBox(
+                          width: getProportionateScreenWidth(200),
                           child: TextField(
+                            textAlign: TextAlign.end,
                             minLines: 1,
                             maxLines: 2,
                             controller: _phoneController,
@@ -132,8 +138,11 @@ class _AddShopState extends State<shopedit> {
                               fontWeight: FontWeight.bold,
                               color: Colors.black
                           ),),
-                        Flexible(
+                        Spacer(),
+                        SizedBox(
+                          width: getProportionateScreenWidth(200),
                           child: TextField(
+                            textAlign: TextAlign.end,
                             minLines: 1,
                             maxLines: 2,
                             controller: _addressController,
@@ -147,8 +156,11 @@ class _AddShopState extends State<shopedit> {
                         ),
                       ],
                     ),
-                    Divider(color: kPrimaryColor,
-                      thickness: 0.9,),
+                    Container(
+                      height: 1,
+                      color: kPrimaryColor,
+                      width: getProportionateScreenWidth(330),
+                    ),
                     Row(
                       children: [
                         Text("Sub-District",
@@ -157,9 +169,11 @@ class _AddShopState extends State<shopedit> {
                               fontWeight: FontWeight.bold,
                               color: Colors.black
                           ),),
-                        Flexible(
-
+                        Spacer(),
+                        SizedBox(
+                          width: getProportionateScreenWidth(200),
                           child: TextField(
+                            textAlign: TextAlign.end,
                             minLines: 1,
                             maxLines: 2,
                             controller: _subDistrictController,
@@ -173,7 +187,11 @@ class _AddShopState extends State<shopedit> {
                         ),
                       ],
                     ),
-                    Divider(color: kPrimaryColor, thickness: 0.5,),
+                   Container(
+                     height: 1,
+                     color: kPrimaryColor,
+                     width: getProportionateScreenWidth(330),
+                   ),
                     Row(
                       children: [
                         Text("District",
@@ -182,8 +200,11 @@ class _AddShopState extends State<shopedit> {
                               fontWeight: FontWeight.bold,
                               color: Colors.black
                           ),),
-                        Flexible(
+                        Spacer(),
+                        SizedBox(
+                          width: getProportionateScreenWidth(200),
                           child: TextField(
+                            textAlign: TextAlign.end,
                             minLines: 1,
                             maxLines: 2,
                             controller: _districtController,
@@ -221,31 +242,38 @@ class _AddShopState extends State<shopedit> {
                               color: Colors.black
                           ),),
                         Spacer(),
-                        DropdownButton(
-                          // Initial Value
-                          borderRadius: BorderRadius.circular(10),
-                          value: dropdownvalue,
-                          // Down Arrow Icon
-                          icon: const Icon(Icons.keyboard_arrow_down),
+                        SizedBox(
+                          width: getProportionateScreenWidth(130),
+                          child: DropdownButton(
+                            // Initial Value
+                            borderRadius: BorderRadius.circular(10),
+                            value: dropdownvalue,
+                            // Down Arrow Icon
+                            icon: const Icon(Icons.keyboard_arrow_down),
 
-                          // Array list of items
-                          items: items.map((String items) {
-                            return DropdownMenuItem(
-                              value: items,
-                              child: Text(items),
-                            );
-                          }).toList(),
-                          // After selecting the desired option,it will
-                          // change button value to selected value
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              dropdownvalue = newValue!;
-                            });
-                          },
+                            // Array list of items
+                            items: items.map((String items) {
+                              return DropdownMenuItem(
+                                value: items,
+                                child: Text(items),
+                              );
+                            }).toList(),
+                            // After selecting the desired option,it will
+                            // change button value to selected value
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                dropdownvalue = newValue!;
+                              });
+                            },
+                          ),
                         ),
                       ],
                     ),
-                    Divider(color: kPrimaryColor, thickness: 0.5,),
+                    Container(
+                      height: 1,
+                      color: kPrimaryColor,
+                      width: getProportionateScreenWidth(330),
+                    ),
                     Text("Description",
                       style: TextStyle(
                           fontSize: 16,
@@ -262,7 +290,13 @@ class _AddShopState extends State<shopedit> {
                     focusedBorder: InputBorder.none,
                     enabledBorder: InputBorder.none,
                   ),
-                ), Divider(color: kPrimaryColor, thickness: 0.5,),
+                ),
+                    Container(
+                      height: 1,
+                      color: kPrimaryColor,
+                      width: getProportionateScreenWidth(330),
+                    ),
+                    SizedBox(height: 20,)
                   ],
                 ),
               ),
@@ -284,7 +318,7 @@ class _AddShopState extends State<shopedit> {
                     Navigator.of(context).pop();
                   },
                   style: ElevatedButton.styleFrom(
-                    minimumSize: Size(getProportionateScreenWidth(400),
+                    minimumSize: Size(getProportionateScreenWidth(300),
                         getProportionateScreenHeight(50)),
                     backgroundColor: kPrimaryColor,
                     shape: StadiumBorder(),
