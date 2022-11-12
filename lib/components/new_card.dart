@@ -51,10 +51,8 @@ class Newcard extends StatelessWidget {
                           height: getProportionateScreenHeight(120),
                           width: double.infinity,
                           imageUrl: store.images[0],
-                          placeholder: (context, test) => SizedBox(
-                              height: getProportionateScreenWidth(90),
-                              width: getProportionateScreenWidth(90),
-                              child: const CircularProgressIndicator()),
+                          placeholder: (context, test) => const SizedBox(
+                              child: LinearProgressIndicator()),
                         ),
                       ),
                       Starrating(rating: store.rating),
