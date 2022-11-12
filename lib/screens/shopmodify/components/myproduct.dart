@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dokan_koi/components/default_button.dart';
 import 'package:dokan_koi/constants.dart';
+import 'package:dokan_koi/screens/shopmodify/components/product_form.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:dokan_koi/components/product_card.dart';
@@ -78,7 +79,9 @@ class _MyProductsState extends State<MyProducts> {
 
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () => _create(),
+          onPressed: (){
+            Navigator.pushNamed(context, ProductForm.routeName);
+          },
           backgroundColor: kPrimaryColor,
           child: const Icon(Icons.add),
 
