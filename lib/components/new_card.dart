@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dokan_koi/models/newproduct.dart';
@@ -11,7 +12,7 @@ import '../size_config.dart';
 class Newcard extends StatelessWidget {
   const Newcard({
     Key? key,
-    this.width = 250,
+    this.width = 240,
     this.aspectRetio = 1.02,
     required this.store,
   }) : super(key: key);
@@ -34,7 +35,6 @@ class Newcard extends StatelessWidget {
           child: AspectRatio(
             aspectRatio: 1.02,
             child: Container(
-              padding: EdgeInsets.only(top:getProportionateScreenWidth(10)),
               decoration: BoxDecoration(
                 color: kSecondaryColor.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(15),
@@ -43,28 +43,47 @@ class Newcard extends StatelessWidget {
                 tag: store.id.toString(),
                 child: Column(
                   children: [
-                    Stack(
-                        children: <Widget>[
-                          Center(child: Image.asset("assets/images/glap.png",height: getProportionateScreenHeight(100),)),
-                          Starrating(rating: store.rating),
-                        ]
-                    ),
-
+                    Stack(children: <Widget>[
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: CachedNetworkImage(
+                          fit: BoxFit.fitWidth,
+                          height: getProportionateScreenHeight(120),
+                          width: double.infinity,
+                          imageUrl: store.images[0],
+                          placeholder: (context, test) => SizedBox(
+                              height: getProportionateScreenWidth(90),
+                              width: getProportionateScreenWidth(90),
+                              child: const CircularProgressIndicator()),
+                        ),
+                      ),
+                      Starrating(rating: store.rating),
+                    ]),
                     Expanded(
                       child: Container(
                         decoration: BoxDecoration(
                           color: Colors.white70,
-                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15),bottomRight:Radius.circular(15), ),
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(15),
+                            bottomRight: Radius.circular(15),
+                          ),
                         ),
                         child: Column(
                           children: [
                             Spacer(),
                             Text(
                               store.title,
-                              style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20),
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20),
                               maxLines: 2,
                             ),
-                            Text("${store.address}, ${store.subDistrict}",textAlign: TextAlign.center,maxLines: 2,),
+                            Text(
+                              "${store.address}, ${store.subDistrict}",
+                              textAlign: TextAlign.center,
+                              maxLines: 2,
+                            ),
                             Spacer(),
                             // OutlinedButton(
                             //   child: Text('Follow',textAlign: TextAlign.center,),
@@ -88,7 +107,8 @@ class Newcard extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(50),
                                   onTap: () {},
                                   child: Container(
-                                    padding: EdgeInsets.all(getProportionateScreenWidth(9)),
+                                    padding: EdgeInsets.all(
+                                        getProportionateScreenWidth(9)),
                                     height: getProportionateScreenWidth(35),
                                     width: getProportionateScreenWidth(35),
                                     decoration: BoxDecoration(
@@ -111,7 +131,6 @@ class Newcard extends StatelessWidget {
                         ),
                       ),
                     ),
-
                   ],
                 ),
               ),

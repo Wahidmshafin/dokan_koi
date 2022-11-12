@@ -29,14 +29,15 @@ class ShopForm extends StatefulWidget {
 
 class _ShopFormState extends State<ShopForm> {
 
+  final _formKey = GlobalKey<FormState>();
   final List<String?> errors = [];
-  String storeName = "";
-  String storeDescription="";
+  String? storeName;
+  String? storeDescription;
   String storeType='Grocery';
-  String storeAddress="";
-  String storeSubDistrict="";
-  String storeDistrict="";
-  String storePhone="";
+  String? storeAddress;
+  String? storeSubDistrict;
+  String? storeDistrict;
+  String? storePhone;
   bool terms=false;
   FirebaseAuth auth = FirebaseAuth.instance;
   final shop= FirebaseFirestore.instance.collection('shop');
@@ -97,28 +98,37 @@ class _ShopFormState extends State<ShopForm> {
       });
   }
 
-  Future<void> createShop() async{
-    try {
-      print(auth.currentUser?.uid);
-      await shop.doc(auth.currentUser?.uid).set({
-        "name": storeName,
-        "description": storeDescription,
-        "phone": storePhone,
-        "address": storeAddress,
-        "district": storeDistrict,
-        "subDistrict": storeSubDistrict,
-        "type":storeType,
-        "rating":1.00,
-        "images":"tshirt.png",
-        "id":auth.currentUser?.uid,
-        "images":"glap.png",
-        "image":image,
-      });
-      print("pressed");
-    }catch(e)
-    {
-      addError(error: "Please Fill up all info");
-    }
+  Future<bool> createShop() async{
+    final FormState? state=_formKey.currentState;
+    if(state!.validate() && fileImage!=null)
+      {
+        try {
+          print(auth.currentUser?.uid);
+          await shop.doc(auth.currentUser?.uid).set({
+            "name": storeName,
+            "description": storeDescription,
+            "phone": storePhone,
+            "address": storeAddress,
+            "district": storeDistrict,
+            "subDistrict": storeSubDistrict,
+            "type":storeType,
+            "rating":1.00,
+            "images":"tshirt.png",
+            "id":auth.currentUser?.uid,
+            "images":"glap.png",
+            "image":image,
+          });
+        }catch(e)
+        {
+          addError(error: "Please Fill up all info");
+        }
+        return true;
+      }
+    else
+      {
+        addError(error: "Please Select an Image");
+        return false;
+      }
   }
 
 
@@ -127,6 +137,7 @@ class _ShopFormState extends State<ShopForm> {
   @override
   Widget build(BuildContext context) {
       return Form(
+        key: _formKey,
       child: Container(
         // height: getProportionateScreenHeight(600),
         padding: EdgeInsets.only(
@@ -175,9 +186,10 @@ class _ShopFormState extends State<ShopForm> {
             FormError(errors: errors),
             SizedBox(height: getProportionateScreenHeight(40)),
             ElevatedButton(
-                onPressed: () {
-                  createShop();
-                  Navigator.pop(context);
+                onPressed: () async {
+                  if(await createShop()){
+                    Navigator.pop(context);
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(getProportionateScreenWidth(240),
@@ -202,14 +214,14 @@ class _ShopFormState extends State<ShopForm> {
       scrollPadding:EdgeInsets.only(bottom:  MediaQuery.of(context).viewInsets.bottom+10),
       onChanged: (value) {
         if (value.isNotEmpty) {
-          removeError(error: kNamelNullError);
+          removeError(error: "Enter Store Name");
         }
         storeName = value;
         return;
       },
       validator: (value) {
         if (value!.isEmpty) {
-          addError(error: kNamelNullError);
+          addError(error: "Enter Store Name");
           return "";
         }
         return null;
@@ -232,14 +244,14 @@ class _ShopFormState extends State<ShopForm> {
       minLines: 1,
       onChanged: (value) {
         if (value.isNotEmpty) {
-          removeError(error: kNamelNullError);
+          removeError(error: "Enter Description");
         }
         storeDescription = value;
         return;
       },
       validator: (value) {
         if (value!.isEmpty) {
-          addError(error: kNamelNullError);
+          addError(error: "Enter Description");
           return "";
         }
         return null;
@@ -290,14 +302,14 @@ class _ShopFormState extends State<ShopForm> {
       minLines: 1,
       onChanged: (value) {
         if (value.isNotEmpty) {
-          removeError(error: kNamelNullError);
+          removeError(error: "Enter Address properly");
         }
         storeAddress = value;
         return;
       },
       validator: (value) {
         if (value!.isEmpty) {
-          addError(error: kNamelNullError);
+          addError(error: "Enter Address properly");
           return "";
         }
         return null;
@@ -319,14 +331,14 @@ class _ShopFormState extends State<ShopForm> {
       scrollPadding:EdgeInsets.only(bottom:  MediaQuery.of(context).viewInsets.bottom),
       onChanged: (value) {
         if (value.isNotEmpty) {
-          removeError(error: kNamelNullError);
+          removeError(error: "Enter Sub District properly");
         }
         storeSubDistrict = value;
         return;
       },
       validator: (value) {
         if (value!.isEmpty) {
-          addError(error: kNamelNullError);
+          addError(error: "Enter Sub District properly");
           return "";
         }
         return null;
@@ -349,14 +361,14 @@ class _ShopFormState extends State<ShopForm> {
       scrollPadding:EdgeInsets.only(bottom:  MediaQuery.of(context).viewInsets.bottom),
       onChanged: (value) {
         if (value.isNotEmpty) {
-          removeError(error: kNamelNullError);
+          removeError(error: "Enter District Properly");
         }
         storeDistrict = value;
         return;
       },
       validator: (value) {
         if (value!.isEmpty) {
-          addError(error: kNamelNullError);
+          addError(error: "Enter District Properly");
           return "";
         }
         return null;
@@ -379,14 +391,14 @@ class _ShopFormState extends State<ShopForm> {
       keyboardType: TextInputType.phone,
       onChanged: (value) {
         if (value.isNotEmpty) {
-          removeError(error: kNamelNullError);
+          removeError(error: "Enter Phone number Properly");
         }
         storePhone = value;
         return;
       },
       validator: (value) {
         if (value!.isEmpty) {
-          addError(error: kNamelNullError);
+          addError(error: "Enter Phone number Properly");
           return "";
         }
         return null;
