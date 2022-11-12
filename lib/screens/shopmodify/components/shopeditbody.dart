@@ -21,7 +21,7 @@ class shopeditbody extends StatelessWidget {
              child: Column(
                children: [
                  // SizedBox(height: getProportionateScreenHeight(20)),
-                 StoreHeader(),
+                // StoreHeader(),
                  SizedBox(height: getProportionateScreenWidth(30)),
                   shopedit(),
 
