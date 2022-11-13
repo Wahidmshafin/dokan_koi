@@ -237,31 +237,17 @@ class _BodyState extends State<Body> {
           ),
           child: TextButton(
             child: Text(
-              "Remove Store",
+              "All Products",
               style: TextStyle(
-                  color: Colors.grey,
+                  color: Colors.green,
                   fontSize: 18,
                   fontWeight: FontWeight.w600),
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, MyProducts.routeName);
+            },
           ),
         ),
-        SizedBox(
-          height: 20,
-        ),
-        Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-          child: SectionTitle(
-              title: "Products",
-              press: () {
-                Navigator.pushNamed(context, MyProducts.routeName);
-              }),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        ShopProducts(id: widget.store.id),
       ],
     );
   }
