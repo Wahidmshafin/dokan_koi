@@ -36,7 +36,7 @@ class Newcard extends StatelessWidget {
       "description":store.description,
       "address": store.address,
       "district":store.district,
-      "image":store.images,
+      "image":store.images[0],
       "name":store.title,
       "id":store.id,
       "subDistrict":store.subDistrict,

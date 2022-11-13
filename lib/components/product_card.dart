@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dokan_koi/models/Product.dart';
@@ -47,7 +48,14 @@ class ProductCard extends StatelessWidget {
         child: Row(
           children: [
             // Image.asset(product.images[0],height: 100,width: 100,),
-            Image.asset("assets/images/$image",height: 100,width: 100,),
+          CachedNetworkImage(
+          fit: BoxFit.fitWidth,
+          height: getProportionateScreenHeight(100),
+          width: getProportionateScreenWidth(100),
+          imageUrl: image,
+          placeholder: (context, test) => const SizedBox(
+              child: CircularProgressIndicator()),
+        ),
             //Spacer(),
             SizedBox(width: getProportionateScreenWidth(20),),
             Column(
