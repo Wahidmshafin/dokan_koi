@@ -11,8 +11,8 @@ import '../constants.dart';
 import '../models/Store.dart';
 import '../size_config.dart';
 
-class Newcard extends StatelessWidget {
-  const Newcard({
+class Favcard extends StatelessWidget {
+  const Favcard({
     Key? key,
     this.width = 240,
     this.aspectRetio = 1.02,
@@ -59,7 +59,7 @@ class Newcard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: getProportionateScreenWidth(20)),
+      padding: const EdgeInsets.all(10.0),
       child: SizedBox(
         width: width,
         child: GestureDetector(
@@ -69,7 +69,7 @@ class Newcard extends StatelessWidget {
             arguments: ProductDetailsArguments2(store: store),
           ),
           child: AspectRatio(
-            aspectRatio: 1.02,
+            aspectRatio: 1.2,
             child: Container(
               decoration: BoxDecoration(
                 color: kSecondaryColor.withOpacity(0.1),
@@ -130,36 +130,36 @@ class Newcard extends StatelessWidget {
                                     color: kPrimaryColor,
                                   ),
                                 ),
-                                  StreamBuilder(
-                                    stream: FirebaseFirestore.instance.collection("favourite").doc(FirebaseAuth.instance.currentUser?.uid)
-                                        .collection("items").where("user",isEqualTo: store.id).snapshots(),
-                                    builder: (BuildContext context, AsyncSnapshot snapshot){
-                                      if(snapshot.data==null){
-                                        return Text("");
-                                      }
-                                      return Padding(
-                                        padding:  EdgeInsets.all(getProportionateScreenWidth(8)),
-                                        child: CircleAvatar(
-                                          radius: 19.0,
-                                          backgroundColor: kPrimaryColor.withOpacity(0.1),
-                                          child: Center(
-                                            child: IconButton(
-                                              onPressed: () => snapshot.data.docs.length==0?addToFavourite():removeFromFavourite(),
-                                              icon: snapshot.data.docs.length==0? Icon(
-                                                Icons.favorite,
-                                                color: kSecondaryColor.withOpacity(0.1),
-                                              ):Icon(
-                                                Icons.favorite,
-                                                color: Colors.red,
-                                              ),
+                                StreamBuilder(
+                                  stream: FirebaseFirestore.instance.collection("favourite").doc(FirebaseAuth.instance.currentUser?.uid)
+                                      .collection("items").where("user",isEqualTo: store.id).snapshots(),
+                                  builder: (BuildContext context, AsyncSnapshot snapshot){
+                                    if(snapshot.data==null){
+                                      return Text("");
+                                    }
+                                    return Padding(
+                                      padding:  EdgeInsets.all(getProportionateScreenWidth(8)),
+                                      child: CircleAvatar(
+                                        radius: 19.0,
+                                        backgroundColor: kPrimaryColor.withOpacity(0.1),
+                                        child: Center(
+                                          child: IconButton(
+                                            onPressed: () => snapshot.data.docs.length==0?addToFavourite():removeFromFavourite(),
+                                            icon: snapshot.data.docs.length==0? Icon(
+                                              Icons.favorite,
+                                              color: kSecondaryColor.withOpacity(0.1),
+                                            ):Icon(
+                                              Icons.favorite,
+                                              color: Colors.red,
                                             ),
                                           ),
                                         ),
-                                      );
-                                    },
+                                      ),
+                                    );
+                                  },
 
-                                  ),
-                                ],
+                                ),
+                              ],
 
                             ),
                           ],

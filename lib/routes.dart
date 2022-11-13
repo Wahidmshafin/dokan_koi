@@ -1,3 +1,4 @@
+import 'package:dokan_koi/screens/Favourite/favourite_screen.dart';
 import 'package:dokan_koi/screens/Shopfollow/Shop%20Components/all_products.dart';
 import 'package:dokan_koi/screens/cart/components/cartbody.dart';
 import 'package:dokan_koi/screens/Cart Splash/splash.dart';
@@ -46,6 +47,7 @@ final Map<String, WidgetBuilder> routes = {
   ProductForm.routeName:(context) => ProductForm(),
   AllProducts.routeName: (context)=>AllProducts(),
   MyProducts.routeName: (context)=>MyProducts(),
+  favscreen.routeName: (context)=>favscreen(),
   ShopModify.routeName: (context)=>ShopModify(),
   MyOrders.routeName: (context)=>MyOrders(),
   CartItems.routeName: (context) => CartItems(),
