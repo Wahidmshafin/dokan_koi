@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +51,14 @@ class CartCard extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Image.asset("assets/images/$image",height: 100,width: 100,),
+              CachedNetworkImage(
+                fit: BoxFit.fitWidth,
+                height: getProportionateScreenHeight(100),
+                width: getProportionateScreenWidth(100),
+                imageUrl: image,
+                placeholder: (context, test) => const SizedBox(
+                    child: CircularProgressIndicator()),
+              ),
               SizedBox(width: getProportionateScreenWidth(20),),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,

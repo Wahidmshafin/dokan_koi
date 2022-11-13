@@ -45,7 +45,7 @@ class Body extends StatelessWidget {
                         child: DefaultButton(
                           text: "Add To Cart",
                           press: () {
-                            _products.add({"title": product.title, "price": product.price.toInt(), "qty":1, "image":product.images[0].toString(), "sid":product.id, "uid":auth.currentUser?.uid,"user":auth.currentUser?.email,});
+                            _products.add({"title": product.title, "price": product.price.toInt(), "qty":1, "images":product.images, "sid":product.id, "uid":auth.currentUser?.uid,"user":auth.currentUser?.email,});
                             print(product.id);
                             Navigator.of(context).pop();
                           },

@@ -84,7 +84,7 @@ class _CartItemsState extends State<CartItems> {
                           title: streamSnapshot.data!.docs[index]['title'],
                           price: streamSnapshot.data!.docs[index]['price'],
                           qty: streamSnapshot.data!.docs[index]['qty'],
-                          image: streamSnapshot.data!.docs[index]['image']),
+                          image: streamSnapshot.data!.docs[index]['images']),
                     ),
                   ),
                 ),
