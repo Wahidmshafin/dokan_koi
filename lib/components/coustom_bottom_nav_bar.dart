@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:dokan_koi/screens/home/home_screen.dart';
 import 'package:dokan_koi/screens/profile/profile_screen.dart';
-
+import 'package:dokan_koi/screens/Favourite/favourite_screen.dart';
 import '../constants.dart';
 import '../enums.dart';
 
@@ -58,7 +58,9 @@ class CustomBottomNavBar extends StatelessWidget {
                     color: MenuState.favourite == selectedMenu
                         ? kPrimaryColor
                         : inActiveIconColor),//SvgPicture.asset("assets/icons/Heart Icon.svg"),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, favscreen.routeName);
+                },
               ),
               IconButton(
                 icon: Icon(Icons.store_mall_directory_outlined,
