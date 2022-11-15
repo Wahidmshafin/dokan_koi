@@ -107,6 +107,7 @@ class _AddShopState extends State<shopedit> {
                             minLines: 1,
                             maxLines: 2,
                             controller: _phoneController,
+                            keyboardType: TextInputType.number,
                             decoration: const InputDecoration(
                               //labelText: 'Name',
                               border: InputBorder.none,
