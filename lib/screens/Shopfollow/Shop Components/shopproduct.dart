@@ -25,7 +25,7 @@ class ShopProducts extends StatelessWidget {
             {
               return SingleChildScrollView(
                 child: Container(
-                  height: getProportionateScreenHeight(600),
+                  height: getProportionateScreenHeight(300),
                   child: ListView.builder(
                       shrinkWrap: true,
                       itemCount: streamSnapshot.data!.docs.length,
@@ -34,7 +34,7 @@ class ShopProducts extends StatelessWidget {
                           title: streamSnapshot.data!.docs[index]['title'],
                           price: streamSnapshot.data!.docs[index]['price'],
                           qty: streamSnapshot.data!.docs[index]['qty'],
-                          image: streamSnapshot.data!.docs[index]['image'])
+                          image: streamSnapshot.data!.docs[index]['images'])
                   ),
                 ),
               );

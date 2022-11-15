@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dokan_koi/components/default_button.dart';
 import 'package:dokan_koi/constants.dart';
+import 'package:dokan_koi/screens/home/components/search_field.dart';
+import 'package:dokan_koi/screens/mystore/components/store_header.dart';
 import 'package:dokan_koi/screens/shopmodify/components/product_form.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -33,48 +35,45 @@ class _MyProductsState extends State<MyProducts> {
     return Scaffold(
         backgroundColor: Colors.white.withOpacity(0.97),
         body: SafeArea(
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-              children: [
-                SizedBox(height: getProportionateScreenHeight(20),),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-                  child: Text("Products",
-                    style: TextStyle(
-                      fontSize: getProportionateScreenWidth(18),
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-                StreamBuilder(
-                    stream: _products.where("id",isEqualTo: auth.currentUser?.uid).snapshots(),
-                    builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
-                      if(streamSnapshot.hasData)
-                      {
-                        log("Hello WOrld");
-                        return Container(
-                          height: getProportionateScreenHeight(650),
-                          child: ListView.builder(
-                              shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
-                              itemCount: streamSnapshot.data!.docs.length,
-                              itemBuilder: (context, index) => ProductCard(
-                                  id: streamSnapshot.data!.docs[index].id,
-                                  title: streamSnapshot.data!.docs[index]['title'],
-                                  price: streamSnapshot.data!.docs[index]['price'],
-                                  qty: streamSnapshot.data!.docs[index]['qty'],
-                                  image: streamSnapshot.data!.docs[index]['image'])
-                          ),
-                        );
-                      }
+          child: Column(
+            children: [
+              SizedBox(height: getProportionateScreenHeight(20),),
+              SearchField(),
+              SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  children: [
+                    SizedBox(height: getProportionateScreenHeight(20),),
+                    StreamBuilder(
+                        stream: _products.where("id",isEqualTo: auth.currentUser?.uid).snapshots(),
+                        builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+                          if(streamSnapshot.hasData)
+                          {
+                            log("Hello WOrld");
+                            return Container(
+                              height: getProportionateScreenHeight(650),
+                              child: ListView.builder(
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: streamSnapshot.data!.docs.length,
+                                  itemBuilder: (context, index) => ProductCard(
+                                      id: streamSnapshot.data!.docs[index].id,
+                                      title: streamSnapshot.data!.docs[index]['title'],
+                                      price: streamSnapshot.data!.docs[index]['price'],
+                                      qty: streamSnapshot.data!.docs[index]['qty'],
+                                      image: streamSnapshot.data!.docs[index]['images'])
+                              ),
+                            );
+                          }
 
-                      return const Center(
-                          child: CircularProgressIndicator());
-                    }
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        }
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
 
         ),

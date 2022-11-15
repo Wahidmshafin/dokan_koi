@@ -19,7 +19,7 @@ class _AddShopState extends State<shopedit> {
   FirebaseAuth auth = FirebaseAuth.instance;
   final shop = FirebaseFirestore.instance.collection('shop');
   Future a = FirebaseFirestore.instance.collection('shop').doc(FirebaseAuth.instance.currentUser?.uid).get().then((value) => value.get('type'));
-  String dropdownvalue = 'BookStore';
+  String dropdownvalue="a";
 
   // List of items in our dropdown menu
   var items = [
@@ -38,7 +38,9 @@ class _AddShopState extends State<shopedit> {
     return StreamBuilder(
       stream: shop.doc(auth.currentUser?.uid).snapshots(),
     builder: (context, snapshot) {
-
+        if(dropdownvalue=="a"){
+          dropdownvalue=snapshot.data!['type'];
+        }
         _nameController.text = snapshot.data!['name'];
         _descriptionController.text =snapshot.data!['description'];
         _addressController.text =snapshot.data!['address'];

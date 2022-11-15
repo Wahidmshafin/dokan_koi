@@ -24,6 +24,7 @@ class Favcard extends StatelessWidget {
 
   Future addToFavourite() async {
     final FirebaseAuth _auth = FirebaseAuth.instance;
+    String s=store.images[0];
     var currentUser = _auth.currentUser;
     CollectionReference _collectionRef =
     FirebaseFirestore.instance.collection("favourite");
@@ -36,7 +37,7 @@ class Favcard extends StatelessWidget {
       "description":store.description,
       "address": store.address,
       "district":store.district,
-      "image":store.images,
+      "image":store.images[0],
       "name":store.title,
       "id":store.id,
       "subDistrict":store.subDistrict,
