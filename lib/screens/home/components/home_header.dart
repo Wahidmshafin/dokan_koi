@@ -1,4 +1,5 @@
 import 'package:dokan_koi/screens/cart/components/cartbody.dart';
+import 'package:dokan_koi/screens/home/components/search.dart';
 import 'package:flutter/material.dart';
 
 import '../../../size_config.dart';
@@ -35,14 +36,13 @@ class HomeHeader extends StatelessWidget {
                 ),
                 IconBtnWithCounter(
 
-                  svgSrc: "assets/icons/Bell.svg",
-                  numOfitem: 3,
-                  press: () {},
+                  svgSrc: "assets/icons/search.svg",
+                  //numOfitem: 3,
+                  press: () {Navigator.pushNamed(context, MyApp.routeName);},
                 ),
               ],
             ),
             SizedBox(height: 10,),
-            SearchField(),
             SizedBox(height: 10,),
           ],
         ),
