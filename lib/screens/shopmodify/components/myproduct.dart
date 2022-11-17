@@ -56,12 +56,51 @@ class _MyProductsState extends State<MyProducts> {
                                   shrinkWrap: true,
                                   scrollDirection: Axis.vertical,
                                   itemCount: streamSnapshot.data!.docs.length,
-                                  itemBuilder: (context, index) => ProductCard(
-                                      id: streamSnapshot.data!.docs[index].id,
-                                      title: streamSnapshot.data!.docs[index]['title'],
-                                      price: streamSnapshot.data!.docs[index]['price'],
-                                      qty: streamSnapshot.data!.docs[index]['qty'],
-                                      image: streamSnapshot.data!.docs[index]['images'])
+                                  itemBuilder: (context, index) => Dismissible(
+                                    key: Key(streamSnapshot.data!.docs[index].id),
+                                    direction: DismissDirection.endToStart,
+                                      confirmDismiss: (direction) async{
+                                        return await showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) => AlertDialog(
+                                            title: const Text('Remove item'),
+                                            content: const Text('The item will be removed from the store'),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(context, false),
+                                                child: const Text('Cancel'),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context, true);
+                                                },
+                                                child: const Text('OK'),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                      onDismissed: (direction)
+                                        {
+                                          setState(() async{
+                                            await _products.doc(streamSnapshot.data!.docs[index].id).delete();
+                                            print("ok");
+                                          });
+                                        },
+                                    background: Container(
+                                      padding: EdgeInsets.symmetric(horizontal: 20),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFFFE6E6),
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                    ),
+                                    child: ProductCard(
+                                        id: streamSnapshot.data!.docs[index].id,
+                                        title: streamSnapshot.data!.docs[index]['title'],
+                                        price: streamSnapshot.data!.docs[index]['price'],
+                                        qty: streamSnapshot.data!.docs[index]['qty'],
+                                        image: streamSnapshot.data!.docs[index]['images']),
+                                  )
                               ),
                             );
                           }
