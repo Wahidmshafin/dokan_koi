@@ -1,15 +1,16 @@
-import 'package:dokan_koi/screens/profile/components/profile_pic.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:dokan_koi/models/newproduct.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dokan_koi/screens/Shopfollow/Shop Components/roundedcontainer.dart';
-import '../../../models/Store.dart';
-import '../../home/components/section_title.dart';
-import '../../../constants.dart';
-import '../../../size_config.dart';
 import 'package:dokan_koi/screens/Shopfollow/Shop Components/shopproduct.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+
+import '../../../models/Store.dart';
+import '../../../size_config.dart';
+import '../../home/components/section_title.dart';
+
 class ProductDescription extends StatelessWidget {
-  const ProductDescription({
+   ProductDescription({
     Key? key,
     required this.store,
     this.pressOnSeeMore,
@@ -17,7 +18,8 @@ class ProductDescription extends StatelessWidget {
 
   final Store store;
   final GestureTapCallback? pressOnSeeMore;
-
+  final _shop = FirebaseFirestore.instance.collection('shop');
+  FirebaseAuth auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -127,6 +129,35 @@ class ProductDescription extends StatelessWidget {
             ),
           ),
         ),
+        SizedBox(height: 20,),
+    RatingBar.builder(
+    initialRating: store.rating,
+    minRating: 1,
+    direction: Axis.horizontal,
+    allowHalfRating: true,
+    itemCount: 5,
+    itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+    itemBuilder: (context, _) => Icon(
+    Icons.star,
+    color: Colors.amber,
+    ),
+    onRatingUpdate: (rating) {
+      double a;
+      if(store.rating==0)
+        {
+          _shop.doc(store.id).update({
+            "rating": rating,
+          });
+        }
+      else{
+        a=(rating+store.rating)/2;
+        _shop.doc(store.id).update({
+          "rating": a,
+        });
+      }
+
+    },
+    ),
         SizedBox(height: 20,),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),

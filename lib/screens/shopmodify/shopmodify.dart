@@ -2,11 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dokan_koi/models/Store.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:dokan_koi/constants.dart';
-import '../../models/product.dart';
-import 'components/shopmodifybody.dart';
+
 import '../details/components/custom_app_bar.dart';
-import 'package:dokan_koi/components/coustom_bottom_nav_bar.dart';
+import 'components/shopmodifybody.dart';
 
 
 

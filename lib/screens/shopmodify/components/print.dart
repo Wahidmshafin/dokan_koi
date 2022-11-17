@@ -1,6 +1,6 @@
 import 'package:dokan_koi/screens/home/home_screen.dart';
-import 'package:flutter/material.dart';
 import 'package:dokan_koi/size_config.dart';
+import 'package:flutter/material.dart';
 
 import '../../../components/default_button.dart';
 

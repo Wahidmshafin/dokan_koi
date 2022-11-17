@@ -1,12 +1,10 @@
-import 'package:dokan_koi/models/shops.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:dokan_koi/size_config.dart';
+import 'package:flutter/material.dart';
+
 import '../../../models/Store.dart';
-import '../../../size_config.dart';
+import '../../home/components/section_title.dart';
 import 'roundedcontainer.dart';
 import 'shopproduct.dart';
-import '../../home/components/section_title.dart';
 
 class ProductDescription extends StatelessWidget {
   const ProductDescription({

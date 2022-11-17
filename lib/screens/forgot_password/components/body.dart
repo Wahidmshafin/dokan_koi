@@ -1,15 +1,13 @@
-import 'package:dokan_koi/helper/keyboard.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:dokan_koi/components/custom_surfix_icon.dart';
 import 'package:dokan_koi/components/default_button.dart';
 import 'package:dokan_koi/components/form_error.dart';
 import 'package:dokan_koi/components/no_account_text.dart';
+import 'package:dokan_koi/helper/keyboard.dart';
 import 'package:dokan_koi/size_config.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
-import 'package:get/get.dart';
-
 import '../../splash/splash_screen.dart';
 
 class Body extends StatelessWidget {

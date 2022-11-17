@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dokan_koi/constants.dart';
 import 'package:dokan_koi/screens/shopmodify/components/print.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import '../../../components/OrderCard.dart';
+
 import '../../../size_config.dart';
 
 class MyOrders extends StatelessWidget {

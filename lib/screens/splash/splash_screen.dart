@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:dokan_koi/screens/splash/components/body.dart';
 import 'package:dokan_koi/size_config.dart';
+import 'package:flutter/material.dart';
 
 class SplashScreen extends StatelessWidget {
   static String routeName = "/splash";

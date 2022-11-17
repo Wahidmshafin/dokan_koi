@@ -1,10 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:dokan_koi/models/Product.dart';
 import 'package:dokan_koi/screens/details/details_screen.dart';
+import 'package:flutter/material.dart';
 
-import '../constants.dart';
 import '../size_config.dart';
 
 class ProductCard extends StatelessWidget {

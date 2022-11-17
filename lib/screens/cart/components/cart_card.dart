@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:dokan_koi/models/Cart.dart';
-import 'cartbody.dart';
+
 import '../../../constants.dart';
 import '../../../size_config.dart';
-import '../../details/details_screen.dart';
 
 class CartCard extends StatelessWidget {
    CartCard({

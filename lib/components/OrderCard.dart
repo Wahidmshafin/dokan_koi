@@ -1,10 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:dokan_koi/models/Product.dart';
-import 'package:dokan_koi/screens/details/details_screen.dart';
-
-import '../constants.dart';
-import '../size_config.dart';
 
 class OrderCard extends StatelessWidget {
   const OrderCard({

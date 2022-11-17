@@ -1,7 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:dokan_koi/components/coustom_bottom_nav_bar.dart';
 import 'package:dokan_koi/enums.dart';
+import 'package:flutter/material.dart';
 
 import 'components/body.dart';
 

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:dokan_koi/components/product_card.dart';
-import 'package:dokan_koi/models/Product.dart';
 
 import '../../../size_config.dart';
 import 'section_title.dart';

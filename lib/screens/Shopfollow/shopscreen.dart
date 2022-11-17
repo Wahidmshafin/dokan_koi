@@ -1,10 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:dokan_koi/constants.dart';
-import '../../models/Store.dart';
-import '../../models/shops.dart';
 import 'package:dokan_koi/screens/Shopfollow/Shop Components/shopbody.dart';
-import '../details/components/custom_app_bar.dart';
-import 'package:dokan_koi/components/coustom_bottom_nav_bar.dart';
+import 'package:flutter/material.dart';
+
+import '../../models/Store.dart';
 class DetailsScreen3 extends StatelessWidget {
   static String routeName = "/details3";
 

@@ -1,14 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../../size_config.dart';
-import 'categories.dart';
-import 'discount_banner.dart';
-import 'home_header.dart';
-import 'popular_product.dart';
-import 'special_offers.dart';
-import '../../newdetails/new product components/new_product.dart';
 import '../../Shopfollow/Shop Components/shops.dart';
+import '../../newdetails/new product components/new_product.dart';
+import 'home_header.dart';
+import 'special_offers.dart';
 class Body extends StatelessWidget {
 
   @override

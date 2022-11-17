@@ -1,9 +1,7 @@
+import 'package:dokan_koi/screens/newdetails/new product components/body2.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/Store.dart';
-import '../../models/newproduct.dart';
-import 'package:dokan_koi/screens/newdetails/new product components/body2.dart';
-import '../details/components/custom_app_bar.dart';
 
 class DetailsScreen2 extends StatelessWidget {
   static String routeName = "/details2";
