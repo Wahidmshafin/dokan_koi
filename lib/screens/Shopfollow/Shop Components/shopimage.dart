@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:dokan_koi/models/shops.dart';
+import 'package:flutter/material.dart';
 
-import '../../../constants.dart';
 import '../../../size_config.dart';
 
 class ProductImages extends StatefulWidget {

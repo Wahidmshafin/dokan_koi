@@ -1,14 +1,13 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dokan_koi/components/custom_surfix_icon.dart';
 import 'package:dokan_koi/components/default_button.dart';
 import 'package:dokan_koi/components/form_error.dart';
-import 'package:dokan_koi/screens/otp/otp_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
 import '../../home/home_screen.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CompleteProfileForm extends StatefulWidget {
   @override

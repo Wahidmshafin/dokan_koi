@@ -1,27 +1,19 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dokan_koi/constants.dart';
-import 'package:dokan_koi/models/product.dart';
-import 'package:dokan_koi/screens/shopmodify/components/shopeditbody.dart';
 import 'package:dokan_koi/screens/shopmodify/components/myorders.dart';
 import 'package:dokan_koi/screens/shopmodify/components/myproduct.dart';
+import 'package:dokan_koi/size_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
-import 'package:dokan_koi/size_config.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
-import '../../../components/form_error.dart';
 import '../../../models/Store.dart';
-import '../../Shopfollow/Shop Components/all_products.dart';
 import '../../Shopfollow/Shop Components/roundedcontainer.dart';
-import '../../Shopfollow/Shop Components/shopproduct.dart';
-import '../../home/components/section_title.dart';
-import '../../mystore/mystore.dart';
 import '../shopedit.dart';
 
 class Body extends StatefulWidget {

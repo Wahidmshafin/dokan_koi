@@ -1,4 +1,3 @@
-import 'package:dokan_koi/screens/sign_in/sign_in_screen.dart';
 import 'package:dokan_koi/screens/splash/splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

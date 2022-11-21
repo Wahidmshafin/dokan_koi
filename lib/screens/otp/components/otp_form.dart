@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:dokan_koi/components/default_button.dart';
 import 'package:dokan_koi/size_config.dart';
+import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
 

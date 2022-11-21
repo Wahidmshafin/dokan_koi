@@ -1,11 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dokan_koi/components/star.dart';
+import 'package:dokan_koi/screens/newdetails/newproductsscreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:dokan_koi/models/newproduct.dart';
-import 'package:dokan_koi/screens/newdetails/newproductsscreen.dart';
-import 'package:dokan_koi/components/star.dart';
 
 import '../constants.dart';
 import '../models/Store.dart';

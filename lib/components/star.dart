@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:dokan_koi/constants.dart';
-
-import '../../../size_config.dart';
 
 class Starrating extends StatelessWidget {
   final double rating;

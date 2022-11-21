@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:dokan_koi/components/socal_card.dart';
 import 'package:dokan_koi/constants.dart';
 import 'package:dokan_koi/size_config.dart';
+import 'package:flutter/material.dart';
 
 import 'sign_up_form.dart';
 

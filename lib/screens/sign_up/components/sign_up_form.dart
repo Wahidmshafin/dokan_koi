@@ -1,10 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
 import 'package:dokan_koi/components/custom_surfix_icon.dart';
 import 'package:dokan_koi/components/default_button.dart';
 import 'package:dokan_koi/components/form_error.dart';
 import 'package:dokan_koi/screens/complete_profile/complete_profile_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
 import '../../../helper/keyboard.dart';

@@ -1,13 +1,13 @@
-import 'package:dokan_koi/screens/home/home_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:dokan_koi/constants.dart';
+import 'package:dokan_koi/screens/home/home_screen.dart';
 import 'package:dokan_koi/screens/sign_in/sign_in_screen.dart';
 import 'package:dokan_koi/size_config.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
+import '../../../components/default_button.dart';
 // This is the best practice
 import '../components/splash_content.dart';
-import '../../../components/default_button.dart';
 
 class Body extends StatefulWidget {
   @override

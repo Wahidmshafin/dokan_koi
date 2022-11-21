@@ -1,21 +1,15 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dokan_koi/components/default_button.dart';
-import 'package:dokan_koi/constants.dart';
-import 'package:dokan_koi/helper/keyboard.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:dokan_koi/components/product_card.dart';
-import 'package:dokan_koi/models/Product.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../components/form_error.dart';
 import '../../../size_config.dart';
-import '../../home/components/section_title.dart';
 import '../../mystore/components/store_header.dart';
 
 class ProductForm extends StatefulWidget {

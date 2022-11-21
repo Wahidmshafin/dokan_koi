@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+
 
 class Store {
   final int tfo,tpo;

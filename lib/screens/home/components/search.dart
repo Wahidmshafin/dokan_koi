@@ -2,6 +2,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dokan_koi/constants.dart';
 import 'package:flutter/material.dart';
+
+import '../../details/details_screen.dart';
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
   static String routeName = "/search";
@@ -38,11 +40,21 @@ class _MyAppState extends State<MyApp> {
                 : ListView.builder(
                 itemCount: snapshots.data!.docs.length,
                 itemBuilder: (context, index) {
+                  var id = snapshots.data!.docs[index].id;
                   var data = snapshots.data!.docs[index].data()
                   as Map<String, dynamic>;
 
                   if (name.isEmpty) {
+
                     return ListTile(
+                      onTap: (){
+                        Navigator.pushNamed(
+                            context,
+                            DetailsScreen.routeName,
+                           arguments: ProductDetailsArguments(id: id
+                           ),
+                        );
+                      },
                       title: Text(
                         data['title'],
                         maxLines: 1,
@@ -71,6 +83,14 @@ class _MyAppState extends State<MyApp> {
                       .toLowerCase()
                       .contains(name.toLowerCase())) {
                     return ListTile(
+                      onTap: (){
+                        Navigator.pushNamed(
+                          context,
+                          DetailsScreen.routeName,
+                          arguments: ProductDetailsArguments(id: id
+                          ),
+                        );
+                      },
                       title: Text(
                         data['title'],
                         maxLines: 1,

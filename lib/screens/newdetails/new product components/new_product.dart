@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dokan_koi/models/Store.dart';
-import 'package:dokan_koi/screens/Shopfollow/Shop%20Components/shops.dart';
-import 'package:flutter/material.dart';
 import 'package:dokan_koi/components/new_card.dart';
+import 'package:dokan_koi/models/Store.dart';
+import 'package:flutter/material.dart';
 
 import '../../../size_config.dart';
 import '../../home/components/section_title.dart';

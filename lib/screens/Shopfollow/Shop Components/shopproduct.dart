@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dokan_koi/components/product_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:dokan_koi/components/product_card.dart';
-import 'package:dokan_koi/models/Product.dart';
 
 import '../../../size_config.dart';
 

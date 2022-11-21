@@ -1,14 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dokan_koi/screens/details/details_screen.dart';
+import 'package:dokan_koi/components/default_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:dokan_koi/components/default_button.dart';
-import '../../../routes.dart';
+
 import '../../../constants.dart';
 import '../../../size_config.dart';
-import '../../home/home_screen.dart';
-import '../../splash/splash_screen.dart';
 import '../../Cart Splash/splash.dart';
 
 class CheckoutCard extends StatelessWidget {

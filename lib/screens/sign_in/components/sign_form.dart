@@ -1,17 +1,14 @@
-import 'package:dokan_koi/screens/home/home_screen.dart';
-import 'package:dokan_koi/screens/splash/splash_screen.dart';
-import 'package:flutter/material.dart';
 import 'package:dokan_koi/components/custom_surfix_icon.dart';
 import 'package:dokan_koi/components/form_error.dart';
 import 'package:dokan_koi/helper/keyboard.dart';
 import 'package:dokan_koi/screens/forgot_password/forgot_password_screen.dart';
-import 'package:dokan_koi/screens/login_success/login_success_screen.dart';
+import 'package:dokan_koi/screens/splash/splash_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 import '../../../components/default_button.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class SignForm extends StatefulWidget {
   @override

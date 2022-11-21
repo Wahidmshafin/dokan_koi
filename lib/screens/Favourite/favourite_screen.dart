@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import '../../components/favcard.dart';
 import '../../models/Store.dart';
 import '../../size_config.dart';
-import '../home/components/section_title.dart';
 class favscreen extends StatelessWidget {
   static String routeName = "/favscreen";
   final _shop = FirebaseFirestore.instance.collection('favourite').doc(FirebaseAuth.instance.currentUser?.uid).collection('items');

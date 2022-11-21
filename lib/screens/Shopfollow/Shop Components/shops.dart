@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:dokan_koi/components/new_card.dart';
+import 'package:flutter/material.dart';
 
 import '../../../models/Store.dart';
 import '../../../size_config.dart';
