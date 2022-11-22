@@ -2,11 +2,11 @@ import 'package:dokan_koi/screens/splash/splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../myaccount.dart';
 import 'profile_menu.dart';
 import 'profile_pic.dart';
 
 class Body extends StatelessWidget {
-
   final auth=FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,9 @@ class Body extends StatelessWidget {
           ProfileMenu(
             text: "My Account",
             icon: "assets/icons/User Icon.svg",
-            press: () => {},
+            press: () => {
+              Navigator.pushNamed(context, MyAccount.routeName)
+            },
           ),
           ProfileMenu(
             text: "Notifications",

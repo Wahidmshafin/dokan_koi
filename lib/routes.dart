@@ -12,6 +12,7 @@ import 'package:dokan_koi/screens/login_success/login_success_screen.dart';
 import 'package:dokan_koi/screens/mystore/mystore.dart';
 import 'package:dokan_koi/screens/newdetails/newproductsscreen.dart';
 import 'package:dokan_koi/screens/otp/otp_screen.dart';
+import 'package:dokan_koi/screens/profile/myaccount.dart';
 import 'package:dokan_koi/screens/profile/profile_screen.dart';
 import 'package:dokan_koi/screens/shopmodify/components/edit_form.dart';
 import 'package:dokan_koi/screens/shopmodify/components/myorders.dart';
@@ -19,11 +20,11 @@ import 'package:dokan_koi/screens/shopmodify/components/myproduct.dart';
 import 'package:dokan_koi/screens/shopmodify/components/print.dart';
 import 'package:dokan_koi/screens/shopmodify/components/product_form.dart';
 import 'package:dokan_koi/screens/shopmodify/shopedit.dart';
+
 import 'package:dokan_koi/screens/shopmodify/shopmodify.dart';
 import 'package:dokan_koi/screens/sign_in/sign_in_screen.dart';
 import 'package:dokan_koi/screens/splash/splash_screen.dart';
 import 'package:flutter/widgets.dart';
-
 import 'screens/sign_up/sign_up_screen.dart';
 
 // We use name route
@@ -50,6 +51,7 @@ final Map<String, WidgetBuilder> routes = {
   MyProducts.routeName: (context)=>MyProducts(),
   favscreen.routeName: (context)=>favscreen(),
   MyApp.routeName: (context)=>MyApp(),
+  MyAccount.routeName: (context)=>MyAccount(),
   ShopModify.routeName: (context)=>ShopModify(),
   MyOrders.routeName: (context)=>MyOrders(),
   CartItems.routeName: (context) => CartItems(),
