@@ -72,6 +72,27 @@ class _CartItemsState extends State<CartItems> {
                       ),
                       key: Key(streamSnapshot.data!.docs[index].id.toString()),
                       direction: DismissDirection.endToStart,
+                      confirmDismiss: (direction) async{
+                        return await showDialog(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                            title: const Text('Remove from cart'),
+                            content: const Text('The item will be removed from order'),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () => Navigator.pop(context, false),
+                                child: const Text('Cancel'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context, true);
+                                },
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
                       onDismissed: (direction)
                       {
                         setState(() async{
@@ -84,7 +105,7 @@ class _CartItemsState extends State<CartItems> {
                           title: streamSnapshot.data!.docs[index]['title'],
                           price: streamSnapshot.data!.docs[index]['price'],
                           qty: streamSnapshot.data!.docs[index]['qty'],
-                          image: streamSnapshot.data!.docs[index]['image']),
+                          image: streamSnapshot.data!.docs[index]['images']),
                     ),
                   ),
                 ),
