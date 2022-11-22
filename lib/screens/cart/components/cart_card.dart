@@ -1,12 +1,15 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:dokan_koi/models/Cart.dart';
+import 'cartbody.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
+import '../../details/details_screen.dart';
 
 class CartCard extends StatelessWidget {
-   CartCard({
+  CartCard({
     Key? key,
     required this.title,
     required this.price,
@@ -15,7 +18,7 @@ class CartCard extends StatelessWidget {
     required this.id,
     //required this.product,
   }) : super(key: key);
-   final CollectionReference _products =
+  final CollectionReference _products =
   FirebaseFirestore.instance.collection('cart');
   // final double width, aspectRetio;
   //final Product product;
@@ -25,14 +28,14 @@ class CartCard extends StatelessWidget {
   final int qty;
   final String id;
 
-   Future<void> _add(String productId) async {
-     await _products.doc(productId).update({"qty":qty+1});
-     print(productId);
-   }
-   Future<void> _delete(String productId) async {
-     await _products.doc(productId).update({"qty":qty-1});
-     print(productId);
-   }
+  Future<void> _add(String productId) async {
+    await _products.doc(productId).update({"qty":qty+1});
+    print(productId);
+  }
+  Future<void> _delete(String productId) async {
+    await _products.doc(productId).update({"qty":qty-1});
+    print(productId);
+  }
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -48,7 +51,14 @@ class CartCard extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Image.asset("assets/images/$image",height: 100,width: 100,),
+              CachedNetworkImage(
+                fit: BoxFit.fitWidth,
+                height: getProportionateScreenHeight(100),
+                width: getProportionateScreenWidth(100),
+                imageUrl: image,
+                placeholder: (context, test) => const SizedBox(
+                    child: CircularProgressIndicator()),
+              ),
               SizedBox(width: getProportionateScreenWidth(20),),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -58,12 +68,12 @@ class CartCard extends StatelessWidget {
                   Row(
                     children: [
                       OutlinedButton(onPressed: () { _add(id);},
-                      child: Icon(CupertinoIcons.plus,size: 16,color: kPrimaryColor,)),
+                          child: Icon(CupertinoIcons.plus,size: 16,color: kPrimaryColor,)),
                       SizedBox(width: 5,),
                       Text("Qty: ${qty.toString()}"),
                       SizedBox(width: 5,),
                       OutlinedButton(onPressed: () { if(qty!=1){_delete(id);} },
-                      child: Icon(CupertinoIcons.minus,size: 16,color: Colors.redAccent,)),
+                          child: Icon(CupertinoIcons.minus,size: 16,color: Colors.redAccent,)),
                     ],
                   ),
                 ],
@@ -76,5 +86,4 @@ class CartCard extends StatelessWidget {
     );
   }
 }
-
 

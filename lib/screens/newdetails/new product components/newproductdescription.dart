@@ -203,26 +203,41 @@ class ProductDescription extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              RatingBar.builder(
-                initialRating: initrating,
-                minRating: 1,
-                direction: Axis.horizontal,
-                //allowHalfRating: true,
-                itemCount: 5,
-                itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                itemBuilder: (context, _) => Icon(
-                  Icons.star,
-                  color: Colors.amber,
+             // Text("Rating",style: TextStyle(fontSize: 26,fontWeight: FontWeight.bold,),),
+              Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20)
                 ),
-                onRatingUpdate: (rating) {
-                  _shop
-                      .doc(store.id)
-                      .collection('ureview')
-                      .doc(auth.currentUser?.uid)
-                      .set({"rating": rating});
-                  var c = (total/cnt);
-                  _shop.doc(store.id).update({"rating":c});
-                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Rating:",style: TextStyle(fontSize: 26,fontWeight: FontWeight.bold,),),
+                    RatingBar.builder(
+                      initialRating: initrating,
+                      minRating: 1,
+                      direction: Axis.horizontal,
+                      //allowHalfRating: true,
+                      itemCount: 5,
+                      itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                      itemBuilder: (context, _) => Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
+                      onRatingUpdate: (rating) {
+                        _shop
+                            .doc(store.id)
+                            .collection('ureview')
+                            .doc(auth.currentUser?.uid)
+                            .set({"rating": rating});
+                        var c = (total/cnt);
+
+                        _shop.doc(store.id).update({"rating":c});
+                      },
+                    ),
+                  ],
+                ),
               ),
               SizedBox(
                 height: 20,
