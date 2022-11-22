@@ -1,11 +1,14 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dokan_koi/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../components/form_error.dart';
 import '../../../size_config.dart';
@@ -32,9 +35,51 @@ class _ShopFormState extends State<ShopForm> {
   String? storeSubDistrict;
   String? storeDistrict;
   String? storePhone;
+
+
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _subDistrictController = TextEditingController();
+  final TextEditingController _districtController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+
   bool terms=false;
   FirebaseAuth auth = FirebaseAuth.instance;
   final shop= FirebaseFirestore.instance.collection('shop');
+  Position? location;
+
+  void getCurrentLocation() async{
+    bool serviceEnabled=await Geolocator.isLocationServiceEnabled();
+    if(serviceEnabled)
+      {
+        LocationPermission permission = await Geolocator.checkPermission();
+        if(permission==LocationPermission.denied)
+          {
+            permission=await Geolocator.requestPermission();
+            if(permission==LocationPermission.denied)
+              {
+                return;
+              }
+          }
+        location=await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+        Position pos;
+        var lastposition = await Geolocator.getLastKnownPosition();
+
+        if(errors.contains("Turn on Location")) {
+          removeError(error: "Turn on Location");
+        }
+        Fluttertoast.showToast(
+          msg: " Location acquired ",
+          toastLength: Toast.LENGTH_SHORT,
+          fontSize: 20,
+        );
+      }
+    else
+      {
+        addError(error: "Turn on Location");
+      }
+  }
 
 
   String? image;
@@ -94,23 +139,24 @@ class _ShopFormState extends State<ShopForm> {
 
   Future<bool> createShop() async{
     final FormState? state=_formKey.currentState;
-    if(state!.validate() && fileImage!=null)
+    if(state!.validate() && fileImage!=null && location!=null )
       {
         try {
           print(auth.currentUser?.uid);
           await shop.doc(auth.currentUser?.uid).set({
-            "name": storeName,
-            "description": storeDescription,
-            "phone": storePhone,
-            "address": storeAddress,
-            "district": storeDistrict,
-            "subDistrict": storeSubDistrict,
+            "name": _nameController.text,
+            "description": _descriptionController.text,
+            "phone": _phoneController.text,
+            "address": _addressController.text,
+            "district": _districtController.text,
+            "subDistrict": _subDistrictController.text,
             "type":storeType,
             "rating":1.00,
             "images":"tshirt.png",
             "id":auth.currentUser?.uid,
-            "images":"glap.png",
             "image":image,
+            "lat" : location?.latitude,
+            "lon": location?.longitude,
           });
         }catch(e)
         {
@@ -177,6 +223,33 @@ class _ShopFormState extends State<ShopForm> {
             SizedBox(height: getProportionateScreenHeight(30)),
             storePhoneFormField(),
             SizedBox(height: getProportionateScreenHeight(30)),
+            SizedBox(
+              width: 60,
+              child: TextButton(
+                  onPressed: getCurrentLocation,
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.green[600]),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.location_on,
+                        size: 20,
+                        color: Colors.white,
+                      ),
+                      Text("Get Location",style: TextStyle(color: Colors.white, fontSize: 20),),
+                    ],
+                  ),
+              ),
+            ),
+            Text("For varification purpose, you must provide\nyour current location which will be set\nas your store location.",
+              style: TextStyle(
+                fontSize: getProportionateScreenHeight(20),
+                color: Colors.grey,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: getProportionateScreenHeight(30)),
             FormError(errors: errors),
             SizedBox(height: getProportionateScreenHeight(40)),
             ElevatedButton(
@@ -188,7 +261,7 @@ class _ShopFormState extends State<ShopForm> {
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(getProportionateScreenWidth(240),
                       getProportionateScreenHeight(50)),
-                  backgroundColor: Colors.orange,
+                  backgroundColor: kPrimaryColor,
                   shape: StadiumBorder(),
                 ),
                 child: Text("Create Shop",
@@ -206,6 +279,7 @@ class _ShopFormState extends State<ShopForm> {
   TextFormField storeNameFormField() {
     return TextFormField(
       scrollPadding:EdgeInsets.only(bottom:  MediaQuery.of(context).viewInsets.bottom+10),
+      controller: _nameController,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: "Enter Store Name");
@@ -234,6 +308,7 @@ class _ShopFormState extends State<ShopForm> {
   TextFormField storeDescriptionFormField() {
     return TextFormField(
       scrollPadding:EdgeInsets.only(bottom:  MediaQuery.of(context).viewInsets.bottom),
+      controller: _descriptionController,
       maxLines: 2,
       minLines: 1,
       onChanged: (value) {
@@ -292,6 +367,7 @@ class _ShopFormState extends State<ShopForm> {
   TextFormField storeAddressFormField() {
     return TextFormField(
       scrollPadding:EdgeInsets.only(bottom:  MediaQuery.of(context).viewInsets.bottom),
+      controller: _addressController,
       maxLines: 2,
       minLines: 1,
       onChanged: (value) {
@@ -323,6 +399,7 @@ class _ShopFormState extends State<ShopForm> {
   TextFormField storeSubDistrictFormField() {
     return TextFormField(
       scrollPadding:EdgeInsets.only(bottom:  MediaQuery.of(context).viewInsets.bottom),
+      controller: _subDistrictController,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: "Enter Sub District properly");
@@ -353,6 +430,7 @@ class _ShopFormState extends State<ShopForm> {
   TextFormField storeDistrictFormField() {
     return TextFormField(
       scrollPadding:EdgeInsets.only(bottom:  MediaQuery.of(context).viewInsets.bottom),
+      controller: _districtController,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: "Enter District Properly");
@@ -382,6 +460,7 @@ class _ShopFormState extends State<ShopForm> {
   TextFormField storePhoneFormField() {
     return TextFormField(
       scrollPadding:EdgeInsets.only(bottom:  MediaQuery.of(context).viewInsets.bottom),
+      controller: _phoneController,
       keyboardType: TextInputType.phone,
       onChanged: (value) {
         if (value.isNotEmpty) {
