@@ -86,13 +86,6 @@ class _NewcardState extends State<Newcard> {
     }
   }
 
-  Text storeDistance() {
-    Geolocator.isLocationServiceEnabled().asStream().listen((event) {
-    });
-    return Text("Location Turned off");
-
-  }
-
 
   Position? position;
 
