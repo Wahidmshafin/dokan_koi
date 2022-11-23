@@ -4,7 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
-
+import '../../../helper/helpscreen.dart';
+import '../myaccount.dart';
 import 'profile_menu.dart';
 import 'profile_pic.dart';
 
@@ -60,22 +61,24 @@ class Body extends StatelessWidget {
           ProfileMenu(
             text: "My Account",
             icon: "assets/icons/User Icon.svg",
-            press: () => {},
+            press: () => {
+              Navigator.pushNamed(context, MyAccount.routeName)
+            },
           ),
           ProfileMenu(
             text: "Update Location",
             icon: "assets/icons/Location point.svg",
             press: getCurrentLocation,
           ),
-          ProfileMenu(
-            text: "Settings",
-            icon: "assets/icons/Settings.svg",
-            press: () {},
-          ),
+          // ProfileMenu(
+          //   text: "Settings",
+          //   icon: "assets/icons/Settings.svg",
+          //   press: () {},
+          // ),
           ProfileMenu(
             text: "Help Center",
             icon: "assets/icons/Question mark.svg",
-            press: () {},
+            press: () {Navigator.pushNamed(context, HelpScreen.routeName);},
           ),
           ProfileMenu(
             text: "Log Out",

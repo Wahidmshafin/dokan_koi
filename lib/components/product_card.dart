@@ -45,14 +45,17 @@ class ProductCard extends StatelessWidget {
         child: Row(
           children: [
             // Image.asset(product.images[0],height: 100,width: 100,),
-          CachedNetworkImage(
-          fit: BoxFit.fitWidth,
-          height: getProportionateScreenHeight(100),
-          width: getProportionateScreenWidth(100),
-          imageUrl: image,
-          placeholder: (context, test) => const SizedBox(
-              child: CircularProgressIndicator()),
+          Padding(
+            padding: const EdgeInsets.only(left: 10.0),
+            child: CachedNetworkImage(
+            fit: BoxFit.fitWidth,
+            height: getProportionateScreenHeight(100),
+            width: getProportionateScreenWidth(100),
+            imageUrl: image,
+            placeholder: (context, test) => const SizedBox(
+                child: CircularProgressIndicator()),
         ),
+          ),
             //Spacer(),
             SizedBox(width: getProportionateScreenWidth(20),),
             Column(

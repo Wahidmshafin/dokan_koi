@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../components/coustom_bottom_nav_bar.dart';
 import '../../components/favcard.dart';
+import '../../enums.dart';
 import '../../models/Store.dart';
 import '../../size_config.dart';
 class favscreen extends StatelessWidget {
@@ -55,6 +57,7 @@ class favscreen extends StatelessWidget {
               child: CircularProgressIndicator());
         },
       ),
+      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.favourite),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../home/home_screen.dart';
 import 'components/shopeditbody.dart';
 
 class ShopEdit extends StatelessWidget {
@@ -39,6 +40,7 @@ class ShopEdit extends StatelessWidget {
                   TextButton(
                     onPressed: () {
                             shop.doc(auth.currentUser?.uid).delete();
+                            Navigator.pushNamed(context, HomeScreen.routeName);
                     },
                     child: const Text('Delete',style: TextStyle(color: Colors.red),),
                   ),

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dokan_koi/constants.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/Product.dart';
@@ -20,13 +21,13 @@ class DetailsScreen extends StatelessWidget {
           var data = snapshot.data!.data();
           return Scaffold(
             backgroundColor: Color(0xFFF5F6F9),
-            appBar: PreferredSize(
-              preferredSize: Size.fromHeight(AppBar().preferredSize.height),
-              child: CustomAppBar(rating: data!['rating']),
+            appBar: AppBar(
+              elevation: 2,
             ),
+
             body: Body(
                 product: Product(
-                id: data['id'],
+                id: data!['id'],
                 qty: data['qty'],
                 images: data['images'],
                 title: data['title'],

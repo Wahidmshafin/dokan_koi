@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dokan_koi/screens/Shopfollow/Shop Components/roundedcontainer.dart';
 import 'package:dokan_koi/screens/Shopfollow/Shop Components/shopproduct.dart';
@@ -5,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
+import '../../../constants.dart';
 import '../../../models/Store.dart';
 import '../../../size_config.dart';
 import '../../home/components/section_title.dart';
@@ -22,7 +24,40 @@ class ProductDescription extends StatelessWidget {
   var total = 0.0;
   var initrating=0.0;
   FirebaseAuth auth = FirebaseAuth.instance;
+  Future addToFavourite() async {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    var currentUser = _auth.currentUser;
+    CollectionReference _collectionRef =
+    FirebaseFirestore.instance.collection("favourite");
+    return _collectionRef
+        .doc(currentUser!.uid)
+        .collection("items")
+        .doc(store.id)
+        .set({
+      "user": store.id,
+      "description":store.description,
+      "address": store.address,
+      "district":store.district,
+      "image":store.images[0],
+      "name":store.title,
+      "id":store.id,
+      "subDistrict":store.subDistrict,
+      "rating":store.rating,
 
+    }).then((value) => print("Added to favourite"));
+  }
+  Future removeFromFavourite() async {
+    print(store.id);
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    var currentUser = _auth.currentUser;
+    CollectionReference _collectionRef =
+    FirebaseFirestore.instance.collection("favourite");
+    return _collectionRef
+        .doc(currentUser!.uid)
+        .collection("items")
+        .doc(store.id).delete();
+
+  }
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -47,7 +82,7 @@ class ProductDescription extends StatelessWidget {
               TopRoundedContainer(
                 color: Colors.white,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 30.0, right: 30.0),
+                  padding: const EdgeInsets.only(left: 40.0, right: 30.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -55,7 +90,9 @@ class ProductDescription extends StatelessWidget {
                       Row(
                         children: [
                           CircleAvatar(
-                            backgroundImage: AssetImage(store.images[0]),
+                            backgroundImage:NetworkImage(
+                              store.images[0],
+                            ),
                             backgroundColor: Colors.white,
                             radius: 30,
                           ),
@@ -73,25 +110,39 @@ class ProductDescription extends StatelessWidget {
                                     fontWeight: FontWeight.bold,
                                     color: Colors.green),
                               ),
-                              Text("treadly.app"),
+                              Text("${store.title}.app"),
                             ],
                           ),
                           Spacer(),
-                          OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                              backgroundColor: Colors.teal, //<-- SEE HERE
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                            ),
-                            onPressed: () {},
-                            child: Text(
-                              "Follow",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15),
-                            ),
-                          )
+                          StreamBuilder(
+                            stream: FirebaseFirestore.instance.collection("favourite").doc(FirebaseAuth.instance.currentUser?.uid)
+                                .collection("items").where("user",isEqualTo: store.id).snapshots(),
+                            builder: (BuildContext context, AsyncSnapshot snapshot){
+                              if(snapshot.data==null){
+                                return Text("");
+                              }
+                              return Padding(
+                                padding:  EdgeInsets.all(getProportionateScreenWidth(8)),
+                                child: CircleAvatar(
+                                  radius: 19.0,
+                                  backgroundColor: kPrimaryColor.withOpacity(0.1),
+                                  child: Center(
+                                    child: IconButton(
+                                      onPressed: () => snapshot.data.docs.length==0?addToFavourite():removeFromFavourite(),
+                                      icon: snapshot.data.docs.length==0? Icon(
+                                        Icons.favorite,
+                                        color: kSecondaryColor.withOpacity(0.1),
+                                      ):Icon(
+                                        Icons.favorite,
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+
+                          ),
                         ],
                       ),
                       SizedBox(
@@ -111,41 +162,15 @@ class ProductDescription extends StatelessWidget {
                           Container(
                             //color: Colors.grey,
                             padding: EdgeInsets.symmetric(
-                                horizontal: getProportionateScreenWidth(20),
-                                vertical: getProportionateScreenHeight(3)),
+                                horizontal: getProportionateScreenWidth(40),
+                                vertical: getProportionateScreenHeight(4)),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
                                 color: Colors.grey.shade300),
-                            child: Row(
-                              children: [
-                                Text("Groceries"),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Icon(Icons.close),
-                              ],
-                            ),
+                            child: Text(store.type,),
                           ),
                           SizedBox(
                             width: 10,
-                          ),
-                          Container(
-                            //color: Colors.grey,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: getProportionateScreenWidth(20),
-                                vertical: getProportionateScreenHeight(5)),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Colors.grey.shade300),
-                            child: Row(
-                              children: [
-                                Text("Groceries"),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Icon(Icons.close),
-                              ],
-                            ),
                           ),
                         ],
                       ),
@@ -203,26 +228,41 @@ class ProductDescription extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              RatingBar.builder(
-                initialRating: initrating,
-                minRating: 1,
-                direction: Axis.horizontal,
-                //allowHalfRating: true,
-                itemCount: 5,
-                itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                itemBuilder: (context, _) => Icon(
-                  Icons.star,
-                  color: Colors.amber,
+             // Text("Rating",style: TextStyle(fontSize: 26,fontWeight: FontWeight.bold,),),
+              Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20)
                 ),
-                onRatingUpdate: (rating) {
-                  _shop
-                      .doc(store.id)
-                      .collection('ureview')
-                      .doc(auth.currentUser?.uid)
-                      .set({"rating": rating});
-                  var c = (total/cnt);
-                  _shop.doc(store.id).update({"rating":c});
-                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Rating:",style: TextStyle(fontSize: 26,fontWeight: FontWeight.bold,),),
+                    RatingBar.builder(
+                      initialRating: initrating,
+                      minRating: 1,
+                      direction: Axis.horizontal,
+                      //allowHalfRating: true,
+                      itemCount: 5,
+                      itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                      itemBuilder: (context, _) => Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
+                      onRatingUpdate: (rating) {
+                        _shop
+                            .doc(store.id)
+                            .collection('ureview')
+                            .doc(auth.currentUser?.uid)
+                            .set({"rating": rating});
+                        var c = (total/cnt);
+
+                        _shop.doc(store.id).update({"rating":c});
+                      },
+                    ),
+                  ],
+                ),
               ),
               SizedBox(
                 height: 20,
