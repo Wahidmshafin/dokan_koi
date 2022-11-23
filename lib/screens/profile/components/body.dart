@@ -1,7 +1,9 @@
 import 'package:dokan_koi/screens/splash/splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../../../helper/helpscreen.dart';
 import '../myaccount.dart';
 import 'profile_menu.dart';
 import 'profile_pic.dart';
@@ -28,15 +30,15 @@ class Body extends StatelessWidget {
             icon: "assets/icons/Bell.svg",
             press: () {},
           ),
-          ProfileMenu(
-            text: "Settings",
-            icon: "assets/icons/Settings.svg",
-            press: () {},
-          ),
+          // ProfileMenu(
+          //   text: "Settings",
+          //   icon: "assets/icons/Settings.svg",
+          //   press: () {},
+          // ),
           ProfileMenu(
             text: "Help Center",
             icon: "assets/icons/Question mark.svg",
-            press: () {},
+            press: () {Navigator.pushNamed(context, HelpScreen.routeName);},
           ),
           ProfileMenu(
             text: "Log Out",

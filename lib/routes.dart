@@ -25,6 +25,7 @@ import 'package:dokan_koi/screens/shopmodify/shopmodify.dart';
 import 'package:dokan_koi/screens/sign_in/sign_in_screen.dart';
 import 'package:dokan_koi/screens/splash/splash_screen.dart';
 import 'package:flutter/widgets.dart';
+import 'helper/helpscreen.dart';
 import 'screens/sign_up/sign_up_screen.dart';
 
 // We use name route
@@ -37,6 +38,7 @@ final Map<String, WidgetBuilder> routes = {
   SignUpScreen.routeName: (context) => SignUpScreen(),
   CompleteProfileScreen.routeName: (context) => CompleteProfileScreen(),
   OtpScreen.routeName: (context) => OtpScreen(),
+  HelpScreen.routeName: (context) => HelpScreen(),
   HomeScreen.routeName: (context) => HomeScreen(),
   DetailsScreen3.routeName: (context) => DetailsScreen3(),
   DetailsScreen2.routeName: (context) => DetailsScreen2(),

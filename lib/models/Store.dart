@@ -2,7 +2,7 @@
 
 class Store {
   final int tfo,tpo;
-  final String title, district,address,description, subDistrict, id;
+  final String title, district,address,description, subDistrict, id,type;
   final List<String> images;
   final double rating;
   final bool isFavourite, isPopular;
@@ -20,5 +20,6 @@ class Store {
     this.tfo=0,
     this.tpo=0,
     required this.id,
+     this.type="N/A",
   });
 }
