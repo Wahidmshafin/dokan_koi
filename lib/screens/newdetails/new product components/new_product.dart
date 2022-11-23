@@ -40,7 +40,9 @@ class NewProducts extends StatelessWidget {
                           rating: streamSnapshot.data!.docs[index]['rating'].toDouble(),
                           title: streamSnapshot.data!.docs[index]['name'],
                           district: streamSnapshot.data!.docs[index]['district'],
-                          subDistrict: streamSnapshot.data!.docs[index]['subDistrict'])
+                          lat: streamSnapshot.data!.docs[index]['lat'].toDouble(),
+                          lon: streamSnapshot.data!.docs[index]['lon'].toDouble(),
+                          subDistrict: streamSnapshot.data!.docs[index]['subDistrict'],)
                       ),
                     ),
                   ),

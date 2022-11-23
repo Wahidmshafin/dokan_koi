@@ -1,16 +1,19 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dokan_koi/components/star.dart';
 import 'package:dokan_koi/screens/newdetails/newproductsscreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 
 import '../constants.dart';
 import '../models/Store.dart';
 import '../size_config.dart';
 
-class Newcard extends StatelessWidget {
-  const Newcard({
+class Newcard extends StatefulWidget {
+   Newcard({
     Key? key,
     this.width = 240,
     this.aspectRetio = 1.02,
@@ -20,6 +23,12 @@ class Newcard extends StatelessWidget {
   final double width, aspectRetio;
   final Store store;
 
+
+  @override
+  State<Newcard> createState() => _NewcardState();
+}
+
+class _NewcardState extends State<Newcard> {
   Future addToFavourite() async {
     final FirebaseAuth _auth = FirebaseAuth.instance;
     var currentUser = _auth.currentUser;
@@ -28,22 +37,23 @@ class Newcard extends StatelessWidget {
     return _collectionRef
         .doc(currentUser!.uid)
         .collection("items")
-        .doc(store.id)
+        .doc(widget.store.id)
         .set({
-      "user": store.id,
-      "description":store.description,
-      "address": store.address,
-      "district":store.district,
-      "image":store.images[0],
-      "name":store.title,
-      "id":store.id,
-      "subDistrict":store.subDistrict,
-      "rating":store.rating,
+      "user": widget.store.id,
+      "description":widget.store.description,
+      "address": widget.store.address,
+      "district":widget.store.district,
+      "image":widget.store.images[0],
+      "name":widget.store.title,
+      "id":widget.store.id,
+      "subDistrict":widget.store.subDistrict,
+      "rating":widget.store.rating,
 
     }).then((value) => print("Added to favourite"));
   }
+
   Future removeFromFavourite() async {
-    print(store.id);
+    print(widget.store.id);
     final FirebaseAuth _auth = FirebaseAuth.instance;
     var currentUser = _auth.currentUser;
     CollectionReference _collectionRef =
@@ -51,20 +61,58 @@ class Newcard extends StatelessWidget {
     return _collectionRef
         .doc(currentUser!.uid)
         .collection("items")
-        .doc(store.id).delete();
+        .doc(widget.store.id).delete();
 
   }
+
+  final locationSettings = LocationSettings(
+    accuracy: LocationAccuracy.bestForNavigation,
+    distanceFilter: 10,
+  );
+
+  void getCurrentLocation() async{
+    bool serviceEnabled=await Geolocator.isLocationServiceEnabled();
+    if(serviceEnabled)
+    {
+      LocationPermission permission = await Geolocator.checkPermission();
+      if(permission==LocationPermission.denied)
+      {
+        permission=await Geolocator.requestPermission();
+        if(permission==LocationPermission.denied)
+        {
+          return;
+        }
+      }
+    }
+  }
+
+  Text storeDistance() {
+    Geolocator.isLocationServiceEnabled().asStream().listen((event) {
+    });
+    return Text("Location Turned off");
+
+  }
+
+
+  Position? position;
+
   @override
   Widget build(BuildContext context) {
+    //getCurssssrentLocation();
+    StreamSubscription<Position> positionStream =Geolocator.getPositionStream(locationSettings: locationSettings).listen((event) {
+      setState(() {
+        position = event;
+      });
+    });
     return Padding(
       padding: EdgeInsets.only(left: getProportionateScreenWidth(20)),
       child: SizedBox(
-        width: width,
+        width: widget.width,
         child: GestureDetector(
           onTap: () => Navigator.pushNamed(
             context,
             DetailsScreen2.routeName,
-            arguments: ProductDetailsArguments2(store: store),
+            arguments: ProductDetailsArguments2(store: widget.store),
           ),
           child: AspectRatio(
             aspectRatio: 1.02,
@@ -74,7 +122,7 @@ class Newcard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Hero(
-                tag: store.id.toString(),
+                tag: widget.store.id.toString(),
                 child: Column(
                   children: [
                     Stack(children: <Widget>[
@@ -84,12 +132,12 @@ class Newcard extends StatelessWidget {
                           fit: BoxFit.fitWidth,
                           height: getProportionateScreenHeight(120),
                           width: double.infinity,
-                          imageUrl: store.images[0],
+                          imageUrl: widget.store.images[0],
                           placeholder: (context, test) => const SizedBox(
                               child: LinearProgressIndicator()),
                         ),
                       ),
-                      Starrating(rating: store.rating),
+                      Starrating(rating: widget.store.rating),
                     ]),
                     Expanded(
                       child: Container(
@@ -104,7 +152,7 @@ class Newcard extends StatelessWidget {
                           children: [
                             Spacer(),
                             Text(
-                              store.title,
+                              widget.store.title,
                               style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
@@ -112,7 +160,7 @@ class Newcard extends StatelessWidget {
                               maxLines: 2,
                             ),
                             Text(
-                              "${store.address}, ${store.subDistrict}",
+                              "${widget.store.address}, ${widget.store.subDistrict}",
                               textAlign: TextAlign.center,
                               maxLines: 2,
                             ),
@@ -121,7 +169,7 @@ class Newcard extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "   890m away",
+                                  position!=null? " ${Geolocator.distanceBetween(position!.latitude, position!.longitude, widget.store.lat, widget.store.lon).floor()}m away":"Location Turned off",
                                   style: TextStyle(
                                     fontSize: getProportionateScreenWidth(14),
                                     //fontWeight: FontWeight.w600,
@@ -130,7 +178,7 @@ class Newcard extends StatelessWidget {
                                 ),
                                   StreamBuilder(
                                     stream: FirebaseFirestore.instance.collection("favourite").doc(FirebaseAuth.instance.currentUser?.uid)
-                                        .collection("items").where("user",isEqualTo: store.id).snapshots(),
+                                        .collection("items").where("user",isEqualTo: widget.store.id).snapshots(),
                                     builder: (BuildContext context, AsyncSnapshot snapshot){
                                       if(snapshot.data==null){
                                         return Text("");

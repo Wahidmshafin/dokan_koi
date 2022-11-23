@@ -4,7 +4,7 @@ class Store {
   final int tfo,tpo;
   final String title, district,address,description, subDistrict, id;
   final List<String> images;
-  final double rating;
+  final double rating, lat, lon;
   final bool isFavourite, isPopular;
 
   Store({
@@ -12,6 +12,8 @@ class Store {
     required this.address,
     required this.images,
     required this.rating,
+    required this.lat,
+    required this.lon,
     this.isFavourite = true,
     this.isPopular = false,
     required this.title,

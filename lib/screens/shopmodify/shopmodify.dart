@@ -34,6 +34,8 @@ class ShopModify extends StatelessWidget {
                 district: data['district'],
                 subDistrict: data['subDistrict'],
                 rating: data['rating'].toDouble(),
+                lat: data['lat'].toDouble(),
+                lon: data['lon'].toDouble(),
             ),
             ),
           );
