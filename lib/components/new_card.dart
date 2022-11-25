@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dokan_koi/components/star.dart';
 import 'package:dokan_koi/screens/newdetails/newproductsscreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -16,7 +17,7 @@ class Newcard extends StatefulWidget {
    Newcard({
     Key? key,
     this.width = 240,
-    this.aspectRetio = 1.02,
+    this.aspectRetio = 1.1,
     required this.store,
   }) : super(key: key);
 
@@ -65,10 +66,17 @@ class _NewcardState extends State<Newcard> {
 
   }
 
-  final locationSettings = LocationSettings(
-    accuracy: LocationAccuracy.bestForNavigation,
-    distanceFilter: 10,
+  final locationSettings = const LocationSettings(
+    accuracy: LocationAccuracy.best,
+    distanceFilter: 0,
   );
+
+    // final locationSettings = AndroidSettings(
+    //   forceLocationManager: true,
+    //   accuracy: LocationAccuracy.bestForNavigation,
+    //   distanceFilter: 1,
+    //
+    // );
 
   void getCurrentLocation() async{
     bool serviceEnabled=await Geolocator.isLocationServiceEnabled();
@@ -92,126 +100,133 @@ class _NewcardState extends State<Newcard> {
   @override
   Widget build(BuildContext context) {
     //getCurssssrentLocation();
-    StreamSubscription<Position> positionStream =Geolocator.getPositionStream(locationSettings: locationSettings).listen((event) {
-      setState(() {
-        position = event;
-      });
-    });
-    return Padding(
-      padding: EdgeInsets.only(left: getProportionateScreenWidth(20)),
-      child: SizedBox(
-        width: widget.width,
-        child: GestureDetector(
-          onTap: () => Navigator.pushNamed(
-            context,
-            DetailsScreen2.routeName,
-            arguments: ProductDetailsArguments2(store: widget.store),
-          ),
-          child: AspectRatio(
-            aspectRatio: 1.02,
-            child: Container(
-              decoration: BoxDecoration(
-                color: kSecondaryColor.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(15),
+    // StreamSubscription<Position> positionStream =Geolocator.getPositionStream(locationSettings: locationSettings).listen((event) {
+    //   setState(() {
+    //     position = event;
+    //   });
+    // });
+    return StreamBuilder<Position>(
+      stream: Geolocator.getPositionStream(locationSettings: locationSettings),
+      builder: (context, snapshot) {
+        print(snapshot.connectionState);
+        print(snapshot.data);
+        return Padding(
+          padding: EdgeInsets.only(left: getProportionateScreenWidth(20)),
+          child: SizedBox(
+            width: widget.width,
+            child: GestureDetector(
+              onTap: () => Navigator.pushNamed(
+                context,
+                DetailsScreen2.routeName,
+                arguments: ProductDetailsArguments2(store: widget.store),
               ),
-              child: Hero(
-                tag: widget.store.id.toString(),
-                child: Column(
-                  children: [
-                    Stack(children: <Widget>[
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: CachedNetworkImage(
-                          fit: BoxFit.fitWidth,
-                          height: getProportionateScreenHeight(120),
-                          width: double.infinity,
-                          imageUrl: widget.store.images[0],
-                          placeholder: (context, test) => const SizedBox(
-                              child: LinearProgressIndicator()),
-                        ),
-                      ),
-                      Starrating(rating: widget.store.rating),
-                    ]),
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white70,
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(15),
-                            bottomRight: Radius.circular(15),
+              child: AspectRatio(
+                aspectRatio: 1.2,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: kSecondaryColor.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Hero(
+                    tag: widget.store.id.toString(),
+                    child: Column(
+                      children: [
+                        Stack(children: <Widget>[
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: CachedNetworkImage(
+                              fit: BoxFit.fitWidth,
+                              height: getProportionateScreenHeight(110),
+                              width: double.infinity,
+                              imageUrl: widget.store.images[0],
+                              placeholder: (context, test) => const SizedBox(
+                                  child: LinearProgressIndicator()),
+                            ),
                           ),
-                        ),
-                        child: Column(
-                          children: [
-                            Spacer(),
-                            Text(
-                              widget.store.title,
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20),
-                              maxLines: 2,
+                          Starrating(rating: widget.store.rating),
+                        ]),
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white70,
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(15),
+                                bottomRight: Radius.circular(15),
+                              ),
                             ),
-                            Text(
-                              "${widget.store.address}, ${widget.store.subDistrict}",
-                              textAlign: TextAlign.center,
-                              maxLines: 2,
-                            ),
-                            Spacer(),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            child: Column(
                               children: [
+                                Spacer(),
                                 Text(
-                                  position!=null? " ${Geolocator.distanceBetween(position!.latitude, position!.longitude, widget.store.lat, widget.store.lon).floor()}m away":"Location Turned off",
+                                  widget.store.title,
                                   style: TextStyle(
-                                    fontSize: getProportionateScreenWidth(14),
-                                    //fontWeight: FontWeight.w600,
-                                    color: kPrimaryColor,
-                                  ),
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
+                                  maxLines: 2,
                                 ),
-                                  StreamBuilder(
-                                    stream: FirebaseFirestore.instance.collection("favourite").doc(FirebaseAuth.instance.currentUser?.uid)
-                                        .collection("items").where("user",isEqualTo: widget.store.id).snapshots(),
-                                    builder: (BuildContext context, AsyncSnapshot snapshot){
-                                      if(snapshot.data==null){
-                                        return Text("");
-                                      }
-                                      return Padding(
-                                        padding:  EdgeInsets.all(getProportionateScreenWidth(8)),
-                                        child: CircleAvatar(
-                                          radius: 19.0,
-                                          backgroundColor: kPrimaryColor.withOpacity(0.1),
-                                          child: Center(
-                                            child: IconButton(
-                                              onPressed: () => snapshot.data.docs.length==0?addToFavourite():removeFromFavourite(),
-                                              icon: snapshot.data.docs.length==0? Icon(
-                                                Icons.favorite,
-                                                color: kSecondaryColor.withOpacity(0.1),
-                                              ):Icon(
-                                                Icons.favorite,
-                                                color: Colors.red,
+                                Text(
+                                  "${widget.store.address}, ${widget.store.subDistrict}",
+                                  textAlign: TextAlign.center,
+                                  maxLines: 2,
+                                ),
+                                Spacer(),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      snapshot.data!=null? " ${Geolocator.distanceBetween(snapshot.data!.latitude, snapshot.data!.longitude, widget.store.lat, widget.store.lon).floor()}m away":"...",
+                                      style: TextStyle(
+                                        fontSize: getProportionateScreenWidth(14),
+                                        //fontWeight: FontWeight.w600,
+                                        color: kPrimaryColor,
+                                      ),
+                                    ),
+                                      StreamBuilder(
+                                        stream: FirebaseFirestore.instance.collection("favourite").doc(FirebaseAuth.instance.currentUser?.uid)
+                                            .collection("items").where("user",isEqualTo: widget.store.id).snapshots(),
+                                        builder: (BuildContext context, AsyncSnapshot snapshot){
+                                          if(snapshot.data==null){
+                                            return Text("");
+                                          }
+                                          return Padding(
+                                            padding:  EdgeInsets.all(getProportionateScreenWidth(8)),
+                                            child: CircleAvatar(
+                                              radius: 19.0,
+                                              backgroundColor: kPrimaryColor.withOpacity(0.1),
+                                              child: Center(
+                                                child: IconButton(
+                                                  onPressed: () => snapshot.data.docs.length==0?addToFavourite():removeFromFavourite(),
+                                                  icon: snapshot.data.docs.length==0? Icon(
+                                                    Icons.favorite,
+                                                    color: kSecondaryColor.withOpacity(0.1),
+                                                  ):Icon(
+                                                    Icons.favorite,
+                                                    color: Colors.red,
+                                                  ),
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ),
-                                      );
-                                    },
+                                          );
+                                        },
 
-                                  ),
-                                ],
+                                      ),
+                                    ],
 
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      }
     );
   }
 }

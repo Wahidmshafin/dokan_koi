@@ -5,6 +5,7 @@ import 'package:dokan_koi/size_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
 
 import '../../../components/default_button.dart';
 // This is the best practice
@@ -34,19 +35,25 @@ class _BodyState extends State<Body> {
     },
   ];
 
-  @override
-  void initState() {
-    super.initState();
-    auth.authStateChanges().listen((event) {
-      if(event!=null)
+  void getCurrentLocation() async{
+    bool serviceEnabled=await Geolocator.isLocationServiceEnabled();
+    if(serviceEnabled)
+    {
+      LocationPermission permission = await Geolocator.checkPermission();
+      if(permission==LocationPermission.denied)
       {
-        Navigator.pushNamed(context, HomeScreen.routeName).whenComplete(() => SystemNavigator.pop());
+        permission=await Geolocator.requestPermission();
+        if(permission==LocationPermission.denied)
+        {
+          return;
+        }
       }
-    });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    getCurrentLocation();
     return SafeArea(
       child: SizedBox(
         width: double.infinity,
@@ -86,7 +93,17 @@ class _BodyState extends State<Body> {
                     DefaultButton(
                       text: "Continue",
                       press: () {
-                        Navigator.pushNamed(context, SignInScreen.routeName);
+                        auth.authStateChanges().listen((event) {
+                          if(event!=null)
+                          {
+                            Navigator.pushNamed(context, HomeScreen.routeName);
+                          }
+                          else
+                            {
+                              Navigator.pushNamed(context, SignInScreen.routeName);
+                            }
+                        });
+
                       },
                     ),
                     Spacer(),

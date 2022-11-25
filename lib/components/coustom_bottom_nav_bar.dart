@@ -2,6 +2,7 @@ import 'package:dokan_koi/screens/Favourite/favourite_screen.dart';
 import 'package:dokan_koi/screens/home/home_screen.dart';
 import 'package:dokan_koi/screens/mystore/mystore.dart';
 import 'package:dokan_koi/screens/profile/profile_screen.dart';
+import 'package:dokan_koi/screens/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -51,7 +52,7 @@ class CustomBottomNavBar extends StatelessWidget {
                 //       : inActiveIconColor,
                 // ),
                 onPressed: () =>
-                    Navigator.pushNamed(context, HomeScreen.routeName),
+                    Navigator.pushNamed(context, HomeScreen.routeName).whenComplete(() => Navigator.popUntil(context,ModalRoute.withName(SplashScreen.routeName))),
               ),
               IconButton(
                 icon: Icon(Icons.favorite_border_outlined,
@@ -59,7 +60,7 @@ class CustomBottomNavBar extends StatelessWidget {
                         ? kPrimaryColor
                         : inActiveIconColor),//SvgPicture.asset("assets/icons/Heart Icon.svg"),
                 onPressed: () {
-                  Navigator.pushNamed(context, favscreen.routeName);
+                  Navigator.pushNamed(context, favscreen.routeName).whenComplete(() => Navigator.popUntil(context,ModalRoute.withName(SplashScreen.routeName)));
                 },
               ),
               IconButton(
@@ -68,7 +69,7 @@ class CustomBottomNavBar extends StatelessWidget {
                       ? kPrimaryColor
                       : inActiveIconColor),
                 onPressed:  () =>
-                    Navigator.pushNamed(context, MyStore.routeName),
+                    Navigator.pushNamed(context, MyStore.routeName).whenComplete(() => Navigator.popUntil(context,ModalRoute.withName(SplashScreen.routeName))),
               ),
               IconButton(
                 icon:Icon(Icons.person,
@@ -82,7 +83,7 @@ class CustomBottomNavBar extends StatelessWidget {
                 //       : inActiveIconColor,
                 // ),
                 onPressed: () =>
-                    Navigator.pushNamed(context, ProfileScreen.routeName),
+                    Navigator.pushNamed(context, ProfileScreen.routeName).whenComplete(() => Navigator.popUntil(context,ModalRoute.withName(SplashScreen.routeName))),
               ),
             ],
           )),
