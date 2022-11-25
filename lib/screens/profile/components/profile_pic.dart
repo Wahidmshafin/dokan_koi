@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../constants.dart';
 import '../../../size_config.dart';
 
 class ProfilePic extends StatefulWidget {
@@ -73,7 +74,7 @@ class _ProfilePicState extends State<ProfilePic> {
             print("ekhane ken ase");
             image = snapshot.data?.data()!["image"];
           }
-          return SizedBox(
+          return (snapshot.connectionState == ConnectionState.waiting)? Center(child: CircularProgressIndicator(color: kPrimaryColor,),):SizedBox(
             height: 115,
             width: 115,
             child: Stack(

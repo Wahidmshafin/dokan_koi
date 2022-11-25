@@ -3,6 +3,7 @@ import 'package:dokan_koi/components/new_card.dart';
 import 'package:dokan_koi/models/Store.dart';
 import 'package:flutter/material.dart';
 
+import '../../../constants.dart';
 import '../../../size_config.dart';
 import '../../home/components/section_title.dart';
 class NewProducts extends StatelessWidget {
@@ -24,11 +25,11 @@ class NewProducts extends StatelessWidget {
             if(streamSnapshot.hasData)
               {
                 print("ok");
-                return Padding(
+                return (streamSnapshot.connectionState == ConnectionState.waiting)? Center(child: CircularProgressIndicator(color: kPrimaryColor,),):Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: Container(
                     width: double.infinity,
-                    height: getProportionateScreenHeight(230),
+                    height: getProportionateScreenHeight(250),
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: streamSnapshot.data!.docs.length,

@@ -47,7 +47,7 @@ class _AddShopState extends State<shopedit> {
         _subDistrictController.text =snapshot.data!['subDistrict'];
         _districtController.text =snapshot.data!['district'];
         _phoneController.text =snapshot.data!['phone'];
-      return SingleChildScrollView(
+      return (snapshot.connectionState == ConnectionState.waiting)? Center(child: CircularProgressIndicator(color: kPrimaryColor,),):SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10),

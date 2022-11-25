@@ -29,7 +29,7 @@ class Body extends StatelessWidget {
       stream: _shop.doc(product.id).snapshots(),
       builder: (context, snapshot) {
         final data = snapshot.data;
-        return ListView(
+        return (snapshot.connectionState == ConnectionState.waiting)? Center(child: CircularProgressIndicator(color: kPrimaryColor,),): ListView(
           padding: EdgeInsets.only(top: 10),
           children: [
             ProductImages(product: product),

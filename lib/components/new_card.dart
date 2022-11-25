@@ -176,7 +176,7 @@ class _NewcardState extends State<Newcard> {
                                       if(snapshot.data==null){
                                         return Text("");
                                       }
-                                      return Padding(
+                                      return (snapshot.connectionState == ConnectionState.waiting)? Center(child: CircularProgressIndicator(color: kPrimaryColor,),): Padding(
                                         padding:  EdgeInsets.all(getProportionateScreenWidth(8)),
                                         child: CircleAvatar(
                                           radius: 19.0,

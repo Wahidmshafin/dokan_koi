@@ -3,6 +3,7 @@ import 'package:dokan_koi/components/product_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../../constants.dart';
 import '../../../size_config.dart';
 
 class ShopProducts extends StatelessWidget {
@@ -22,7 +23,7 @@ class ShopProducts extends StatelessWidget {
           builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
             if(streamSnapshot.hasData)
             {
-              return SingleChildScrollView(
+              return (streamSnapshot.connectionState == ConnectionState.waiting)? Center(child: CircularProgressIndicator(color: kPrimaryColor,),):SingleChildScrollView(
                 child: Container(
                   height: getProportionateScreenHeight(300),
                   child: ListView.builder(

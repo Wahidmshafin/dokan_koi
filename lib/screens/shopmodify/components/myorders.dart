@@ -3,6 +3,7 @@ import 'package:dokan_koi/screens/shopmodify/components/print.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../../constants.dart';
 import '../../../size_config.dart';
 
 class MyOrders extends StatelessWidget {
@@ -65,7 +66,7 @@ class MyOrders extends StatelessWidget {
                           builder:
                               (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
                             if (streamSnapshot.hasData) {
-                              return Container(
+                              return (streamSnapshot.connectionState == ConnectionState.waiting)? Center(child: CircularProgressIndicator(color: kPrimaryColor,),):Container(
                                 height: getProportionateScreenHeight(550),
                                 color: Colors.white,
                                 child: ListView.builder(

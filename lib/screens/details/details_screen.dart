@@ -19,7 +19,7 @@ class DetailsScreen extends StatelessWidget {
       builder: (context, snapshot) {
         if(snapshot.hasData) {
           var data = snapshot.data!.data();
-          return Scaffold(
+          return (snapshot.connectionState == ConnectionState.waiting)? Center(child: CircularProgressIndicator(color: kPrimaryColor,),):Scaffold(
             backgroundColor: Color(0xFFF5F6F9),
             appBar: AppBar(
               elevation: 2,

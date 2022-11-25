@@ -3,6 +3,7 @@ import 'package:dokan_koi/models/Store.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../constants.dart';
 import '../details/components/custom_app_bar.dart';
 import 'components/shopmodifybody.dart';
 
@@ -19,7 +20,7 @@ class ShopModify extends StatelessWidget {
       builder: (context, snapshot) {
         if(snapshot.hasData) {
           final data = snapshot.data!.data();
-          return Scaffold(
+          return (snapshot.connectionState == ConnectionState.waiting)? Center(child: CircularProgressIndicator(color: kPrimaryColor,),):Scaffold(
             backgroundColor: Colors.grey.withOpacity(0.09),
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(AppBar().preferredSize.height),

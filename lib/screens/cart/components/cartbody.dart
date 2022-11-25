@@ -3,6 +3,7 @@ import 'package:dokan_koi/screens/cart/components/cart_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../../constants.dart';
 import '../../../size_config.dart';
 import 'check_out_card.dart';
 
@@ -37,7 +38,7 @@ class _CartItemsState extends State<CartItems> {
               total += (qtr*price);
             }
             print(total);
-            return Scaffold(
+            return (streamSnapshot.connectionState == ConnectionState.waiting)? Center(child: CircularProgressIndicator(color: kPrimaryColor,),):Scaffold(
               backgroundColor: Colors.white.withOpacity(0.97),
               appBar: AppBar(
                 title: Column(

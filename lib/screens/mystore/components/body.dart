@@ -4,6 +4,8 @@ import 'package:dokan_koi/screens/shopmodify/shopmodify.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../../constants.dart';
+
 
 class Body extends StatelessWidget {
 
@@ -16,11 +18,11 @@ class Body extends StatelessWidget {
        stream: _shop.doc(_auth.currentUser?.uid).snapshots(),
        builder: (context, snapshot) {
          if(snapshot.data?.exists??false) {
-           return ShopModify();
+           return (snapshot.connectionState == ConnectionState.waiting)? Center(child: CircularProgressIndicator(color: kPrimaryColor,),):ShopModify();
          }
          else
            {
-             return ShopForm();
+             return (snapshot.connectionState == ConnectionState.waiting)? Center(child: CircularProgressIndicator(color: kPrimaryColor,),):ShopForm();
            }
        }
      );

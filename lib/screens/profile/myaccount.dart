@@ -39,7 +39,7 @@ class MyAccount extends StatelessWidget {
           _lnameController.text =snapshot.data!['lname'];
           _addressController.text =snapshot.data!['address'];
           _phoneController.text =snapshot.data!['phone'];
-          return SingleChildScrollView(
+          return (snapshot.connectionState == ConnectionState.waiting)? Center(child: CircularProgressIndicator(color: kPrimaryColor,),):SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 10),

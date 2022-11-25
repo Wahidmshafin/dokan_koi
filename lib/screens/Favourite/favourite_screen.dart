@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../components/coustom_bottom_nav_bar.dart';
 import '../../components/favcard.dart';
+import '../../constants.dart';
 import '../../enums.dart';
 import '../../models/Store.dart';
 import '../../size_config.dart';
@@ -30,7 +31,7 @@ class favscreen extends StatelessWidget {
           if(streamSnapshot.hasData)
           {
             print("ok");
-            return Center(
+            return (streamSnapshot.connectionState == ConnectionState.waiting)? Center(child: CircularProgressIndicator(color: kPrimaryColor,),): Center(
               child: Container(
                 width: getProportionateScreenWidth(350),
                 height: getProportionateScreenHeight(670),

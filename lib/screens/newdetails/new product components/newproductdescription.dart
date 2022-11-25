@@ -63,6 +63,9 @@ class ProductDescription extends StatelessWidget {
     return StreamBuilder(
         stream: _shop.doc(store.id).collection('ureview').snapshots(includeMetadataChanges: true),
         builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+          if(streamSnapshot.connectionState == ConnectionState.waiting){
+           return Center(child: CircularProgressIndicator(color: kPrimaryColor,),);
+          }
           total = 0;
           var initrating=0.0;
           var cnt = streamSnapshot.data!.docs.length;
@@ -121,7 +124,7 @@ class ProductDescription extends StatelessWidget {
                               if(snapshot.data==null){
                                 return Text("");
                               }
-                              return Padding(
+                              return (snapshot.connectionState == ConnectionState.waiting)? Center(child: CircularProgressIndicator(color: kPrimaryColor,),):Padding(
                                 padding:  EdgeInsets.all(getProportionateScreenWidth(8)),
                                 child: CircleAvatar(
                                   radius: 19.0,
