@@ -226,7 +226,7 @@ class _AddShopState extends State<shopedit> {
               ),
               SizedBox(height: 20,),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 10),
+                padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(10)),
                 width: getProportionateScreenWidth(400),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
@@ -246,7 +246,7 @@ class _AddShopState extends State<shopedit> {
                           ),),
                         Spacer(),
                         SizedBox(
-                          width: getProportionateScreenWidth(130),
+                          width: getProportionateScreenWidth(140),
                           child: DropdownButton(
                             // Initial Value
                             borderRadius: BorderRadius.circular(10),
