@@ -4,6 +4,7 @@ import 'package:dokan_koi/screens/sign_in/sign_in_screen.dart';
 import 'package:dokan_koi/size_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../components/default_button.dart';
 // This is the best practice
@@ -39,7 +40,7 @@ class _BodyState extends State<Body> {
     auth.authStateChanges().listen((event) {
       if(event!=null)
       {
-        Navigator.pushNamed(context, HomeScreen.routeName);
+        Navigator.pushNamed(context, HomeScreen.routeName).whenComplete(() => SystemNavigator.pop());
       }
     });
   }
