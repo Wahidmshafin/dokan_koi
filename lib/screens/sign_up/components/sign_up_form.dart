@@ -1,6 +1,7 @@
 import 'package:dokan_koi/components/custom_surfix_icon.dart';
 import 'package:dokan_koi/components/default_button.dart';
 import 'package:dokan_koi/components/form_error.dart';
+import 'package:dokan_koi/models/myuser.dart';
 import 'package:dokan_koi/screens/complete_profile/complete_profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -55,11 +56,17 @@ class _SignUpFormState extends State<SignUpForm> {
             text: "Continue",
             press: () async{
               try{
-                final user= await auth.createUserWithEmailAndPassword(email: email, password: conform_password);
-                if(user!=null) {
-                  KeyboardUtil.hideKeyboard(context);
-                  Navigator.pushNamed(context, CompleteProfileScreen.routeName);
-                }
+                final FormState? state=_formKey.currentState;
+                if(state!.validate())
+                  {
+                    Navigator.pushNamed(context, CompleteProfileScreen.routeName, arguments: MyUser(user: email, password: password));
+                  }
+                else
+                  {
+                    throw Error();
+                  }
+                //final user= await auth.createUserWithEmailAndPassword(email: email, password: conform_password);
+                KeyboardUtil.hideKeyboard(context);
               }
               catch(e)
               {
@@ -112,7 +119,7 @@ class _SignUpFormState extends State<SignUpForm> {
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPassNullError);
-        } else if (value.length >= 8) {
+        } else if (value.length >=6) {
           removeError(error: kShortPassError);
         }
         password = value;
@@ -121,7 +128,7 @@ class _SignUpFormState extends State<SignUpForm> {
         if (value!.isEmpty) {
           addError(error: kPassNullError);
           return "";
-        } else if (value.length < 8) {
+        } else if (value.length < 6) {
           addError(error: kShortPassError);
           return "";
         }

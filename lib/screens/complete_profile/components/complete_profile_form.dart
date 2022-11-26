@@ -10,6 +10,10 @@ import '../../../size_config.dart';
 import '../../home/home_screen.dart';
 
 class CompleteProfileForm extends StatefulWidget {
+
+  String user, password;
+  CompleteProfileForm({super.key, required this.user, required this.password});
+
   @override
   _CompleteProfileFormState createState() => _CompleteProfileFormState();
 }
@@ -59,13 +63,23 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
             press: () async{
               print(profile.doc());
               try {
-                await profile.doc(auth.currentUser?.uid).set({
-                  "fname": firstName,
-                  "lname": lastName,
-                  "phone": phoneNumber,
-                  "address": address
-                });
-                Navigator.pushNamed(context, HomeScreen.routeName);
+                final FormState? state=_formKey.currentState;
+                if(state!.validate())
+                  {
+                    final user= await auth.createUserWithEmailAndPassword(email: widget.user, password: widget.password);
+                    await profile.doc(auth.currentUser?.uid).set({
+                      "fname": firstName,
+                      "lname": lastName,
+                      "phone": phoneNumber,
+                      "address": address
+                    });
+                    Navigator.pushNamed(context, HomeScreen.routeName);
+                  }
+                else
+                  {
+                    addError(error: "Fill information properly");
+                  }
+
               }catch(e)
               {
                 print(e);
@@ -95,7 +109,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
       },
       decoration: InputDecoration(
         labelText: "Address",
-        hintText: "Enter your phone address",
+        hintText: "Enter your address",
         // If  you are using latest version of flutter then lable text and hint text shown like this
         // if you r using flutter less then 1.20.* then maybe this is not working properly
         floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -116,13 +130,14 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
         return;
       },
       validator: (value) {
+
         if (value!.isEmpty) {
           addError(error: kPhoneNumberNullError);
           return "";
         }
         return null;
       },
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         labelText: "Phone Number",
         hintText: "Enter your phone number",
         // If  you are using latest version of flutter then lable text and hint text shown like this

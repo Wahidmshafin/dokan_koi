@@ -16,7 +16,7 @@ import '../size_config.dart';
 class Newcard extends StatefulWidget {
    Newcard({
     Key? key,
-    this.width = 240,
+    this.width = double.infinity,
     this.aspectRetio = 1.1,
     required this.store,
   }) : super(key: key);
@@ -48,6 +48,8 @@ class _NewcardState extends State<Newcard> {
       "name":widget.store.title,
       "type":widget.store.type,
       "id":widget.store.id,
+      "lat":widget.store.lat,
+      "lon":widget.store.lon,
       "subDistrict":widget.store.subDistrict,
       "rating":widget.store.rating,
 
