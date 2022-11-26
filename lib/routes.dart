@@ -6,10 +6,12 @@ import 'package:dokan_koi/screens/cart/components/cartbody.dart';
 import 'package:dokan_koi/screens/complete_profile/complete_profile_screen.dart';
 import 'package:dokan_koi/screens/details/details_screen.dart';
 import 'package:dokan_koi/screens/forgot_password/forgot_password_screen.dart';
+import 'package:dokan_koi/screens/home/components/allcatagory.dart';
 import 'package:dokan_koi/screens/home/components/search.dart';
 import 'package:dokan_koi/screens/home/home_screen.dart';
 import 'package:dokan_koi/screens/login_success/login_success_screen.dart';
 import 'package:dokan_koi/screens/mystore/mystore.dart';
+import 'package:dokan_koi/screens/newdetails/new%20product%20components/allnewshops.dart';
 import 'package:dokan_koi/screens/newdetails/newproductsscreen.dart';
 import 'package:dokan_koi/screens/otp/otp_screen.dart';
 import 'package:dokan_koi/screens/profile/myaccount.dart';
@@ -25,6 +27,7 @@ import 'package:dokan_koi/screens/shopmodify/shopmodify.dart';
 import 'package:dokan_koi/screens/sign_in/sign_in_screen.dart';
 import 'package:dokan_koi/screens/splash/splash_screen.dart';
 import 'package:flutter/widgets.dart';
+import 'Special for you/Specialforyouscreen.dart';
 import 'helper/helpscreen.dart';
 import 'screens/sign_up/sign_up_screen.dart';
 
@@ -51,6 +54,9 @@ final Map<String, WidgetBuilder> routes = {
   ProductForm.routeName:(context) => ProductForm(),
   AllProducts.routeName: (context)=>AllProducts(),
   MyProducts.routeName: (context)=>MyProducts(),
+  AllCatagory.routeName: (context)=>AllCatagory(),
+  Specialcreen.routeName: (context)=>Specialcreen(),
+  Allnewshops.routeName: (context)=>Allnewshops(),
   favscreen.routeName: (context)=>favscreen(),
   MyApp.routeName: (context)=>MyApp(),
   MyAccount.routeName: (context)=>MyAccount(),

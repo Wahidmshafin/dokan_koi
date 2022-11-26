@@ -5,6 +5,7 @@ import 'package:dokan_koi/screens/Shopfollow/Shop Components/shopproduct.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
 
 import '../../../constants.dart';
 import '../../../models/Store.dart';
@@ -40,6 +41,7 @@ class ProductDescription extends StatelessWidget {
       "district":store.district,
       "image":store.images[0],
       "name":store.title,
+      "type":store.type,
       "id":store.id,
       "subDistrict":store.subDistrict,
       "rating":store.rating,
@@ -259,7 +261,7 @@ class ProductDescription extends StatelessWidget {
                             .collection('ureview')
                             .doc(auth.currentUser?.uid)
                             .set({"rating": rating});
-                        var c = (total/cnt);
+                        var c = double.parse((total/cnt).toStringAsPrecision(3));
 
                         _shop.doc(store.id).update({"rating":c});
                       },

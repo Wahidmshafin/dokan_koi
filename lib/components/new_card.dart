@@ -46,6 +46,7 @@ class _NewcardState extends State<Newcard> {
       "district":widget.store.district,
       "image":widget.store.images[0],
       "name":widget.store.title,
+      "type":widget.store.type,
       "id":widget.store.id,
       "subDistrict":widget.store.subDistrict,
       "rating":widget.store.rating,

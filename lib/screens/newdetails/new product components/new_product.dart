@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dokan_koi/components/new_card.dart';
 import 'package:dokan_koi/models/Store.dart';
+import 'package:dokan_koi/screens/newdetails/new%20product%20components/allnewshops.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
@@ -16,7 +17,9 @@ class NewProducts extends StatelessWidget {
         Padding(
           padding:
           EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-          child: SectionTitle(title: "New Shops", press: () {}),
+          child: SectionTitle(title: "New Shops", press: () {
+            Navigator.pushNamed(context, Allnewshops.routeName);
+          }),
         ),
         SizedBox(height: getProportionateScreenWidth(20)),
         StreamBuilder(

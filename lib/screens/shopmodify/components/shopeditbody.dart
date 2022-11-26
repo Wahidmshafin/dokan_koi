@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../../constants.dart';
 import '../../../size_config.dart';
 import 'ShopEdit.dart';
 class shopeditbody extends StatelessWidget {
@@ -15,7 +16,7 @@ class shopeditbody extends StatelessWidget {
       StreamBuilder(
         stream: _shop.doc(_auth.currentUser?.uid).snapshots(),
     builder: (context, snapshot) {
-       return SafeArea(
+       return (snapshot.connectionState == ConnectionState.waiting)? Center(child: CircularProgressIndicator(color: kPrimaryColor,),):SafeArea(
          child: SingleChildScrollView(
              child: Column(
                children: [

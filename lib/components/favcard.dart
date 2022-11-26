@@ -38,6 +38,7 @@ class Favcard extends StatelessWidget {
       "image":store.images[0],
       "name":store.title,
       "id":store.id,
+      "type":store.type,
       "subDistrict":store.subDistrict,
       "rating":store.rating,
 

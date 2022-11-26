@@ -38,6 +38,7 @@ class Shops extends StatelessWidget {
                         address: streamSnapshot.data!.docs[index]['address'],
                         images: [streamSnapshot.data!.docs[index]['image']],
                         rating: streamSnapshot.data!.docs[index]['rating'].toDouble(),
+                        type: streamSnapshot.data?.docs[index]['type'],
                         lat: streamSnapshot.data!.docs[index]['lat'].toDouble(),
                         lon: streamSnapshot.data!.docs[index]['lon'].toDouble(),
                         title: streamSnapshot.data!.docs[index]['name'],

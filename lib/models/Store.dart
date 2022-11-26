@@ -22,6 +22,6 @@ class Store {
     this.tfo=0,
     this.tpo=0,
     required this.id,
-     this.type="N/A",
+     required this.type,
   });
 }
