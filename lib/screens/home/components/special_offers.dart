@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../../../Special for you/Specialforyouscreen.dart';
+import '../../../constants.dart';
 import '../../../size_config.dart';
 import 'allcatagory.dart';
 import 'section_title.dart';
@@ -87,7 +88,7 @@ class SpecialOfferCard extends StatelessWidget {
     return StreamBuilder(
         stream: _shop.where("type", isEqualTo:category).snapshots(),
     builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
-      return Padding(
+      return (streamSnapshot.connectionState == ConnectionState.waiting)? Center(child: CircularProgressIndicator(color: kPrimaryColor,),):Padding(
         padding: EdgeInsets.only(left: getProportionateScreenWidth(20)),
         child: GestureDetector(
           onTap: () {

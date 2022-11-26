@@ -114,7 +114,7 @@ class _NewcardState extends State<Newcard> {
         print(snapshot.connectionState);
         print(snapshot.data);
         return Padding(
-          padding: EdgeInsets.only(left: getProportionateScreenWidth(20)),
+          padding: EdgeInsets.all(getProportionateScreenWidth(10)),
           child: SizedBox(
             width: widget.width,
             child: GestureDetector(
