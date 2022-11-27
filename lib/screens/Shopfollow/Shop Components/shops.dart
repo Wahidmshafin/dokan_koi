@@ -6,6 +6,7 @@ import '../../../constants.dart';
 import '../../../models/Store.dart';
 import '../../../size_config.dart';
 import '../../home/components/section_title.dart';
+import '../../newdetails/new product components/allnewshops.dart';
 class Shops extends StatelessWidget {
   final _shop = FirebaseFirestore.instance.collection('shop');
   @override
@@ -15,7 +16,7 @@ class Shops extends StatelessWidget {
         Padding(
           padding:
           EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-          child: SectionTitle(title: "Popular Shops", press: () {}),
+          child: SectionTitle(title: "Popular Shops", press: () {Navigator.pushNamed(context, Allnewshops.routeName);}),
         ),
         SizedBox(height: getProportionateScreenWidth(20)),
         StreamBuilder(
@@ -53,7 +54,7 @@ class Shops extends StatelessWidget {
               );
             }
             return const Center(
-                child: CircularProgressIndicator());
+                child: CircularProgressIndicator(color: kPrimaryColor,));
           },
         )
       ],

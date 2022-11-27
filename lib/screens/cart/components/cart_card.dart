@@ -57,7 +57,7 @@ class CartCard extends StatelessWidget {
                 width: getProportionateScreenWidth(100),
                 imageUrl: image,
                 placeholder: (context, test) => const SizedBox(
-                    child: CircularProgressIndicator()),
+                    child: CircularProgressIndicator(color: kPrimaryColor,)),
               ),
               SizedBox(width: getProportionateScreenWidth(20),),
               Column(

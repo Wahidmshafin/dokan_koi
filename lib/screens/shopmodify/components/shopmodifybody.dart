@@ -129,7 +129,7 @@ class _BodyState extends State<Body> {
                       placeholder: (context, test) => SizedBox(
                           height: getProportionateScreenWidth(90),
                           width: getProportionateScreenWidth(90),
-                          child: const CircularProgressIndicator()),
+                          child: const CircularProgressIndicator(color: kPrimaryColor,)),
                     ),
                     Positioned(
                       right: -16,

@@ -115,7 +115,7 @@ class _CartItemsState extends State<CartItems> {
             }
 
             return const Center(
-                child: CircularProgressIndicator());
+                child: CircularProgressIndicator(color: kPrimaryColor,));
           }
       ),
     );
