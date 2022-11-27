@@ -93,7 +93,7 @@ class SpecialOfferCard extends StatelessWidget {
         child: GestureDetector(
           onTap: () {
             Navigator.pushNamed(context, Specialcreen.routeName,
-                arguments: Storetypeargument(type: 'BookStore'));
+                arguments: Storetypeargument(type: category));
           },
           child: SizedBox(
             width: getProportionateScreenWidth(242),
@@ -108,6 +108,7 @@ class SpecialOfferCard extends StatelessWidget {
                     height: getProportionateScreenWidth(100),
                     fit: BoxFit.cover,
                     colorBlendMode: BlendMode.saturation,
+                    opacity: const AlwaysStoppedAnimation(.9),
                   ),
                   Container(
                     decoration: BoxDecoration(

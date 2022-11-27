@@ -34,6 +34,7 @@ class ProductDescription extends StatelessWidget {
                       backgroundImage:  AssetImage(store.images[0]),
                       backgroundColor: Colors.white,
                       radius: 30,
+
                     ),
                     SizedBox(width: 10,),
                     Column(
