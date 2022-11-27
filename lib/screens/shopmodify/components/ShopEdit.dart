@@ -3,6 +3,8 @@ import 'package:dokan_koi/constants.dart';
 import 'package:dokan_koi/size_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geolocator/geolocator.dart';
 class shopedit extends StatefulWidget {
 
   @override
@@ -18,8 +20,44 @@ class _AddShopState extends State<shopedit> {
   final TextEditingController _phoneController = TextEditingController();
   FirebaseAuth auth = FirebaseAuth.instance;
   final shop = FirebaseFirestore.instance.collection('shop');
+  final product=FirebaseFirestore.instance.collection("product");
   Future a = FirebaseFirestore.instance.collection('shop').doc(FirebaseAuth.instance.currentUser?.uid).get().then((value) => value.get('type'));
   String dropdownvalue="a";
+
+  Position? location;
+  double lat=0,lon=0;
+
+  void getCurrentLocation() async{
+    bool serviceEnabled=await Geolocator.isLocationServiceEnabled();
+    if(serviceEnabled)
+    {
+      LocationPermission permission = await Geolocator.checkPermission();
+      if(permission==LocationPermission.denied)
+      {
+        permission=await Geolocator.requestPermission();
+        if(permission==LocationPermission.denied)
+        {
+          return;
+        }
+      }
+      location=await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      Position pos;
+      var lastposition = await Geolocator.getLastKnownPosition();
+
+      Fluttertoast.showToast(
+        msg: " Location acquired ",
+        toastLength: Toast.LENGTH_SHORT,
+        fontSize: 20,
+      );
+    }
+    else
+    {
+      Fluttertoast.showToast(msg: "Turn on Location", toastLength: Toast.LENGTH_SHORT,fontSize: 20);
+    }
+  }
+
+
+
 
   // List of items in our dropdown menu
   var items = [
@@ -47,6 +85,8 @@ class _AddShopState extends State<shopedit> {
         _subDistrictController.text =snapshot.data!['subDistrict'];
         _districtController.text =snapshot.data!['district'];
         _phoneController.text =snapshot.data!['phone'];
+        lat=snapshot.data!['lat'];
+        lon=snapshot.data!['lon'];
       return (snapshot.connectionState == ConnectionState.waiting)? Center(child: CircularProgressIndicator(color: kPrimaryColor,),):SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Padding(
@@ -221,6 +261,33 @@ class _AddShopState extends State<shopedit> {
                         ),
                       ],
                     ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: TextButton(
+                        onPressed: getCurrentLocation,
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(Colors.green[600]),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.location_on,
+                              size: 16,
+                              color: Colors.white,
+                            ),
+                            Text("Get Location",style: TextStyle(color: Colors.white, fontSize: 16),),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Text("For varification purpose, you must provide\nyour current location which will be set\nas your store location.",
+                      style: TextStyle(
+                        fontSize: getProportionateScreenHeight(16),
+                        color: Colors.grey,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 20,),
                   ],
                 ),
               ),
@@ -316,6 +383,8 @@ class _AddShopState extends State<shopedit> {
                       "type": dropdownvalue,
                       "rating": 1.00,
                       "images": "tshirt.png",
+                      "lat":location==null?lat:location!.latitude,
+                      "lon":location==null?lon:location!.longitude,
                       "id": auth.currentUser?.uid,
                     });
                     Navigator.of(context).pop();

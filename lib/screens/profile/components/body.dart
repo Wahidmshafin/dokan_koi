@@ -12,43 +12,43 @@ import 'profile_pic.dart';
 class Body extends StatelessWidget {
   final auth = FirebaseAuth.instance;
 
-  Position? location;
-  final shop = FirebaseFirestore.instance.collection('shop');
-
-  void getCurrentLocation() async {
-    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (serviceEnabled) {
-      LocationPermission permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
-        if (permission == LocationPermission.denied) {
-          return;
-        }
-      }
-      location = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
-      Position pos;
-      var lastposition = await Geolocator.getLastKnownPosition();
-
-      Fluttertoast.showToast(
-        msg: " Location Updated ",
-        toastLength: Toast.LENGTH_SHORT,
-        fontSize: 20,
-      );
-
-      shop.doc(auth.currentUser?.uid).update({
-        "lat": location?.latitude,
-        "lon": location?.longitude,
-      });
-    }
-    else {
-      Fluttertoast.showToast(
-        msg: " Turn on your location ",
-        toastLength: Toast.LENGTH_SHORT,
-        fontSize: 20,
-      );
-    }
-  }
+  // Position? location;
+  // final shop = FirebaseFirestore.instance.collection('shop');
+  //
+  // void getCurrentLocation() async {
+  //   bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  //   if (serviceEnabled) {
+  //     LocationPermission permission = await Geolocator.checkPermission();
+  //     if (permission == LocationPermission.denied) {
+  //       permission = await Geolocator.requestPermission();
+  //       if (permission == LocationPermission.denied) {
+  //         return;
+  //       }
+  //     }
+  //     location = await Geolocator.getCurrentPosition(
+  //         desiredAccuracy: LocationAccuracy.high);
+  //     Position pos;
+  //     var lastposition = await Geolocator.getLastKnownPosition();
+  //
+  //     Fluttertoast.showToast(
+  //       msg: " Location Updated ",
+  //       toastLength: Toast.LENGTH_SHORT,
+  //       fontSize: 20,
+  //     );
+  //
+  //     shop.doc(auth.currentUser?.uid).update({
+  //       "lat": location?.latitude,
+  //       "lon": location?.longitude,
+  //     });
+  //   }
+  //   else {
+  //     Fluttertoast.showToast(
+  //       msg: " Turn on your location ",
+  //       toastLength: Toast.LENGTH_SHORT,
+  //       fontSize: 20,
+  //     );
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -65,16 +65,16 @@ class Body extends StatelessWidget {
               Navigator.pushNamed(context, MyAccount.routeName)
             },
           ),
-          ProfileMenu(
-            text: "Update Location",
-            icon: "assets/icons/Location point.svg",
-            press: getCurrentLocation,
-          ),
           // ProfileMenu(
-          //   text: "Settings",
-          //   icon: "assets/icons/Settings.svg",
-          //   press: () {},
+          //   text: "Update Location",
+          //   icon: "assets/icons/Location point.svg",
+          //   press: getCurrentLocation,
           // ),
+          ProfileMenu(
+            text: "Settings",
+            icon: "assets/icons/Settings.svg",
+            press: () {},
+          ),
           ProfileMenu(
             text: "Help Center",
             icon: "assets/icons/Question mark.svg",
