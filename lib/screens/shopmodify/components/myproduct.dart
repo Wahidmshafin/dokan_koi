@@ -49,7 +49,7 @@ class _MyProductsState extends State<MyProducts> {
           builder: (context, snapshots) {
             return (snapshots.connectionState == ConnectionState.waiting)
                 ? Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(color: kPrimaryColor,),
             )
                 :
             ListView.builder(

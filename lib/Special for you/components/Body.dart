@@ -67,7 +67,7 @@ class Body extends StatelessWidget {
           );
         }
         return const Center(
-            child: CircularProgressIndicator());
+            child: CircularProgressIndicator(color: kPrimaryColor,));
       },
     );
   }

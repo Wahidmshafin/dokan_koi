@@ -35,7 +35,7 @@ class _ProductImagesState extends State<ProductImages> {
                 width: double.infinity,
                 imageUrl: widget.product.images,
                 placeholder: (context, test) => const SizedBox(
-                    child: CircularProgressIndicator()),
+                    child: CircularProgressIndicator(color: kPrimaryColor,)),
               ),
             ),
           ),

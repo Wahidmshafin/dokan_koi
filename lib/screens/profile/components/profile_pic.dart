@@ -94,7 +94,7 @@ class _ProfilePicState extends State<ProfilePic> {
                         placeholder: (context, test) => SizedBox(
                             height: getProportionateScreenWidth(90),
                             width: getProportionateScreenWidth(90),
-                            child: const CircularProgressIndicator()),
+                            child: const CircularProgressIndicator(color: kPrimaryColor,)),
                       ),
                 Positioned(
                   right: -16,

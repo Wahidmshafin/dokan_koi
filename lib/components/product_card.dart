@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dokan_koi/screens/details/details_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../constants.dart';
 import '../size_config.dart';
 
 class ProductCard extends StatelessWidget {
@@ -53,7 +54,7 @@ class ProductCard extends StatelessWidget {
             width: getProportionateScreenWidth(100),
             imageUrl: image,
             placeholder: (context, test) => const SizedBox(
-                child: CircularProgressIndicator()),
+                child: CircularProgressIndicator(color: kPrimaryColor,)),
         ),
           ),
             //Spacer(),

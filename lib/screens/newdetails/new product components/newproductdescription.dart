@@ -95,11 +95,12 @@ class ProductDescription extends StatelessWidget {
                       Row(
                         children: [
                           CircleAvatar(
-                            backgroundImage:NetworkImage(
+                            foregroundImage:NetworkImage(
                               store.images[0],
                             ),
                             backgroundColor: Colors.white,
                             radius: 30,
+
                           ),
                           SizedBox(
                             width: 10,

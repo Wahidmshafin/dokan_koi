@@ -61,7 +61,7 @@ class favscreen extends StatelessWidget {
             );
           }
           return const Center(
-              child: CircularProgressIndicator());
+              child: CircularProgressIndicator(color: kPrimaryColor,));
         },
       ),
       bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.favourite),
