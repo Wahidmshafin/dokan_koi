@@ -76,6 +76,12 @@ class _AddShopState extends State<shopedit> {
     return StreamBuilder(
         stream: shop.doc(auth.currentUser?.uid).snapshots(),
         builder: (context, snapshot) {
+          if(snapshot.connectionState == ConnectionState.waiting)
+          {
+             Center(child: CircularProgressIndicator(color: kPrimaryColor,),);
+          }
+
+
           if(dropdownvalue=="a"){
             dropdownvalue=snapshot.data!['type'];
           }

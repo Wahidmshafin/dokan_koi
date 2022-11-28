@@ -93,6 +93,8 @@ class Body extends StatelessWidget {
                     child: DefaultButton(
                       text: "Add To Cart",
                       press: () {
+                        var v =_products.where('uid', isEqualTo: auth.currentUser!.uid).where('sid',isEqualTo: product.id).count();
+                        print(v);
                         _products.add({
                           "title": product.title,
                           "price": product.price.toInt(),
