@@ -78,7 +78,7 @@ class _AddShopState extends State<shopedit> {
         builder: (context, snapshot) {
           if(snapshot.connectionState == ConnectionState.waiting)
           {
-            Center(child: CircularProgressIndicator(color: kPrimaryColor,),);
+             Center(child: CircularProgressIndicator(color: kPrimaryColor,),);
           }
           else {
     if(dropdownvalue=="a"){
