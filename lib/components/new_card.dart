@@ -111,8 +111,6 @@ class _NewcardState extends State<Newcard> {
     return StreamBuilder<Position>(
       stream: Geolocator.getPositionStream(locationSettings: locationSettings),
       builder: (context, snapshot) {
-        print(snapshot.connectionState);
-        print(snapshot.data);
         return Padding(
           padding: EdgeInsets.all(getProportionateScreenWidth(10)),
           child: SizedBox(
