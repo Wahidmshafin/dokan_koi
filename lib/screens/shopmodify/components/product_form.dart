@@ -6,6 +6,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 
@@ -144,6 +145,7 @@ class _ProductFormState extends State<ProductForm> {
                         final int price = int.parse(_priceController.text);
 
                         try{
+                          Fluttertoast.showToast(msg: "Uploading products. Please wait",toastLength: Toast.LENGTH_LONG, fontSize: 20);
                           await storage
                               .ref("product/${tmp.name}")
                               .putFile(File(tmp.path));
