@@ -103,9 +103,11 @@ class _CartItemsState extends State<CartItems> {
                       },
                       child: CartCard(
                           id: streamSnapshot.data!.docs[index].id,
+                          uuid: streamSnapshot.data!.docs[index]['uuid'],
                           title: streamSnapshot.data!.docs[index]['title'],
                           price: streamSnapshot.data!.docs[index]['price'],
                           qty: streamSnapshot.data!.docs[index]['qty'],
+                          totalqty: streamSnapshot.data!.docs[index]['totalqty'],
                           image: streamSnapshot.data!.docs[index]['images']),
                     ),
                   ),

@@ -13,13 +13,14 @@ import 'top_rounded_container.dart';
 
 class Body extends StatelessWidget {
   final Product product;
+  final String docid;
   FirebaseAuth auth = FirebaseAuth.instance;
   final CollectionReference _products =
       FirebaseFirestore.instance.collection('cart');
   final CollectionReference _shop =
       FirebaseFirestore.instance.collection('shop');
 
-  Body({Key? key, required this.product}) : super(key: key);
+  Body({Key? key, required this.product ,required this.docid}) : super(key: key);
   var a;
 
   @override
@@ -80,12 +81,14 @@ class Body extends StatelessWidget {
                                     .get()
                                     .then((value) {
                                   if (value.size == 0) {
-                                    _products.add({
+                                    _products.doc(docid).set({
                                       "title": product.title,
                                       "price": product.price.toInt(),
                                       "qty": 1,
+                                      "totalqty":product.qty.toInt(),
                                       "images": product.images,
                                       "uuid": product.uid,
+                                      "docid":docid,
                                       "sid": product.id,
                                       "uid": auth.currentUser?.uid,
                                       "user": auth.currentUser?.email,
@@ -96,7 +99,8 @@ class Body extends StatelessWidget {
                                     _products
                                         .doc(value.docs.first.id)
                                         .update({"qty": v['qty'] + 1});
-                                    print(product.id);
+                                    print(docid);
+                                    print("object");
                                   }
                                 });
 

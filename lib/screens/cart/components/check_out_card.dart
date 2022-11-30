@@ -11,12 +11,14 @@ import '../../Cart Splash/splash.dart';
 class CheckoutCard extends StatelessWidget {
   int total;
 
-  CheckoutCard({Key? key, required this.total}) : super(key: key);
+  CheckoutCard({Key? key, required this.total,}) : super(key: key);
   FirebaseAuth auth = FirebaseAuth.instance;
   final CollectionReference _products =
       FirebaseFirestore.instance.collection('cart');
   final CollectionReference _orders =
-      FirebaseFirestore.instance.collection('Orders');
+      FirebaseFirestore.instance.collection('Orders'); 
+  final CollectionReference _product =
+      FirebaseFirestore.instance.collection('product');
 
   @override
   Widget build(BuildContext context) {
@@ -98,12 +100,17 @@ class CheckoutCard extends StatelessWidget {
                           if (total == 0) {
                             return;
                           }
+                         // _product.doc(docid).update({"qty":7});
                           _products
                               .where("uid", isEqualTo: auth.currentUser?.uid)
                               .get()
-                              .then((value) {
+                              .then((value) async {
                             for (var element in value.docs) {
+                              int a = await _products.doc(element.id).get().then((value) => value.get('qty'));
+                              int b = await _product.doc(element.id).get().then((value) => value.get('qty'));
+                              int c = b-a;
                               _orders.add(element.data());
+                              _product.doc(element.id).update({"qty":c});
                               _products.doc(element.id).delete();
                             }
                           });
