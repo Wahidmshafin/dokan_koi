@@ -13,8 +13,9 @@ class CheckoutCard extends StatelessWidget {
 
   CheckoutCard({Key? key, required this.total}) : super(key: key);
   FirebaseAuth auth = FirebaseAuth.instance;
-  final CollectionReference _products =
+  final CollectionReference _cart =
       FirebaseFirestore.instance.collection('cart');
+  final product = FirebaseFirestore.instance.collection("production");
   final CollectionReference _orders =
       FirebaseFirestore.instance.collection('Orders');
 
@@ -92,19 +93,21 @@ class CheckoutCard extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20)),
                           primary: Colors.white,
-                          backgroundColor: total == 0?Colors.grey:kPrimaryColor,
+                          backgroundColor:
+                              total == 0 ? Colors.grey : kPrimaryColor,
                         ),
                         onPressed: () {
                           if (total == 0) {
                             return;
                           }
-                          _products
+
+                          _cart
                               .where("uid", isEqualTo: auth.currentUser?.uid)
                               .get()
                               .then((value) {
                             for (var element in value.docs) {
                               _orders.add(element.data());
-                              _products.doc(element.id).delete();
+                              _cart.doc(element.id).delete();
                             }
                           });
                           Navigator.pushNamed(context, ordsuc.routeName);

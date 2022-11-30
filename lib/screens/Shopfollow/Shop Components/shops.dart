@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dokan_koi/components/new_card.dart';
+import 'package:dokan_koi/screens/Shopfollow/Shop%20Components/mostpopularshop.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
@@ -22,12 +23,12 @@ class Shops extends StatelessWidget {
           child: SectionTitle(
               title: "Popular Shops",
               press: () {
-                Navigator.pushNamed(context, Allnewshops.routeName);
+                Navigator.pushNamed(context, AllPopularShop.routeName);
               }),
         ),
         SizedBox(height: getProportionateScreenWidth(20)),
         StreamBuilder(
-          stream: _shop.snapshots(),
+          stream: _shop.orderBy("tfo",descending: true).snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
             if (streamSnapshot.hasData) {
               print("ok");
@@ -73,6 +74,8 @@ class Shops extends StatelessWidget {
                                       ['district'],
                                   subDistrict: streamSnapshot.data!.docs[index]
                                       ['subDistrict'],
+                                  tpo: streamSnapshot.data!.docs[index]['tpo'],
+                                  tfo: streamSnapshot.data!.docs[index]['tfo'],
                                 ),
                               ),
                             );

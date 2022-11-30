@@ -1,6 +1,7 @@
 import 'package:dokan_koi/screens/Cart Splash/splash.dart';
 import 'package:dokan_koi/screens/Favourite/favourite_screen.dart';
 import 'package:dokan_koi/screens/Shopfollow/Shop%20Components/all_products.dart';
+import 'package:dokan_koi/screens/Shopfollow/Shop%20Components/mostpopularshop.dart';
 import 'package:dokan_koi/screens/Shopfollow/shopscreen.dart';
 import 'package:dokan_koi/screens/cart/components/cartbody.dart';
 import 'package:dokan_koi/screens/complete_profile/complete_profile_screen.dart';
@@ -63,6 +64,7 @@ final Map<String, WidgetBuilder> routes = {
   AllCatagory.routeName: (context)=>AllCatagory(),
   Specialcreen.routeName: (context)=>Specialcreen(),
   Allnewshops.routeName: (context)=>Allnewshops(),
+  AllPopularShop.routeName: (context)=>AllPopularShop(),
   favscreen.routeName: (context)=>favscreen(),
   MyApp.routeName: (context)=>MyApp(),
   MyAccount.routeName: (context)=>MyAccount(),

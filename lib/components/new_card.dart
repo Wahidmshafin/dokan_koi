@@ -30,11 +30,23 @@ class Newcard extends StatefulWidget {
 }
 
 class _NewcardState extends State<Newcard> {
+
+
+  final _shop = FirebaseFirestore.instance.collection('shop');
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   Future addToFavourite() async {
-    final FirebaseAuth _auth = FirebaseAuth.instance;
+
     var currentUser = _auth.currentUser;
     CollectionReference _collectionRef =
     FirebaseFirestore.instance.collection("favourite");
+    print(_auth.currentUser?.uid);
+    _shop
+        .doc(widget.store.id)
+        .collection('ureview')
+        .doc(_auth.currentUser?.uid)
+        .update({"favourite": true});
+    _shop.doc(widget.store.id).update({"tfo":widget.store.tfo+1});
     return _collectionRef
         .doc(currentUser!.uid)
         .collection("items")
@@ -57,8 +69,13 @@ class _NewcardState extends State<Newcard> {
   }
 
   Future removeFromFavourite() async {
-    print(widget.store.id);
-    final FirebaseAuth _auth = FirebaseAuth.instance;
+    _shop
+        .doc(widget.store.id)
+        .collection('ureview')
+        .doc(_auth.currentUser?.uid)
+        .update({"favourite": false});
+    _shop.doc(widget.store.id).update({"tfo":widget.store.tfo-1});
+
     var currentUser = _auth.currentUser;
     CollectionReference _collectionRef =
     FirebaseFirestore.instance.collection("favourite");
@@ -71,7 +88,7 @@ class _NewcardState extends State<Newcard> {
 
   final locationSettings = const LocationSettings(
     accuracy: LocationAccuracy.best,
-    distanceFilter: 0,
+    distanceFilter: 1,
   );
 
     // final locationSettings = AndroidSettings(
@@ -99,6 +116,7 @@ class _NewcardState extends State<Newcard> {
 
 
   Position? position;
+  int predistance=0;
 
   @override
   Widget build(BuildContext context) {
@@ -111,6 +129,17 @@ class _NewcardState extends State<Newcard> {
     return StreamBuilder<Position>(
       stream: Geolocator.getPositionStream(locationSettings: locationSettings),
       builder: (context, snapshot) {
+        if(snapshot.data!=null)
+          {
+              int distance = Geolocator.distanceBetween(snapshot.data!.latitude, snapshot.data!.longitude, widget.store.lat, widget.store.lon).floor();
+              int dif = distance - predistance;
+              if(dif.abs()>20)
+                {
+                  _shop.doc(widget.store.id).update({"distance":distance});
+                  predistance=distance;
+                }
+
+          }
         return Padding(
           padding: EdgeInsets.all(getProportionateScreenWidth(10)),
           child: SizedBox(

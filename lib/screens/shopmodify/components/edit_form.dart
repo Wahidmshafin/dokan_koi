@@ -158,6 +158,7 @@ class _ShopFormState extends State<ShopForm> {
             "lat" : location?.latitude,
             "lon": location?.longitude,
             "tpo":0,
+            "tfo":0,
           });
         }catch(e)
         {

@@ -17,7 +17,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   Position? position;
 
-  final shop  = FirebaseFirestore.instance;
+  final shop = FirebaseFirestore.instance;
 
   void getCurrentLocation() async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -32,7 +32,6 @@ class _MyAppState extends State<MyApp> {
       position = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.best);
       print("The position is:  ${position!.longitude}");
-
     }
   }
 
@@ -63,7 +62,10 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
         body: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance.collection('product').orderBy('id').snapshots(),
+          stream: FirebaseFirestore.instance
+              .collection('product')
+              .orderBy('id')
+              .snapshots(),
           builder: (context, snapshots) {
             return (snapshots.connectionState == ConnectionState.waiting)
                 ? Center(
@@ -78,139 +80,143 @@ class _MyAppState extends State<MyApp> {
                       var data = snapshots.data!.docs[index].data()
                           as Map<String, dynamic>;
 
-                  if (name.isEmpty) {
-
-                    return StreamBuilder<DocumentSnapshot>(
-                      stream: shop.collection("shop").doc(data['id']).snapshots(),
-                      builder: (context, snapshot) {
-                        if(snapshot.connectionState==ConnectionState.waiting)
-                          {
-                            return SizedBox(
-                              height: getProportionateScreenHeight(100),
-                              child: Center(
-                                child: CircularProgressIndicator(
-                                  color: kPrimaryColor,
+                      if (name.isEmpty) {
+                        return StreamBuilder<DocumentSnapshot>(
+                            stream: shop
+                                .collection("shop")
+                                .doc(data['id'])
+                                .snapshots(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return SizedBox(
+                                  height: getProportionateScreenHeight(100),
+                                  child: Center(
+                                    child: CircularProgressIndicator(
+                                      color: kPrimaryColor,
+                                    ),
+                                  ),
+                                );
+                              }
+                              var result =
+                                  snapshot.data!.data() as Map<String, dynamic>;
+                              return ListTile(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    DetailsScreen.routeName,
+                                    arguments: ProductDetailsArguments(id: id),
+                                  );
+                                },
+                                title: Text(
+                                  data['title'],
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
                                 ),
-                              ),
-                            );
-                          }
-                        var result =snapshot.data!.data() as Map<String, dynamic>;
-                        return ListTile(
-                          onTap: (){
-                            Navigator.pushNamed(
-                                context,
-                                DetailsScreen.routeName,
-                               arguments: ProductDetailsArguments(id: id
-                               ),
-                            );
-                          },
-                          title: Text(
-                            data['title'],
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          subtitle: Row(
-                            children: [
-                              Text(
-                                result["name"],
-                                style: TextStyle(
-                                  color: Colors.blueGrey,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600
+                                subtitle: Row(
+                                  children: [
+                                    Text(
+                                      result["name"],
+                                      style: TextStyle(
+                                          color: Colors.blueGrey,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    Spacer(),
+                                    Text(
+                                      position == null
+                                          ? "..."
+                                          : "${Geolocator.distanceBetween(position!.latitude, position!.longitude, result['lat'].toDouble(), result["lon"].toDouble()).floor()}m away",
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        color: Colors.green,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              Spacer(),
-                              Text(
-                                position==null?"...":"${Geolocator.distanceBetween(position!.latitude, position!.longitude, result['lat'].toDouble(), result["lon"].toDouble()).floor()}m away",
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 16,
+                                leading: CircleAvatar(
+                                  backgroundImage: NetworkImage(data['images']),
                                 ),
-                              ),
-                            ],
-                          ),
-                          leading: CircleAvatar(
-                            backgroundImage: NetworkImage(data['images']),
-                          ),
-                        );
+                              );
+                            });
                       }
-                    );
-                  }
-                  if (data['title']
-                      .toString()
-                      .toLowerCase()
-                      .contains(name.toLowerCase())) {
-                    return StreamBuilder<DocumentSnapshot>(
-                      stream: shop.collection("shop").doc(data['id']).snapshots(),
-                      builder: (context, snapshot) {
-                        if(snapshot.connectionState==ConnectionState.waiting)
-                        {
-                          return SizedBox(
-                            height: getProportionateScreenHeight(100),
-                            child: Center(
-                              child: CircularProgressIndicator(
-                                color: kPrimaryColor,
-                              ),
-                            ),
-                          );
-                        }
-                        var result =snapshot.data!.data() as Map<String, dynamic>;
-                        return ListTile(
-                          onTap: (){
-                            Navigator.pushNamed(
-                              context,
-                              DetailsScreen.routeName,
-                              arguments: ProductDetailsArguments(id: id
-                              ),
-                            );
-                          },
-                          title: Text(
-                            data['title'],
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          subtitle: Row(
-                            children: [
-                              Text(
-                                result["name"],
-                                style: TextStyle(
-                                    color: Colors.blueGrey,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600
+                      if (data['title']
+                          .toString()
+                          .toLowerCase()
+                          .contains(name.toLowerCase())) {
+                        return StreamBuilder<DocumentSnapshot>(
+                            stream: shop
+                                .collection("shop")
+                                .doc(data['id'])
+                                .snapshots(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return SizedBox(
+                                  height: getProportionateScreenHeight(100),
+                                  child: Center(
+                                    child: CircularProgressIndicator(
+                                      color: kPrimaryColor,
+                                    ),
+                                  ),
+                                );
+                              }
+                              var result =
+                                  snapshot.data!.data() as Map<String, dynamic>;
+                              return ListTile(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    DetailsScreen.routeName,
+                                    arguments: ProductDetailsArguments(id: id),
+                                  );
+                                },
+                                title: Text(
+                                  data['title'],
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
                                 ),
-                              ),
-                              Spacer(),
-                              Text(
-                                position==null?"...":"${Geolocator.distanceBetween(position!.latitude, position!.longitude, result['lat'].toDouble(), result["lon"].toDouble()).floor()}m away",
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: Colors.green,
-                                  fontSize: 16,
+                                subtitle: Row(
+                                  children: [
+                                    Text(
+                                      result["name"],
+                                      style: TextStyle(
+                                          color: Colors.blueGrey,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    Spacer(),
+                                    Text(
+                                      position == null
+                                          ? "..."
+                                          : "${Geolocator.distanceBetween(position!.latitude, position!.longitude, result['lat'].toDouble(), result["lon"].toDouble()).floor()}m away",
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        color: Colors.green,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
-                          ),
-                          leading: CircleAvatar(
-                            backgroundImage: NetworkImage(data['images']),
-                          ),
-
-                        );
+                                leading: CircleAvatar(
+                                  backgroundImage: NetworkImage(data['images']),
+                                ),
+                              );
+                            });
                       }
-                    );
-                  }
-                  return Container();
-                });
+                      return Container();
+                    });
           },
         ));
   }

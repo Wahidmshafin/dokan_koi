@@ -173,18 +173,16 @@ class _ProductEditState extends State<ProductEdit> {
                                   image = await storage
                                       .ref("product/${tmp.name}")
                                       .getDownloadURL();
-                                  await _product.add({
+                                  await _product.doc(agrs.id).update({
                                     "title": title,
                                     "price": price,
                                     "qty": quantity,
-                                    "image": "glap.png",
-                                    "images": image,
                                     "id": _auth.currentUser?.uid,
                                     "description": description,
-                                    "rating": 0.00
                                   });
                                   Navigator.pop(context);
-                                } catch (e) {
+                                }on FirebaseException catch (e) {
+                                  print("Error Message is :${e.message}");
                                   if (errors.isNotEmpty) {
                                     errors.clear();
                                   }
