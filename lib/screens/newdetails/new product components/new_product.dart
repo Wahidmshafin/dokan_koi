@@ -50,6 +50,7 @@ class NewProducts extends StatelessWidget {
                             lon: streamSnapshot.data!.docs[index]['lon'].toDouble(),
                             subDistrict: streamSnapshot.data!.docs[index]['subDistrict'],
                             type: streamSnapshot.data!.docs[index]['type'],
+                            tpo: streamSnapshot.data!.docs[index]['tpo'],
 
                         )
                         ),

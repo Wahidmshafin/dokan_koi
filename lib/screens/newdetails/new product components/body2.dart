@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../models/Store.dart';
 import '../../Shopfollow/Shop Components/all_products.dart';
 import '../../details/details_screen.dart';
-import 'newproductdescription.dart';
+import 'shopdetailsforuser.dart';
 
 
 class Body extends StatelessWidget {

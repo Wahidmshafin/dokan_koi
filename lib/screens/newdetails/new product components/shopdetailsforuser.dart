@@ -27,12 +27,18 @@ class ProductDescription extends StatelessWidget {
   final _shop = FirebaseFirestore.instance.collection('shop');
   var total = 0.0;
   var initrating=0.0;
+
   FirebaseAuth auth = FirebaseAuth.instance;
   Future addToFavourite() async {
     final FirebaseAuth _auth = FirebaseAuth.instance;
     var currentUser = _auth.currentUser;
     CollectionReference _collectionRef =
     FirebaseFirestore.instance.collection("favourite");
+    _shop
+        .doc(store.id)
+        .collection('ureview')
+        .doc(auth.currentUser?.uid)
+        .update({"favourite": true});
     return _collectionRef
         .doc(currentUser!.uid)
         .collection("items")
@@ -57,6 +63,11 @@ class ProductDescription extends StatelessWidget {
     var currentUser = _auth.currentUser;
     CollectionReference _collectionRef =
     FirebaseFirestore.instance.collection("favourite");
+    _shop
+        .doc(store.id)
+        .collection('ureview')
+        .doc(auth.currentUser?.uid)
+        .update({"favourite": false});
     return _collectionRef
         .doc(currentUser!.uid)
         .collection("items")
@@ -66,7 +77,8 @@ class ProductDescription extends StatelessWidget {
   openMapsSheet(context) async {
     try {
       final coords = Coords(store.lat, store.lon);
-      final title = store.address+","+store.subDistrict+","+store.district;
+      final address=store.address+","+store.subDistrict+","+store.district;
+      final title = store.title;
       final availableMaps = await MapLauncher.installedMaps;
 
       showModalBottomSheet(
@@ -82,6 +94,7 @@ class ProductDescription extends StatelessWidget {
                         onTap: ()  {map.showMarker(
                           coords: coords,
                           title: title,
+                          description: address,
                         );
                         Navigator.of(context).pop();
                           },
@@ -106,13 +119,16 @@ class ProductDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return StreamBuilder(
         stream: _shop.doc(store.id).collection('ureview').snapshots(includeMetadataChanges: true),
         builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+          int totalFollower=0;
           if(streamSnapshot.connectionState == ConnectionState.waiting){
            return Center(child: CircularProgressIndicator(color: kPrimaryColor,),);
           }
           total = 0;
+
           var initrating=0.0;
           var cnt = streamSnapshot.data!.docs.length;
           if (streamSnapshot.hasData) {
@@ -124,6 +140,10 @@ class ProductDescription extends StatelessWidget {
 
               var urat = va["rating"] as double;
               total += urat;
+              if(va["favourite"]!=null && va["favourite"])
+                {
+                  totalFollower++;
+                }
             }
           }
           return Column(
@@ -211,7 +231,7 @@ class ProductDescription extends StatelessWidget {
                         child: Row(
                           children: [
                             Icon(Icons.location_on_outlined,color: kPrimaryColor,),
-                            Text("Get Direction",style: TextStyle(color: kPrimaryColor,fontWeight: FontWeight.bold),)
+                            Text("Get Direction",style: TextStyle(color: kPrimaryColor,fontWeight: FontWeight.bold,fontSize: 18),)
                           ],
                         ),
                       ),
@@ -262,7 +282,7 @@ class ProductDescription extends StatelessWidget {
                                 fontSize: 17, fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            store.tfo.toString(),
+                            totalFollower.toString(),
                             style: TextStyle(
                                 fontSize: 17, fontWeight: FontWeight.bold),
                           ),
