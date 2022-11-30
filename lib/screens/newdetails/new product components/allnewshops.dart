@@ -12,6 +12,7 @@ class Allnewshops extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white.withOpacity(0.9),
       appBar: AppBar(
         title: Row(
           children: [

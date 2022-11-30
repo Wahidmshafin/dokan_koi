@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dokan_koi/screens/shopmodify/components/print.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
@@ -41,11 +42,11 @@ class MyOrders extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.all(8.0),
                   height: getProportionateScreenHeight(630),
-                  width: 600,
+                 width: getProportionateScreenWidth(907),
                   child: Column(
                     children: [
                       Table(
-                        defaultColumnWidth: FixedColumnWidth(146.0),
+                        defaultColumnWidth: FixedColumnWidth(155.7),
                         border: TableBorder.all(
                             color: Colors.black,
                             style: BorderStyle.solid,
@@ -56,6 +57,8 @@ class MyOrders extends StatelessWidget {
                             Column(children:[Text("Product",style: TextStyle(fontSize: 20.0)),]),
                             Column(children:[Text("Quantity",style: TextStyle(fontSize: 20.0)),]),
                             Column(children:[Text("Price",style: TextStyle(fontSize: 20.0)),]),
+                            Column(children:[Text("Accept Order",style: TextStyle(fontSize: 20.0)),]),
+                            Column(children:[Text("Reject Order",style: TextStyle(fontSize: 20.0)),]),
                           ]),
                         ],
                       ),
@@ -81,12 +84,23 @@ class MyOrders extends StatelessWidget {
                                   color: Colors.black,
                                   style: BorderStyle.solid,
                                   width: 2),
+
                                   children: [
                                     TableRow( children: [
                                     Column(children:[Text(streamSnapshot.data!.docs[index]['user'], style: TextStyle(fontSize: 20.0))]),
                                   Column(children:[Text(streamSnapshot.data!.docs[index]['title'], style: TextStyle(fontSize: 20.0))]),
                                   Column(children:[Text(streamSnapshot.data!.docs[index]['qty'].toString(), style: TextStyle(fontSize: 20.0))]),
                                   Column(children:[Text((streamSnapshot.data!.docs[index]['price']*streamSnapshot.data!.docs[index]['qty']).toString(), style: TextStyle(fontSize: 20.0))]),
+                                  Column(children:[GestureDetector(onTap:(){_products.doc(streamSnapshot.data!.docs[index].id).delete();        Fluttertoast.showToast(
+                                    msg: " Order Accepted ",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    fontSize: 20,
+                                  );}, child: Icon(Icons.check_circle,color: kPrimaryColor,)),]),
+                                  Column(children:[GestureDetector(onTap:(){_products.doc(streamSnapshot.data!.docs[index].id).delete();        Fluttertoast.showToast(
+                                    msg: "Order Rejected",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    fontSize: 20,
+                                  );}, child: Icon(Icons.delete,color: Colors.red,)),]),
                                   ]),
                                   ],
                                   ),
