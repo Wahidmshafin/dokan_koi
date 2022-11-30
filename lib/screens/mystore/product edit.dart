@@ -156,7 +156,7 @@ class _ProductEditState extends State<ProductEdit> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 30),
                             child: DefaultButton(
-                              text: "Add Product",
+                              text: "Update Product",
                               press: () async {
                                 final String title = _nameController.text;
                                 final String description =
