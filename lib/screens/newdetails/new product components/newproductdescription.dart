@@ -5,14 +5,15 @@ import 'package:dokan_koi/screens/Shopfollow/Shop Components/shopproduct.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:map_launcher/map_launcher.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-//import 'package:map_launcher/map_launcher.dart';
 
 import '../../../constants.dart';
 import '../../../models/Store.dart';
 import '../../../size_config.dart';
 import '../../home/components/section_title.dart';
+import 'maptest.dart';
 
 class ProductDescription extends StatelessWidget {
   ProductDescription({
@@ -62,45 +63,46 @@ class ProductDescription extends StatelessWidget {
         .doc(store.id).delete();
 
   }
+  openMapsSheet(context) async {
+    try {
+      final coords = Coords(store.lat, store.lon);
+      final title = store.address+","+store.subDistrict+","+store.district;
+      final availableMaps = await MapLauncher.installedMaps;
 
-
-  // openMapsSheet(context) async {
-  //   try {
-  //     final coords = Coords(37.759392, -122.5107336);
-  //     final title = "Ocean Beach";
-  //     final availableMaps = await MapLauncher.installedMaps;
-  //
-  //     showModalBottomSheet(
-  //       context: context,
-  //       builder: (BuildContext context) {
-  //         return SafeArea(
-  //           child: SingleChildScrollView(
-  //             child: Wrap(
-  //               children: <Widget>[
-  //                 for (var map in availableMaps)
-  //                   ListTile(
-  //                     onTap: () => map.showMarker(
-  //                       coords: coords,
-  //                       title: title,
-  //                     ),
-  //                     title: Text(map.mapName),
-  //                     leading: SvgPicture.asset(
-  //                       map.icon,
-  //                       height: 30.0,
-  //                       width: 30.0,
-  //                     ),
-  //                   ),
-  //               ],
-  //             ),
-  //           ),
-  //         );
-  //       },
-  //     );
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
-
+      showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return SafeArea(
+            child: SingleChildScrollView(
+              child: Container(
+                child: Wrap(
+                  children: <Widget>[
+                    for (var map in availableMaps)
+                      ListTile(
+                        onTap: ()  {map.showMarker(
+                          coords: coords,
+                          title: title,
+                        );
+                        Navigator.of(context).pop();
+                          },
+                        title: Text(map.mapName),
+                        leading: SvgPicture.asset(
+                          map.icon,
+                          height: 30.0,
+                          width: 30.0,
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      );
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -202,6 +204,18 @@ class ProductDescription extends StatelessWidget {
                         maxLines: 4,
                       ),
                       SizedBox(
+                        height: 15,
+                      ),
+                      GestureDetector(
+                        onTap: ()  {openMapsSheet(context);},
+                        child: Row(
+                          children: [
+                            Icon(Icons.location_on_outlined,color: kPrimaryColor,),
+                            Text("Get Direction",style: TextStyle(color: kPrimaryColor,fontWeight: FontWeight.bold),)
+                          ],
+                        ),
+                      ),
+                      SizedBox(
                         height: 30,
                       ),
                       Row(
@@ -277,13 +291,6 @@ class ProductDescription extends StatelessWidget {
                 height: getProportionateScreenHeight(20),
               ),
              // Text("Rating",style: TextStyle(fontSize: 26,fontWeight: FontWeight.bold,),),
-              ElevatedButton(
-                  onPressed: ()=>{},
-                  child: Text("Get Directions"),
-              ),
-              SizedBox(
-                height: getProportionateScreenHeight(20),
-              ),
               Container(
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
