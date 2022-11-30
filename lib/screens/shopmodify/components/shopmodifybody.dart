@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dokan_koi/constants.dart';
 import 'package:dokan_koi/screens/shopmodify/components/myorders.dart';
-import 'package:dokan_koi/screens/shopmodify/components/myproduct.dart';
 import 'package:dokan_koi/size_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -14,6 +13,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../../models/Store.dart';
 import '../../Shopfollow/Shop Components/roundedcontainer.dart';
+import '../../mystore/components/shopallproduct.dart';
 import '../shopedit.dart';
 
 class Body extends StatefulWidget {
@@ -236,7 +236,7 @@ class _BodyState extends State<Body> {
                   fontWeight: FontWeight.w600),
             ),
             onPressed: () {
-              Navigator.pushNamed(context, MyProducts.routeName);
+              Navigator.pushNamed(context, ShopAllProducts.routeName);
             },
           ),
         ),

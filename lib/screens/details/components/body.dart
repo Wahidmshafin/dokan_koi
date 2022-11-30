@@ -21,112 +21,95 @@ class Body extends StatelessWidget {
 
   Body({Key? key, required this.product}) : super(key: key);
   var a;
-  
 
   @override
   Widget build(BuildContext context) {
-   
     return StreamBuilder(
-      stream: _shop.doc(product.id).snapshots(),
-      builder: (context, snapshot) {
-        final data = snapshot.data;
-        return (snapshot.connectionState == ConnectionState.waiting)? Center(child: CircularProgressIndicator(color: kPrimaryColor,),): ListView(
-          padding: EdgeInsets.only(top: 10),
-          children: [
-            ProductImages(product: product),
-            TopRoundedContainer(
-              color: Colors.white,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ProductDescription(
-                    product: product,
-                    pressOnSeeMore: () {},
+        stream: _shop.doc(product.id).snapshots(),
+        builder: (context, snapshot) {
+          final data = snapshot.data;
+          return (snapshot.connectionState == ConnectionState.waiting)
+              ? Center(
+                  child: CircularProgressIndicator(
+                    color: kPrimaryColor,
                   ),
-                  SizedBox(
-                    height: getProportionateScreenHeight(30),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
+                )
+              : ListView(
+                  padding: EdgeInsets.only(top: 10),
+                  children: [
+                    ProductImages(product: product),
+                    TopRoundedContainer(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Row(
-                      children: [
-                        CircleAvatar(
-                          backgroundImage: NetworkImage(
-                              "${data!["image"]}"),
-                          backgroundColor: Colors.white,
-                          radius: 30,
-                        ),
-
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              " ",
-                              // data['title'],
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.green),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ProductDescription(
+                            product: product,
+                            images: "${data!["image"]}",
+                            name: "${data!["name"]}",
+                            type: "${data!["type"]}",
+                            description: "${data!["description"]}",
+                            address: "${data!["address"]}",
+                            rating: data!["rating"].toDouble(),
+                            lat: data!["lat"].toDouble(),
+                            lon: data!["lon"].toDouble(),
+                            title: "${data!["name"]}",
+                            district: "${data!["district"]}",
+                            subDistrict: "${data!["subDistrict"]}",
+                          ),
+                          SizedBox(
+                            height: getProportionateScreenHeight(30),
+                          ),
+                          SizedBox(
+                            height: getProportionateScreenHeight(180),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                              left: SizeConfig.screenWidth * 0.15,
+                              right: SizeConfig.screenWidth * 0.15,
+                              bottom: getProportionateScreenWidth(40),
+                              top: getProportionateScreenWidth(15),
                             ),
-                          ],
-                        ),
-                        Spacer(),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: getProportionateScreenHeight(180),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: SizeConfig.screenWidth * 0.15,
-                      right: SizeConfig.screenWidth * 0.15,
-                      bottom: getProportionateScreenWidth(40),
-                      top: getProportionateScreenWidth(15),
-                    ),
-                    child: DefaultButton(
-                      text: "Add To Cart",
-                      press: () async {
-                        await _products.where('uid', isEqualTo: auth.currentUser!.uid).where('uuid',isEqualTo: product.uid).get().then((value) {
-                          if(value.size==0)
-                            {
-                              _products.add({
-                                "title": product.title,
-                                "price": product.price.toInt(),
-                                "qty": 1,
-                                "images": product.images,
-                                "uuid":product.uid,
-                                "sid": product.id,
-                                "uid": auth.currentUser?.uid,
-                                "user": auth.currentUser?.email,
-                              });
-                            }
-                          else
-                            {
-                              var v =value.docs.first.data() as Map<String, dynamic>;
-                              _products.doc(value.docs.first.id).update({"qty":v['qty']+1});
-                              print(product.id);
-                            }
-                        });
+                            child: DefaultButton(
+                              text: "Add To Cart",
+                              press: () async {
+                                await _products
+                                    .where('uid',
+                                        isEqualTo: auth.currentUser!.uid)
+                                    .where('uuid', isEqualTo: product.uid)
+                                    .get()
+                                    .then((value) {
+                                  if (value.size == 0) {
+                                    _products.add({
+                                      "title": product.title,
+                                      "price": product.price.toInt(),
+                                      "qty": 1,
+                                      "images": product.images,
+                                      "uuid": product.uid,
+                                      "sid": product.id,
+                                      "uid": auth.currentUser?.uid,
+                                      "user": auth.currentUser?.email,
+                                    });
+                                  } else {
+                                    var v = value.docs.first.data()
+                                        as Map<String, dynamic>;
+                                    _products
+                                        .doc(value.docs.first.id)
+                                        .update({"qty": v['qty'] + 1});
+                                    print(product.id);
+                                  }
+                                });
 
-                        print(product.id);
-                        Navigator.of(context).pop();
-                      },
+                                print(product.id);
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        );
-      }
-    );
+                  ],
+                );
+        });
   }
 }

@@ -2,9 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dokan_koi/components/new_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import '../../components/coustom_bottom_nav_bar.dart';
-import '../../components/favcard.dart';
 import '../../constants.dart';
 import '../../enums.dart';
 import '../../models/Store.dart';
