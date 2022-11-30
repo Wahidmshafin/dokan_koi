@@ -81,7 +81,7 @@ class Body extends StatelessWidget {
                                     .get()
                                     .then((value) {
                                   if (value.size == 0) {
-                                    _products.doc(docid).set({
+                                    _products.add({
                                       "title": product.title,
                                       "price": product.price.toInt(),
                                       "qty": 1,

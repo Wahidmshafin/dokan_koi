@@ -107,10 +107,11 @@ class CheckoutCard extends StatelessWidget {
                               .then((value) async {
                             for (var element in value.docs) {
                               int a = await _products.doc(element.id).get().then((value) => value.get('qty'));
-                              int b = await _product.doc(element.id).get().then((value) => value.get('qty'));
+                              String d = await _products.doc(element.id).get().then((value) => value.get('docid'));
+                              int b = await _product.doc(d).get().then((value) => value.get('qty'));
                               int c = b-a;
                               _orders.add(element.data());
-                              _product.doc(element.id).update({"qty":c});
+                              _product.doc(d).update({"qty":c});
                               _products.doc(element.id).delete();
                             }
                           });
