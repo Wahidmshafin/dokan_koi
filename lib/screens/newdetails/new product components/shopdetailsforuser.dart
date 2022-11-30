@@ -26,6 +26,7 @@ class ProductDescription extends StatelessWidget {
   final GestureTapCallback? pressOnSeeMore;
   final _shop = FirebaseFirestore.instance.collection('shop');
   var total = 0.0;
+  var initrating=0.0;
 
   FirebaseAuth auth = FirebaseAuth.instance;
   Future addToFavourite() async {
@@ -336,7 +337,7 @@ class ProductDescription extends StatelessWidget {
                             .doc(store.id)
                             .collection('ureview')
                             .doc(auth.currentUser?.uid)
-                            .update({"rating": rating});
+                            .set({"rating": rating});
                         var c = double.parse((total/cnt).toStringAsPrecision(3));
 
                         _shop.doc(store.id).update({"rating":c});
