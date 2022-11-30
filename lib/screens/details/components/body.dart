@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dokan_koi/components/default_button.dart';
 import 'package:dokan_koi/constants.dart';
 import 'package:dokan_koi/models/Product.dart';
 import 'package:dokan_koi/size_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
 import 'product_description.dart';
 import 'product_images.dart';
 import 'top_rounded_container.dart';
@@ -44,18 +44,19 @@ class Body extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           ProductDescription(
-                              product: product,
-                              images: "${data!["image"]}",
-                              name: "${data!["name"]}",
-                              type: "${data!["type"]}",
-                              description: "${data!["description"]}",
-                              address: "${data!["address"]}",
-                              rating: data!["rating"].toDouble(),
-                              lat: data!["lat"].toDouble(),
-                              lon: data!["lon"].toDouble(),
-                              title: "${data!["name"]}",
-                              district: "${data!["district"]}",
-                              subDistrict: "${data!["subDistrict"]}",),
+                            product: product,
+                            images: "${data!["image"]}",
+                            name: "${data!["name"]}",
+                            type: "${data!["type"]}",
+                            description: "${data!["description"]}",
+                            address: "${data!["address"]}",
+                            rating: data!["rating"].toDouble(),
+                            lat: data!["lat"].toDouble(),
+                            lon: data!["lon"].toDouble(),
+                            title: "${data!["name"]}",
+                            district: "${data!["district"]}",
+                            subDistrict: "${data!["subDistrict"]}",
+                          ),
                           SizedBox(
                             height: getProportionateScreenHeight(30),
                           ),
@@ -71,22 +72,34 @@ class Body extends StatelessWidget {
                             ),
                             child: DefaultButton(
                               text: "Add To Cart",
-                              press: () {
-                                var v = _products
+                              press: () async {
+                                await _products
                                     .where('uid',
                                         isEqualTo: auth.currentUser!.uid)
-                                    .where('sid', isEqualTo: product.id)
-                                    .count();
-                                print(v);
-                                _products.add({
-                                  "title": product.title,
-                                  "price": product.price.toInt(),
-                                  "qty": 1,
-                                  "images": product.images,
-                                  "sid": product.id,
-                                  "uid": auth.currentUser?.uid,
-                                  "user": auth.currentUser?.email,
+                                    .where('uuid', isEqualTo: product.uid)
+                                    .get()
+                                    .then((value) {
+                                  if (value.size == 0) {
+                                    _products.add({
+                                      "title": product.title,
+                                      "price": product.price.toInt(),
+                                      "qty": 1,
+                                      "images": product.images,
+                                      "uuid": product.uid,
+                                      "sid": product.id,
+                                      "uid": auth.currentUser?.uid,
+                                      "user": auth.currentUser?.email,
+                                    });
+                                  } else {
+                                    var v = value.docs.first.data()
+                                        as Map<String, dynamic>;
+                                    _products
+                                        .doc(value.docs.first.id)
+                                        .update({"qty": v['qty'] + 1});
+                                    print(product.id);
+                                  }
                                 });
+
                                 print(product.id);
                                 Navigator.of(context).pop();
                               },

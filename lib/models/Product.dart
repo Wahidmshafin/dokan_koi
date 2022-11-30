@@ -2,7 +2,7 @@
 
 class Product {
   final int qty;
-  final String id,title, description;
+  final String id,title, description,uid;
   final String images;
   //final List<Color> colors;
   final double rating, price;
@@ -10,6 +10,7 @@ class Product {
 
   Product({
     required this.id,
+    required this.uid,
     required this.qty,
     required this.images,
    // required this.colors,

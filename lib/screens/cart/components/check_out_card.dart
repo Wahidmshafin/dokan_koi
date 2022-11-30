@@ -9,17 +9,15 @@ import '../../../size_config.dart';
 import '../../Cart Splash/splash.dart';
 
 class CheckoutCard extends StatelessWidget {
-
   int total;
-  CheckoutCard({
-    Key? key,
-    required this.total
-  }) : super(key: key);
-  FirebaseAuth  auth = FirebaseAuth.instance;
+
+  CheckoutCard({Key? key, required this.total}) : super(key: key);
+  FirebaseAuth auth = FirebaseAuth.instance;
   final CollectionReference _products =
-  FirebaseFirestore.instance.collection('cart');
+      FirebaseFirestore.instance.collection('cart');
   final CollectionReference _orders =
-  FirebaseFirestore.instance.collection('Orders');
+      FirebaseFirestore.instance.collection('Orders');
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -85,29 +83,41 @@ class CheckoutCard extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  width: getProportionateScreenWidth(190),
-                  child: DefaultButton(
-                    text:"Check Out",
-                    press: () {
-                      // _products.where("uid",isEqualTo: auth.currentUser?.uid).snapshots().forEach((element) {
-                      //     element.docs.asMap().forEach((key, value) {
-                      //       print("eta ken print hoi");
-                      //       _orders.add(value.data());
-                      //       _products.doc(value.id).delete();
-                      //     });
-                      // });
-                      _products.where("uid",isEqualTo: auth.currentUser?.uid).get().then((value) => {
-                        value.docs.forEach((element) {
-                          print("eta ken hoi?");
-                          _orders.add(element.data());
-                          _products.doc(element.id).delete();
-                        })
-                      });
-                      Navigator.pushNamed(context, ordsuc.routeName);
-
-                    },
-                  ),
-                ),
+                    width: getProportionateScreenWidth(190),
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: getProportionateScreenHeight(56),
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          primary: Colors.white,
+                          backgroundColor: total == 0?Colors.grey:kPrimaryColor,
+                        ),
+                        onPressed: () {
+                          if (total == 0) {
+                            return;
+                          }
+                          _products
+                              .where("uid", isEqualTo: auth.currentUser?.uid)
+                              .get()
+                              .then((value) {
+                            for (var element in value.docs) {
+                              _orders.add(element.data());
+                              _products.doc(element.id).delete();
+                            }
+                          });
+                          Navigator.pushNamed(context, ordsuc.routeName);
+                        },
+                        child: Text(
+                          "Check Out",
+                          style: TextStyle(
+                            fontSize: getProportionateScreenWidth(18),
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    )),
               ],
             ),
           ],
