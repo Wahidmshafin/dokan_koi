@@ -161,6 +161,9 @@ class _ProductFormState extends State<ProductForm> {
                             "description": description,
                             "rating": 0.00
                           });
+                          _shop.doc(_auth.currentUser?.uid).get().then((value) =>{
+                            _shop.doc(_auth.currentUser?.uid).update({"tpo":value["tpo"]+1})
+                          });
                           Navigator.pop(context);
                         }catch(e){
                           if(errors.isNotEmpty){

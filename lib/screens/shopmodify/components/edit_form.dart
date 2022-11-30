@@ -157,6 +157,7 @@ class _ShopFormState extends State<ShopForm> {
             "image":image,
             "lat" : location?.latitude,
             "lon": location?.longitude,
+            "tpo":0,
           });
         }catch(e)
         {
