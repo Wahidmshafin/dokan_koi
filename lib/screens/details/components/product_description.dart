@@ -38,6 +38,9 @@ class ProductDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String a;
+    if(product.qty.toInt() == 0){a="Out of Stock";}
+    else{a="${product.qty} Remaining";}
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -63,7 +66,7 @@ class ProductDescription extends StatelessWidget {
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "${product.qty} Remaining",
+                    a,
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 13,
