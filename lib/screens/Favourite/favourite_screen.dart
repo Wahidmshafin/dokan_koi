@@ -73,8 +73,8 @@ class favscreen extends StatelessWidget {
                                   ['district'],
                               subDistrict: streamSnapshot.data!.docs[index]
                                   ['subDistrict'],
-                              tpo: streamSnapshot.data!.docs[index]['tpo'],
-                              tfo: streamSnapshot.data!.docs[index]['tfo'],
+                               tpo: streamSnapshot.data!.docs[index]['tpo'],
+                               tfo: streamSnapshot.data!.docs[index]['tfo'],
                             ),
                           ),
                         ),

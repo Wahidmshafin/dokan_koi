@@ -64,6 +64,8 @@ class _NewcardState extends State<Newcard> {
       "lon":widget.store.lon,
       "subDistrict":widget.store.subDistrict,
       "rating":widget.store.rating,
+      "tpo":widget.store.tpo,
+      "tfo":widget.store.tfo+1,
 
     }).then((value) => print("Added to favourite"));
   }
