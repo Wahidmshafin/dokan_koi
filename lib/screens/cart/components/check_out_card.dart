@@ -14,11 +14,11 @@ class CheckoutCard extends StatelessWidget {
   CheckoutCard({Key? key, required this.total,}) : super(key: key);
   FirebaseAuth auth = FirebaseAuth.instance;
   final CollectionReference _products =
-      FirebaseFirestore.instance.collection('cart');
+  FirebaseFirestore.instance.collection('cart');
   final CollectionReference _orders =
-      FirebaseFirestore.instance.collection('Orders'); 
+  FirebaseFirestore.instance.collection('Orders');
   final CollectionReference _product =
-      FirebaseFirestore.instance.collection('product');
+  FirebaseFirestore.instance.collection('product');
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +100,7 @@ class CheckoutCard extends StatelessWidget {
                           if (total == 0) {
                             return;
                           }
-                         // _product.doc(docid).update({"qty":7});
+                          // _product.doc(docid).update({"qty":7});
                           _products
                               .where("uid", isEqualTo: auth.currentUser?.uid)
                               .get()

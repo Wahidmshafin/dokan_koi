@@ -8,7 +8,7 @@ import '../../../size_config.dart';
 import '../../newdetails/newproductsscreen.dart';
 
 class ProductDescription extends StatelessWidget {
-   ProductDescription({
+  ProductDescription({
     Key? key,
     required this.product,
     required this.images,
@@ -22,13 +22,19 @@ class ProductDescription extends StatelessWidget {
     required this.title,
     required this.district,
     required this.subDistrict,
-
     this.pressOnSeeMore,
   }) : super(key: key);
   final Product product;
   final GestureTapCallback? pressOnSeeMore;
-  final String images,name,type,description,address,title,district,subDistrict;
-  final double rating,lat,lon;
+  final String images,
+      name,
+      type,
+      description,
+      address,
+      title,
+      district,
+      subDistrict;
+  final double rating, lat, lon;
 
   @override
   Widget build(BuildContext context) {
@@ -36,25 +42,41 @@ class ProductDescription extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding:
-              EdgeInsets.only(left: getProportionateScreenWidth(20),right: getProportionateScreenWidth(25)),
+          padding: EdgeInsets.only(
+              left: getProportionateScreenWidth(20),
+              right: getProportionateScreenWidth(25)),
           child: Row(
             children: [
-              Text(
-                product.title,
-                style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: Colors.black)
-              ),
+              Text(product.title,
+                  style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black)),
               Spacer(),
               Column(
                 children: [
-                  Text("\৳${product.price}",style: TextStyle(color: kPrimaryColor,fontSize: 20,fontWeight: FontWeight.bold),),
-                  Text("${product.qty} Remaining",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13,color: kPrimaryColor),),
+                  Text(
+                    "\৳${product.price}",
+                    style: TextStyle(
+                        color: kPrimaryColor,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    "${product.qty} Remaining",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
+                        color: Colors.red),
+                  ),
                 ],
               )
             ],
           ),
         ),
-        SizedBox(height: 5,),
+        SizedBox(
+          height: 5,
+        ),
         Center(
           child: Container(
             height: 1,
@@ -62,24 +84,28 @@ class ProductDescription extends StatelessWidget {
             width: getProportionateScreenWidth(330),
           ),
         ),
-        SizedBox(height: getProportionateScreenHeight(7),),
+        SizedBox(
+          height: getProportionateScreenHeight(7),
+        ),
         GestureDetector(
           onTap: () => Navigator.pushNamed(
             context,
             DetailsScreen2.routeName,
-            arguments: ProductDetailsArguments2(store: Store(
-    id: product.id,
-    description:description,
-    address: address,
-    images: [images],
-    rating: rating,
-    type: type,
-    lat: lat,
-    lon: lon,
-    title: title,
-    district: district,
-    subDistrict: subDistrict),
-    ),),
+            arguments: ProductDetailsArguments2(
+              store: Store(
+                  id: product.id,
+                  description: description,
+                  address: address,
+                  images: [images],
+                  rating: rating,
+                  type: type,
+                  lat: lat,
+                  lon: lon,
+                  title: title,
+                  district: district,
+                  subDistrict: subDistrict),
+            ),
+          ),
           child: Container(
             padding: EdgeInsets.only(left: 30),
             decoration: BoxDecoration(
@@ -89,12 +115,10 @@ class ProductDescription extends StatelessWidget {
             child: Row(
               children: [
                 CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      images),
+                  backgroundImage: NetworkImage(images),
                   backgroundColor: Colors.white,
                   radius: 30,
                 ),
-
                 SizedBox(
                   width: 10,
                 ),
@@ -103,14 +127,15 @@ class ProductDescription extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-
-                     name ,
+                      name,
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.green),
                     ),
-                    Text(type,),
+                    Text(
+                      type,
+                    ),
                   ],
                 ),
                 Spacer(),
@@ -118,7 +143,9 @@ class ProductDescription extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: getProportionateScreenHeight(7),),
+        SizedBox(
+          height: getProportionateScreenHeight(7),
+        ),
         Center(
           child: Container(
             height: 1,
@@ -126,13 +153,18 @@ class ProductDescription extends StatelessWidget {
             width: getProportionateScreenWidth(330),
           ),
         ),
-        SizedBox(height: getProportionateScreenHeight(13),),
-    Padding(
-    padding:
-    EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(10)),
-    child:  Text("Product Description:",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.black),),
-    ),
-
+        SizedBox(
+          height: getProportionateScreenHeight(13),
+        ),
+        Padding(
+          padding:
+              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(10)),
+          child: Text(
+            "Product Description:",
+            style: TextStyle(
+                fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black),
+          ),
+        ),
         Padding(
           padding: EdgeInsets.only(
             top: getProportionateScreenHeight(10),
@@ -143,7 +175,6 @@ class ProductDescription extends StatelessWidget {
             product.description,
           ),
         ),
-
       ],
     );
   }

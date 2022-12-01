@@ -5,14 +5,13 @@ import 'package:flutter/material.dart';
 import '../../../components/new_card.dart';
 import '../../../models/Store.dart';
 import '../../../size_config.dart';
-class Allnewshops extends StatelessWidget {
-  static String routeName = "/Allnewshops";
+class AllPopularShop extends StatelessWidget {
+  static String routeName = "/AllPopularShop";
   final _shop = FirebaseFirestore.instance.collection('shop');
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white.withOpacity(0.9),
       appBar: AppBar(
         title: Row(
           children: [
@@ -20,14 +19,14 @@ class Allnewshops extends StatelessWidget {
               padding: const EdgeInsets.only(top: 4.0),
               child: Icon(Icons.storefront,color: kPrimaryColor,),
             ),
-            Text("Nearest Shops",style: TextStyle(color: Colors.black),
-      ),
+            Text("Most Popular Shop",style: TextStyle(color: Colors.black),
+            ),
           ],
         ),
         elevation: 2,
       ),
       body: StreamBuilder(
-        stream: _shop.orderBy("distance").snapshots(),
+        stream: _shop.orderBy('tfo',descending: true).snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot){
           if(streamSnapshot.hasData)
           {
@@ -43,19 +42,19 @@ class Allnewshops extends StatelessWidget {
                   itemBuilder: (context,index)=>SizedBox(
                     width: getProportionateScreenWidth(200),
                     child: Newcard(store: Store(
-                        id: streamSnapshot.data!.docs[index]['id'],
-                        description: streamSnapshot.data!.docs[index]['description'],
-                        address: streamSnapshot.data!.docs[index]['address'],
-                        images: [streamSnapshot.data!.docs[index]['image']],
-                        rating: streamSnapshot.data!.docs[index]['rating'].toDouble(),
-                        type: streamSnapshot.data!.docs[index]['type'],
-                        lat: streamSnapshot.data!.docs[index]['lat'].toDouble(),
-                        lon: streamSnapshot.data!.docs[index]['lon'].toDouble(),
-                        title: streamSnapshot.data!.docs[index]['name'],
-                        district: streamSnapshot.data!.docs[index]['district'],
-                        subDistrict: streamSnapshot.data!.docs[index]['subDistrict'],
-                        tpo: streamSnapshot.data!.docs[index]['tpo'],
-                        tfo: streamSnapshot.data!.docs[index]['tfo'],
+                      id: streamSnapshot.data!.docs[index]['id'],
+                      description: streamSnapshot.data!.docs[index]['description'],
+                      address: streamSnapshot.data!.docs[index]['address'],
+                      images: [streamSnapshot.data!.docs[index]['image']],
+                      rating: streamSnapshot.data!.docs[index]['rating'].toDouble(),
+                      type: streamSnapshot.data!.docs[index]['type'],
+                      lat: streamSnapshot.data!.docs[index]['lat'].toDouble(),
+                      lon: streamSnapshot.data!.docs[index]['lon'].toDouble(),
+                      title: streamSnapshot.data!.docs[index]['name'],
+                      district: streamSnapshot.data!.docs[index]['district'],
+                      subDistrict: streamSnapshot.data!.docs[index]['subDistrict'],
+                      tpo: streamSnapshot.data!.docs[index]['tpo'],
+                      tfo: streamSnapshot.data!.docs[index]['tfo'],
                     ),
                     ),
                   ),

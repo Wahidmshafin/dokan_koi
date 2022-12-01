@@ -34,11 +34,7 @@ class ProductDescription extends StatelessWidget {
     var currentUser = _auth.currentUser;
     CollectionReference _collectionRef =
     FirebaseFirestore.instance.collection("favourite");
-    _shop
-        .doc(store.id)
-        .collection('ureview')
-        .doc(auth.currentUser?.uid)
-        .update({"favourite": true});
+    _shop.doc(store.id).update({"tfo":store.tfo+1});
     return _collectionRef
         .doc(currentUser!.uid)
         .collection("items")
@@ -63,11 +59,7 @@ class ProductDescription extends StatelessWidget {
     var currentUser = _auth.currentUser;
     CollectionReference _collectionRef =
     FirebaseFirestore.instance.collection("favourite");
-    _shop
-        .doc(store.id)
-        .collection('ureview')
-        .doc(auth.currentUser?.uid)
-        .update({"favourite": false});
+    _shop.doc(store.id).update({"tfo":store.tfo-1});
     return _collectionRef
         .doc(currentUser!.uid)
         .collection("items")
@@ -140,10 +132,6 @@ class ProductDescription extends StatelessWidget {
 
               var urat = va["rating"] as double;
               total += urat;
-              if(va["favourite"]!=null && va["favourite"])
-                {
-                  totalFollower++;
-                }
             }
           }
           return Column(
@@ -282,7 +270,7 @@ class ProductDescription extends StatelessWidget {
                                 fontSize: 17, fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            totalFollower.toString(),
+                            store.tfo.toString(),
                             style: TextStyle(
                                 fontSize: 17, fontWeight: FontWeight.bold),
                           ),
