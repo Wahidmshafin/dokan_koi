@@ -34,6 +34,7 @@ class ProductDescription extends StatelessWidget {
       title,
       district,
       subDistrict;
+
   final double rating, lat, lon;
 
   @override
@@ -106,7 +107,7 @@ class ProductDescription extends StatelessWidget {
                   lon: lon,
                   title: title,
                   district: district,
-                  subDistrict: subDistrict),
+                  subDistrict: subDistrict, tfo: 0, tpo: 0),
             ),
           ),
           child: Container(

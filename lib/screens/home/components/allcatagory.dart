@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
-import '../../../Special for you/Specialforyouscreen.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
+import '../../Special for you/Specialforyouscreen.dart';
 
 final _shop = FirebaseFirestore.instance.collection('shop');
 

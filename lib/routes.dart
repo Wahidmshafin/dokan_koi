@@ -3,6 +3,7 @@ import 'package:dokan_koi/screens/Favourite/favourite_screen.dart';
 import 'package:dokan_koi/screens/Shopfollow/Shop%20Components/all_products.dart';
 import 'package:dokan_koi/screens/Shopfollow/Shop%20Components/mostpopularshop.dart';
 import 'package:dokan_koi/screens/Shopfollow/shopscreen.dart';
+import 'package:dokan_koi/screens/Special%20for%20you/Specialforyouscreen.dart';
 import 'package:dokan_koi/screens/cart/components/cartbody.dart';
 import 'package:dokan_koi/screens/complete_profile/complete_profile_screen.dart';
 import 'package:dokan_koi/screens/details/details_screen.dart';
@@ -31,7 +32,6 @@ import 'package:dokan_koi/screens/shopmodify/shopmodify.dart';
 import 'package:dokan_koi/screens/sign_in/sign_in_screen.dart';
 import 'package:dokan_koi/screens/splash/splash_screen.dart';
 import 'package:flutter/widgets.dart';
-import 'Special for you/Specialforyouscreen.dart';
 import 'helper/helpscreen.dart';
 import 'screens/sign_up/sign_up_screen.dart';
 
