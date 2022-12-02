@@ -1,4 +1,5 @@
 import 'package:dokan_koi/screens/Cart Splash/splash.dart';
+import 'package:dokan_koi/screens/Notification/notificationScreen.dart';
 import 'package:dokan_koi/screens/Favourite/favourite_screen.dart';
 import 'package:dokan_koi/screens/Shopfollow/Shop%20Components/all_products.dart';
 import 'package:dokan_koi/screens/Shopfollow/Shop%20Components/mostpopularshop.dart';
@@ -27,7 +28,6 @@ import 'package:dokan_koi/screens/shopmodify/components/myproduct.dart';
 import 'package:dokan_koi/screens/shopmodify/components/print.dart';
 import 'package:dokan_koi/screens/shopmodify/components/product_form.dart';
 import 'package:dokan_koi/screens/shopmodify/shopedit.dart';
-
 import 'package:dokan_koi/screens/shopmodify/shopmodify.dart';
 import 'package:dokan_koi/screens/sign_in/sign_in_screen.dart';
 import 'package:dokan_koi/screens/splash/splash_screen.dart';
@@ -69,6 +69,7 @@ final Map<String, WidgetBuilder> routes = {
   MyApp.routeName: (context)=>MyApp(),
   MyAccount.routeName: (context)=>MyAccount(),
   ShopModify.routeName: (context)=>ShopModify(),
+  Notify.routeName: (context)=>Notify(),
   MyOrders.routeName: (context)=>MyOrders(),
   CartItems.routeName: (context) => CartItems(),
   ProfileScreen.routeName: (context) => ProfileScreen(),
