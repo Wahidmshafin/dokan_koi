@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dokan_koi/models/Cart.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'cartbody.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
@@ -14,19 +15,24 @@ class CartCard extends StatelessWidget {
     required this.title,
     required this.price,
     required this.qty,
+    required this.totalqty,
     required this.image,
     required this.id,
+    required this.uuid,
     //required this.product,
   }) : super(key: key);
   final CollectionReference _products =
   FirebaseFirestore.instance.collection('cart');
+  final CollectionReference _product =
+  FirebaseFirestore.instance.collection('product');
   // final double width, aspectRetio;
   //final Product product;
   final String image;
   final String title;
   final int price;
-  final int qty;
+  final int qty,totalqty;
   final String id;
+  final String uuid;
 
   Future<void> _add(String productId) async {
     await _products.doc(productId).update({"qty":qty+1});
@@ -67,7 +73,19 @@ class CartCard extends StatelessWidget {
                   Text("Price: \৳${price}"),
                   Row(
                     children: [
-                      OutlinedButton(onPressed: () { _add(id);},
+                      OutlinedButton(onPressed: () {
+                        if(qty<totalqty){
+                              _add(id);
+                            }
+                        else{
+                          //print(prod)
+                          Fluttertoast.showToast(
+                            msg: " Cannot exceed Current Stock. Current Stock : ${totalqty}",
+                            toastLength: Toast.LENGTH_SHORT,
+                            fontSize: 20,
+                          );
+                        }
+                          },
                           child: Icon(CupertinoIcons.plus,size: 16,color: kPrimaryColor,)),
                       SizedBox(width: 5,),
                       Text("Qty: ${qty.toString()}"),

@@ -19,8 +19,8 @@ class Store {
     required this.title,
     required this.district,
     required this.subDistrict,
-    this.tfo=0,
-    this.tpo=0,
+   required this.tfo,
+    required this.tpo,
     required this.id,
     this.type="General",
   });

@@ -34,10 +34,14 @@ class ProductDescription extends StatelessWidget {
       title,
       district,
       subDistrict;
+
   final double rating, lat, lon;
 
   @override
   Widget build(BuildContext context) {
+    String a;
+    if(product.qty.toInt() == 0){a="Out of Stock";}
+    else{a="${product.qty} Remaining";}
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -63,7 +67,7 @@ class ProductDescription extends StatelessWidget {
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "${product.qty} Remaining",
+                    a,
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 13,
@@ -103,7 +107,7 @@ class ProductDescription extends StatelessWidget {
                   lon: lon,
                   title: title,
                   district: district,
-                  subDistrict: subDistrict),
+                  subDistrict: subDistrict, tfo: 0, tpo: 0),
             ),
           ),
           child: Container(

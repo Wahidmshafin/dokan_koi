@@ -33,6 +33,7 @@ class DetailsScreen extends StatelessWidget {
                     ),
                     body: Body(
                       product: Product(
+
                           id: data!['id'],
                           qty: data['qty'],
                           images: data['images'],
@@ -40,6 +41,7 @@ class DetailsScreen extends StatelessWidget {
                           price: data['price'].toDouble(),
                           description: data['description'],
                           uid: data['uid']),
+                          docid: agrs.id,
                     ),
                   );
           }

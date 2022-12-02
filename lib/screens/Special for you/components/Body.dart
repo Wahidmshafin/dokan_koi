@@ -3,10 +3,9 @@ import 'package:dokan_koi/components/new_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../../components/favcard.dart';
-import '../../constants.dart';
-import '../../models/Store.dart';
-import '../../size_config.dart';
+import '../../../constants.dart';
+import '../../../models/Store.dart';
+import '../../../size_config.dart';
 class Body extends StatelessWidget {
    Body({
     Key? key,
@@ -57,7 +56,9 @@ class Body extends StatelessWidget {
                         district: streamSnapshot.data!.docs[index]['district'],
                         subDistrict: streamSnapshot.data!.docs[index]['subDistrict'],
                         lat: streamSnapshot.data!.docs[index]['lat'].toDouble(),
-                        lon: streamSnapshot.data!.docs[index]['lon'].toDouble(),),
+                        lon: streamSnapshot.data!.docs[index]['lon'].toDouble(),
+                        tfo: streamSnapshot.data!.docs[index]['tfo'],
+                        tpo: streamSnapshot.data!.docs[index]['tpo']),
                       ),
                     ),
                   ),
