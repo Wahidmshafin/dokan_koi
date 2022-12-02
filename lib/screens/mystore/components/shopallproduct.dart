@@ -62,24 +62,102 @@ class _ShopAllProductsState extends State<ShopAllProducts> {
                 as Map<String, dynamic>;
 
                 if (name.isEmpty) {
-                  return  ShopProductCard(
-                      id: snapshots.data!.docs[index].id,
-                      title: snapshots.data!.docs[index]['title'],
-                      price: snapshots.data!.docs[index]['price'],
-                      qty: snapshots.data!.docs[index]['qty'],
-                      image: snapshots.data!.docs[index]['images']
+                  return  Dismissible(
+                    key: Key(snapshots.data!.docs[index].id),
+                    direction: DismissDirection.endToStart,
+                    confirmDismiss: (direction) async{
+                      return await showDialog(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: const Text('Remove Product?'),
+                          content: const Text('The item will be removed from list of products'),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, false),
+                              child: const Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context, true);
+                              },
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    onDismissed: (direction)
+                    {
+                      setState(() async{
+                        await _products.doc(snapshots.data!.docs[index].id).delete();
+                        print("Deleted");
+                      });
+                    },
+                    background: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFFFE6E6),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                    child: ShopProductCard(
+                        id: snapshots.data!.docs[index].id,
+                        title: snapshots.data!.docs[index]['title'],
+                        price: snapshots.data!.docs[index]['price'],
+                        qty: snapshots.data!.docs[index]['qty'],
+                        image: snapshots.data!.docs[index]['images']
+                    ),
                   );
                 }
                 if (data['title']
                     .toString()
                     .toLowerCase()
                     .contains(name.toLowerCase())) {
-                  return ShopProductCard(
-                      id: snapshots.data!.docs[index].id,
-                      title: snapshots.data!.docs[index]['title'],
-                      price: snapshots.data!.docs[index]['price'],
-                      qty: snapshots.data!.docs[index]['qty'],
-                      image: snapshots.data!.docs[index]['images']
+                  return Dismissible(
+                    key: Key(snapshots.data!.docs[index].id),
+                    direction: DismissDirection.endToStart,
+                    confirmDismiss: (direction) async{
+                      return await showDialog(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: const Text('Remove Product?'),
+                          content: const Text('The item will be removed from list of products'),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, false),
+                              child: const Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context, true);
+                              },
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    onDismissed: (direction)
+                    {
+                      setState(() async{
+                        await _products.doc(snapshots.data!.docs[index].id).delete();
+                        print("Deleted");
+                      });
+                    },
+                    background: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFFFE6E6),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                    child: ShopProductCard(
+                        id: snapshots.data!.docs[index].id,
+                        title: snapshots.data!.docs[index]['title'],
+                        price: snapshots.data!.docs[index]['price'],
+                        qty: snapshots.data!.docs[index]['qty'],
+                        image: snapshots.data!.docs[index]['images']
+                    ),
                   );
                 }
                 return Container();

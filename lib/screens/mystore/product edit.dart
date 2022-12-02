@@ -6,6 +6,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../components/form_error.dart';
@@ -17,6 +18,7 @@ import 'components/store_header.dart';
 class ProductEdit extends StatefulWidget {
   static String routeName = "/productedit";
   final _products = FirebaseFirestore.instance.collection('product');
+
   @override
   State<ProductEdit> createState() => _ProductEditState();
 }
@@ -59,7 +61,13 @@ class _ProductEditState extends State<ProductEdit> {
       if (tmp == null) {
         return;
       }
-
+      Fluttertoast.showToast(msg: "Please wait until image is uploaded." ,toastLength: Toast.LENGTH_SHORT);
+      await storage
+          .ref("product/${tmp.name}")
+          .putFile(File(tmp.path));
+      image = await storage
+          .ref("product/${tmp.name}")
+          .getDownloadURL();
       setState(() {
         fileImage = File(tmp.path);
         print("File ${tmp.name}");
@@ -77,15 +85,19 @@ class _ProductEditState extends State<ProductEdit> {
     return StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
       stream: _product.doc(agrs.id).snapshots(),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        if(snapshot.connectionState == ConnectionState.waiting){return Center(child: CircularProgressIndicator(color: kPrimaryColor,));}
-        else {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+              child: CircularProgressIndicator(
+            color: kPrimaryColor,
+          ));
+        } else {
           if (snapshot.hasData) {
             var data = snapshot.data!.data();
-            _nameController.text= data['title'];
-            _categoryController.text= data['title'];
-            _priceController.text= data['price'].toString();
-            _quantityController.text= data['qty'].toString();
-            _detailsController.text= data['description'];
+            _nameController.text = data['title'];
+            _categoryController.text = data['category'];
+            _priceController.text = data['price'].toString();
+            _quantityController.text = data['qty'].toString();
+            _detailsController.text = data['description'];
             return Scaffold(
               body: SafeArea(
                 child: SingleChildScrollView(
@@ -100,18 +112,18 @@ class _ProductEditState extends State<ProductEdit> {
                             onPressed: getImage,
                             child: fileImage == null
                                 ? DottedBorder(
-                                color: Colors.grey,
-                                strokeWidth: 1,
-                                dashPattern: [5, 4],
-                                radius: Radius.circular(20),
-                                child: Image.network(
-                                  data['images'],
-                                  width: getProportionateScreenWidth(200),
-                                ))
+                                    color: Colors.grey,
+                                    strokeWidth: 1,
+                                    dashPattern: [5, 4],
+                                    radius: Radius.circular(20),
+                                    child: Image.network(
+                                      data['images'],
+                                      width: getProportionateScreenWidth(200),
+                                    ))
                                 : Image.file(
-                              fileImage,
-                              width: 200,
-                            ),
+                                    fileImage,
+                                    width: 200,
+                                  ),
                           ),
                           SizedBox(
                             height: getProportionateScreenHeight(10),
@@ -162,26 +174,23 @@ class _ProductEditState extends State<ProductEdit> {
                                 final String description =
                                     _detailsController.text;
                                 final int quantity =
-                                int.parse(_quantityController.text);
+                                    int.parse(_quantityController.text);
                                 final int price =
-                                int.parse(_priceController.text);
+                                    int.parse(_priceController.text);
+                                final category = _categoryController.text;
 
                                 try {
-                                  await storage
-                                      .ref("product/${tmp.name}")
-                                      .putFile(File(tmp.path));
-                                  image = await storage
-                                      .ref("product/${tmp.name}")
-                                      .getDownloadURL();
                                   await _product.doc(agrs.id).update({
                                     "title": title,
                                     "price": price,
                                     "qty": quantity,
                                     "id": _auth.currentUser?.uid,
                                     "description": description,
+                                    "images": tmp==null?data['images']:image,
+                                    "category":_categoryController.text,
                                   });
                                   Navigator.pop(context);
-                                }on FirebaseException catch (e) {
+                                } on FirebaseException catch (e) {
                                   print("Error Message is :${e.message}");
                                   if (errors.isNotEmpty) {
                                     errors.clear();
@@ -205,8 +214,8 @@ class _ProductEditState extends State<ProductEdit> {
           }
           return const Center(
               child: CircularProgressIndicator(
-                color: kPrimaryColor,
-              ));
+            color: kPrimaryColor,
+          ));
         }
       },
     );

@@ -61,6 +61,11 @@ class _ProductFormState extends State<ProductForm> {
       if (tmp == null) {
         return;
       }
+      Fluttertoast.showToast(msg: "Please wait until image is uploaded",toastLength: Toast.LENGTH_SHORT);
+      await storage
+          .ref("product/${tmp.name}")
+          .putFile(File(tmp.path));
+      image = await storage.ref("product/${tmp.name}").getDownloadURL();
 
       setState(() {
         fileImage = File(tmp.path);
@@ -143,19 +148,16 @@ class _ProductFormState extends State<ProductForm> {
                         final String description = _detailsController.text;
                         final int quantity = int.parse(_quantityController.text);
                         final int price = int.parse(_priceController.text);
+                        final category = _categoryController.text;
 
                         try{
                           Fluttertoast.showToast(msg: "Uploading products. Please wait",toastLength: Toast.LENGTH_LONG, fontSize: 20);
-                          await storage
-                              .ref("product/${tmp.name}")
-                              .putFile(File(tmp.path));
-                          image = await storage.ref("product/${tmp.name}").getDownloadURL();
                           await _product.add({
                             "title": title,
                             "price": price,
                             "qty": quantity,
-                            "image": "glap.png",
                             "images":image,
+                            "category":category,
                             "id": _auth.currentUser?.uid,
                             "uid":uid.v1(),
                             "description": description,

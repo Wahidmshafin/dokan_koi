@@ -95,6 +95,7 @@ class _ShopFormState extends State<ShopForm> {
       {
         return;
       }
+      Fluttertoast.showToast(msg: "Please wait until image is uploaded." ,toastLength: Toast.LENGTH_SHORT);
       try{
         if(image!=null){
           await storage.ref("shop/${auth.currentUser?.uid}").delete();

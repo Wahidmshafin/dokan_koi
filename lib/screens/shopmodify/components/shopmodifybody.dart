@@ -9,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../models/Store.dart';
@@ -61,6 +62,7 @@ class _BodyState extends State<Body> {
       if (tmp == null) {
         return;
       }
+      Fluttertoast.showToast(msg: "Please wait until image is uploaded." ,toastLength: Toast.LENGTH_SHORT);
       try {
         await storage.ref("shop/${auth.currentUser?.uid}").delete();
         await storage
