@@ -45,7 +45,7 @@ class Shops extends StatelessWidget {
                         height: getProportionateScreenHeight(250),
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: streamSnapshot.data!.docs.length,
+                          itemCount:streamSnapshot.data!.docs.length<4?streamSnapshot.data!.docs.length:4,
                           itemBuilder: (context, index) {
                             return SizedBox(
                               width: getProportionateScreenWidth(240),

@@ -160,6 +160,7 @@ class _ShopFormState extends State<ShopForm> {
             "lon": location?.longitude,
             "tpo":0,
             "tfo":0,
+            "time":DateTime.now().millisecondsSinceEpoch,
           });
         }catch(e)
         {

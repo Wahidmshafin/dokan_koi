@@ -2,6 +2,7 @@ import 'package:dokan_koi/screens/Cart Splash/splash.dart';
 import 'package:dokan_koi/screens/Favourite/favourite_screen.dart';
 import 'package:dokan_koi/screens/Shopfollow/Shop%20Components/all_products.dart';
 import 'package:dokan_koi/screens/Shopfollow/Shop%20Components/mostpopularshop.dart';
+import 'package:dokan_koi/screens/Shopfollow/Shop%20Components/timeshop.dart';
 import 'package:dokan_koi/screens/Shopfollow/shopscreen.dart';
 import 'package:dokan_koi/screens/Special%20for%20you/Specialforyouscreen.dart';
 import 'package:dokan_koi/screens/cart/components/cartbody.dart';
@@ -53,6 +54,7 @@ final Map<String, WidgetBuilder> routes = {
   ordsuc.routeName: (context)=>ordsuc(),
   Print.routeName: (context)=>Print(),
   ProductEdit.routeName: (context)=>ProductEdit(),
+  Allnewshops.routeName: (context)=>Allnewshops(),
   MapLauncherDemo.routeName: (context)=>MapLauncherDemo(),
   MyStore.routeName: (context) => MyStore(),
   ShopAllProducts.routeName: (context) => ShopAllProducts(),

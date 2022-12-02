@@ -23,6 +23,7 @@ class Newcard extends StatefulWidget {
 
   final double width, aspectRetio;
   final Store store;
+   int predistance=0;
 
 
   @override
@@ -90,7 +91,7 @@ class _NewcardState extends State<Newcard> {
 
   final locationSettings = const LocationSettings(
     accuracy: LocationAccuracy.best,
-    distanceFilter: 1,
+    distanceFilter: 10,
   );
 
     // final locationSettings = AndroidSettings(
@@ -118,7 +119,6 @@ class _NewcardState extends State<Newcard> {
 
 
   Position? position;
-  int predistance=0;
 
   @override
   Widget build(BuildContext context) {
@@ -131,17 +131,6 @@ class _NewcardState extends State<Newcard> {
     return StreamBuilder<Position>(
       stream: Geolocator.getPositionStream(locationSettings: locationSettings),
       builder: (context, snapshot) {
-        if(snapshot.data!=null)
-          {
-              int distance = Geolocator.distanceBetween(snapshot.data!.latitude, snapshot.data!.longitude, widget.store.lat, widget.store.lon).floor();
-              int dif = distance - predistance;
-              if(dif.abs()>20)
-                {
-                  _shop.doc(widget.store.id).update({"distance":distance});
-                  predistance=distance;
-                }
-
-          }
         return Padding(
           padding: EdgeInsets.all(getProportionateScreenWidth(10)),
           child: SizedBox(
