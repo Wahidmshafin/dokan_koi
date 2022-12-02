@@ -1,5 +1,6 @@
 import 'package:dokan_koi/constants.dart';
 import 'package:flutter/material.dart';
+import 'components/body.dart';
 class Notify extends StatelessWidget {
   static String routeName = "/not";
   const Notify({Key? key}) : super(key: key);
@@ -7,6 +8,7 @@ class Notify extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white.withOpacity(0.96),
       appBar: AppBar(
         title: Row(
           children: [
@@ -19,6 +21,7 @@ class Notify extends StatelessWidget {
         ),
         elevation: 2,
       ),
+      body: Body(),
     );
   }
 }

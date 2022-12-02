@@ -1,93 +1,125 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dokan_koi/screens/details/details_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
+import '../models/notifications.dart';
 import '../size_config.dart';
 
-class NotificationCard extends StatelessWidget {
-  const NotificationCard({
-    Key? key,
-    required this.title,
-    required this.price,
-    required this.qty,
-    required this.image,
-    required this.uid,
-    required this.date,
-    required this.time,
-    required this.shop,
-    required this.msg,
-    //required this.product,
-  }) : super(key: key);
-
+class NotificationCard extends StatefulWidget {
   // final double width, aspectRetio;
   //final Product product;
-  final String image;
-  final String title;
-  final int price;
-  final int qty;
-  final String date;
-  final String uid;
-  final String time,shop,msg;
+  Notifications notify;
+  final _shop = FirebaseFirestore.instance.collection('shop');
 
+  NotificationCard({super.key, required this.notify});
+
+  @override
+  State<NotificationCard> createState() => _NotificationCardState();
+}
+
+class _NotificationCardState extends State<NotificationCard> {
   @override
   Widget build(BuildContext context) {
     String a;
-    if(qty.toInt() == 0){a="Out of Stock";}
-    else{a="$qty";}
-    return Padding(
-      padding: EdgeInsets.all( getProportionateScreenWidth(15)),
-      child:SizedBox(
-        width: double.infinity,
-        child: GestureDetector(
-          onTap: () {
-
-          },
-          child: Container(
-            width: double.infinity,
-            height: 120,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(30),
-            ),
-            child: Row(
-              children: [
-                // Image.asset(product.images[0],height: 100,width: 100,),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: CachedNetworkImage(
-                    fit: BoxFit.fitWidth,
-                    height: getProportionateScreenHeight(100),
-                    width: getProportionateScreenWidth(100),
-                    imageUrl: image,
-                    placeholder: (context, test) => const SizedBox(
-                        child: CircularProgressIndicator(color: kPrimaryColor,)),
+    if (widget.notify.qty.toInt() == 0) {
+      a = "Out of Stock";
+    } else {
+      a = "${widget.notify.qty}";
+    }
+    return StreamBuilder(
+        stream:
+            widget._shop.where('id', isEqualTo: widget.notify.shop).snapshots(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+          return (streamSnapshot.connectionState == ConnectionState.waiting)
+              ? Center(
+                  child: CircularProgressIndicator(
+                    color: kPrimaryColor,
                   ),
-                ),
-                //Spacer(),
-                SizedBox(width: getProportionateScreenWidth(20),),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(title,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,),maxLines: 1,overflow: TextOverflow.fade,softWrap: false,),
-                    Text("Price: \৳${price}"),
-                    Row(
-                      children: [
-                        Text("Qty:"),
-                        Text(" $a",style: TextStyle(color: qty.toInt() != 0
-                            ? Colors.black.withOpacity(0.6)
-                            : Colors.red,),),
-                      ],
-                    )
-                  ],
-                ),
-              ],
-            ),
+                )
+              : Padding(
+                  padding:
+                      EdgeInsets.only(bottom: getProportionateScreenWidth(5)),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        padding: EdgeInsets.all(8),
+                        width: double.infinity,
+                        //height: 80,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 20.0),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(1000),
+                                    child: CachedNetworkImage(
+                                      fit: BoxFit.fitWidth,
+                                      height: getProportionateScreenHeight(70),
+                                      width: getProportionateScreenWidth(70),
+                                      imageUrl: streamSnapshot.data!.docs[0]
+                                          ['image'],
+                                      placeholder: (context, test) =>
+                                          const SizedBox(
+                                              child: CircularProgressIndicator(
+                                        color: kPrimaryColor,
+                                      )),
+                                    ),
+                                  ),
+                                ),
+                                //Spacer(),
+                                SizedBox(
+                                  width: getProportionateScreenWidth(30),
+                                ),
+                                Flexible(
+                                    child: Text(
+                                  "${widget.notify.msg}",
+                                  style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black,fontSize: 16,),
+                                )),
 
-          ),
-        ),
-      ),
-    );
+                              ],
+                            ),
+                        Row(
+                          children: [
+                            SizedBox(height: 2,),
+                            Spacer(),
+                            ExpandableNotifier(  // <-- Provides ExpandableController to its children
+                              child: Column(
+                                children: [
+                                  Expandable(           // <-- Driven by ExpandableController from ExpandableNotifier
+                                    collapsed: ExpandableButton(  // <-- Expands when tapped on the cover photo
+                                      child: Text("See Details>",textAlign: TextAlign.left,style: TextStyle(color: kPrimaryColor),),
+                                    ),
+                                    expanded: Column(
+                                        children: [
+                                          Text("hello"),
+                                          ExpandableButton(       // <-- Collapses when tapped on
+                                            child: Text("See Less>",textAlign: TextAlign.left,style: TextStyle(color: kPrimaryColor),),
+                                          ),
+                                        ]
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+        });
   }
 }
-

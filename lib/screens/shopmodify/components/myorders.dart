@@ -95,7 +95,7 @@ class MyOrders extends StatelessWidget {
                                   Column(children:[Text((streamSnapshot.data!.docs[index]['price']*streamSnapshot.data!.docs[index]['qty']).toString(), style: TextStyle(fontSize: 20.0))]),
                                   Column(children:[
                                     GestureDetector(onTap:() async {
-                                      await _notifi.add({'user':streamSnapshot.data!.docs[index]['uid'],'name':streamSnapshot.data!.docs[index]['title'],'qty':streamSnapshot.data!.docs[index]['qty'],'price':streamSnapshot.data!.docs[index]['price'],'images':streamSnapshot.data!.docs[index]['images'],'date':DateFormat("MMMM, dd, yyyy").format(DateTime.now()),'time':DateFormat("hh:mm a").format(DateTime.now()),'msg':"Your Order have been accepted",'shop':auth.currentUser?.uid});
+                                      await _notifi.add({'user':streamSnapshot.data!.docs[index]['uid'],'name':streamSnapshot.data!.docs[index]['title'],'qty':streamSnapshot.data!.docs[index]['qty'],'price':streamSnapshot.data!.docs[index]['price'],'images':streamSnapshot.data!.docs[index]['images'],'date':DateFormat("MMMM, dd, yyyy").format(DateTime.now()),'time':DateFormat("hh:mm a").format(DateTime.now()),'msg':"Your Order have been accepted                             ",'shop':auth.currentUser?.uid});
                                      await  _products.doc(streamSnapshot.data!.docs[index].id).delete();
                                     Fluttertoast.showToast(
                                     msg: " Order Accepted ",
