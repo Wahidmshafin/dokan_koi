@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../components/new_card.dart';
 import '../../../models/Store.dart';
+import '../../../models/productList.dart';
 import '../../../size_config.dart';
 class Allnewshops extends StatelessWidget {
   static String routeName = "/Allnewshops";
@@ -11,6 +12,8 @@ class Allnewshops extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ProductList agrs =
+    ModalRoute.of(context)!.settings.arguments as ProductList;
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(0.9),
       appBar: AppBar(
@@ -42,21 +45,7 @@ class Allnewshops extends StatelessWidget {
 
                   itemBuilder: (context,index)=>SizedBox(
                     width: getProportionateScreenWidth(200),
-                    child: Newcard(store: Store(
-                        id: streamSnapshot.data!.docs[index]['id'],
-                        description: streamSnapshot.data!.docs[index]['description'],
-                        address: streamSnapshot.data!.docs[index]['address'],
-                        images: [streamSnapshot.data!.docs[index]['image']],
-                        rating: streamSnapshot.data!.docs[index]['rating'].toDouble(),
-                        type: streamSnapshot.data!.docs[index]['type'],
-                        lat: streamSnapshot.data!.docs[index]['lat'].toDouble(),
-                        lon: streamSnapshot.data!.docs[index]['lon'].toDouble(),
-                        title: streamSnapshot.data!.docs[index]['name'],
-                        district: streamSnapshot.data!.docs[index]['district'],
-                        subDistrict: streamSnapshot.data!.docs[index]['subDistrict'],
-                        tpo: streamSnapshot.data!.docs[index]['tpo'],
-                        tfo: streamSnapshot.data!.docs[index]['tfo'],
-                    ),
+                    child: Newcard(store: agrs.storeList.elementAt(index)
                     ),
                   ),
                 ),
