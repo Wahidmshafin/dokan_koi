@@ -109,12 +109,12 @@ class NewProducts extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: Container(
                         width: double.infinity,
-                        height: getProportionateScreenHeight(250),
+                        height: getProportionateScreenHeight(270),
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           itemCount: storeList.length<4?storeList.length:4,
                           itemBuilder: (context, index) => SizedBox(
-                            width: getProportionateScreenWidth(240),
+                            width: getProportionateScreenWidth(300),
                             child: Newcard(
                                 store:storeList.elementAt(index),
                             ),
