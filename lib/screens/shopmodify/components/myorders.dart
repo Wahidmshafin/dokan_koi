@@ -1,8 +1,10 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dokan_koi/screens/shopmodify/components/print.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
@@ -11,7 +13,8 @@ class MyOrders extends StatelessWidget {
   static String routeName = "/myorders";
   FirebaseAuth auth = FirebaseAuth.instance;
   final CollectionReference _products =
-      FirebaseFirestore.instance.collection('Orders');
+  FirebaseFirestore.instance.collection('Orders');
+  final _notifi = FirebaseFirestore.instance.collection('notification');
 
   @override
   Widget build(BuildContext context) {
@@ -85,132 +88,220 @@ class MyOrders extends StatelessWidget {
                               AsyncSnapshot<QuerySnapshot> streamSnapshot) {
                             if (streamSnapshot.hasData) {
                               return (streamSnapshot.connectionState ==
-                                      ConnectionState.waiting)
+                                  ConnectionState.waiting)
                                   ? Center(
-                                      child: CircularProgressIndicator(
-                                        color: kPrimaryColor,
-                                      ),
-                                    )
+                                child: CircularProgressIndicator(
+                                  color: kPrimaryColor,
+                                ),
+                              )
                                   : Container(
-                                      height: getProportionateScreenHeight(550),
-                                      color: Colors.white,
-                                      child: ListView.builder(
-                                        shrinkWrap: true,
-                                        scrollDirection: Axis.vertical,
-                                        itemCount:
-                                            streamSnapshot.data!.docs.length,
-                                        itemBuilder: (context, index) => Table(
-                                          defaultColumnWidth:
-                                              FixedColumnWidth(120.0),
-                                          border: TableBorder.all(
-                                              color: Colors.black,
-                                              style: BorderStyle.solid,
-                                              width: 2),
-                                          children: [
-                                            TableRow(children: [
-                                              Column(children: [
-                                                Text(
-                                                    streamSnapshot.data!
-                                                        .docs[index]['user'],
-                                                    style: TextStyle(
-                                                        fontSize: 20.0))
-                                              ]),
-                                              Column(children: [
-                                                Text(
-                                                    streamSnapshot.data!
-                                                        .docs[index]['title'],
-                                                    style: TextStyle(
-                                                        fontSize: 20.0))
-                                              ]),
-                                              Column(children: [
-                                                Text(
-                                                    streamSnapshot.data!
-                                                        .docs[index]['qty']
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                        fontSize: 20.0))
-                                              ]),
-                                              Column(children: [
-                                                Text(
-                                                    (streamSnapshot.data!
-                                                                    .docs[index]
-                                                                ['price'] *
-                                                            streamSnapshot.data!
-                                                                    .docs[index]
-                                                                ['qty'])
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                        fontSize: 20.0))
-                                              ]),
-                                              Column(children: [
-                                                GestureDetector(
-                                                    onTap: () {
-                                                      _products
-                                                          .doc(streamSnapshot
-                                                              .data!
-                                                              .docs[index]
-                                                              .id)
-                                                          .delete();
-                                                      Fluttertoast.showToast(
-                                                        msg: " Order Accepted ",
-                                                        toastLength:
-                                                            Toast.LENGTH_SHORT,
-                                                        fontSize: 20,
-                                                      );
-                                                    },
-                                                    child: Icon(
-                                                      Icons.check_circle,
-                                                      color: kPrimaryColor,
-                                                    )),
-                                              ]),
-                                              Column(children: [
-                                                GestureDetector(
-                                                    onTap: () {
-                                                      _products
-                                                          .doc(streamSnapshot
-                                                              .data!
-                                                              .docs[index]
-                                                              .id)
-                                                          .delete();
-                                                      Fluttertoast.showToast(
-                                                        msg: "Order Rejected",
-                                                        toastLength:
-                                                            Toast.LENGTH_SHORT,
-                                                        fontSize: 20,
-                                                      );
-                                                    },
-                                                    child: Icon(
-                                                      Icons.delete,
-                                                      color: Colors.red,
-                                                    )),
-                                              ]),
-                                            ]),
-                                          ],
-                                        ),
-                                      ),
-                                    );
+                                height: getProportionateScreenHeight(550),
+                                color: Colors.white,
+                                child: ListView.builder(
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  itemCount:
+                                  streamSnapshot.data!.docs.length,
+                                  itemBuilder: (context, index) => Table(
+                                    defaultColumnWidth:
+                                    FixedColumnWidth(120.0),
+                                    border: TableBorder.all(
+                                        color: Colors.black,
+                                        style: BorderStyle.solid,
+                                        width: 2),
+                                    children: [
+                                      TableRow(children: [
+                                        Column(children: [
+                                          Text(
+                                              streamSnapshot.data!
+                                                  .docs[index]['user'],
+                                              style: TextStyle(
+                                                  fontSize: 20.0))
+                                        ]),
+                                        Column(children: [
+                                          Text(
+                                              streamSnapshot.data!
+                                                  .docs[index]['title'],
+                                              style: TextStyle(
+                                                  fontSize: 20.0))
+                                        ]),
+                                        Column(children: [
+                                          Text(
+                                              streamSnapshot.data!
+                                                  .docs[index]['qty']
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  fontSize: 20.0))
+                                        ]),
+                                        Column(children: [
+                                          Text(
+                                              (streamSnapshot.data!
+                                                  .docs[index]
+                                              ['price'] *
+                                                  streamSnapshot.data!
+                                                      .docs[index]
+                                                  ['qty'])
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  fontSize: 20.0))
+                                        ]),
+                                        Column(children: [
+                                          GestureDetector(
+                                              onTap: () async {
+                                                Notifya(auth.currentUser?.uid," Order Accepted ");  //localnotification method call below
+                                                // when user top on notification this listener will work and user will be navigated to notification page
+                                                await _notifi.add({
+                                                  'user': streamSnapshot
+                                                      .data!
+                                                      .docs[index]['uid'],
+                                                  'name': streamSnapshot
+                                                      .data!
+                                                      .docs[index]
+                                                  ['title'],
+                                                  'qty': streamSnapshot
+                                                      .data!
+                                                      .docs[index]['qty'],
+                                                  'price': streamSnapshot
+                                                      .data!
+                                                      .docs[index]
+                                                  ['price'],
+                                                  'images': streamSnapshot
+                                                      .data!
+                                                      .docs[index]
+                                                  ['images'],
+                                                  'date': DateFormat(
+                                                      "MMMM, dd, yyyy")
+                                                      .format(
+                                                      DateTime.now()),
+                                                  'time': DateFormat(
+                                                      "hh:mm a")
+                                                      .format(
+                                                      DateTime.now()),
+                                                  'msg':
+                                                  "Your Order have been accepted                             ",
+                                                  'shop': auth
+                                                      .currentUser?.uid,
+                                                  'ord':(DateTime.now().millisecondsSinceEpoch/1000).toInt(),
+                                                });
+
+                                                await _products
+                                                    .doc(streamSnapshot
+                                                    .data!
+                                                    .docs[index]
+                                                    .id)
+                                                    .delete();
+                                                Fluttertoast.showToast(
+                                                  msg: " Order Accepted ",
+                                                  toastLength:
+                                                  Toast.LENGTH_SHORT,
+                                                  fontSize: 20,
+                                                );
+
+                                              },
+                                              child: Icon(
+                                                Icons.check_circle,
+                                                color: kPrimaryColor,
+                                              )),
+                                        ]),
+                                        Column(children: [
+                                          GestureDetector(
+                                              onTap: () async {
+                                                Notifya(auth.currentUser?.uid,"Sorry, Your Order have been declined!",);
+                                                await _notifi.add({
+                                                  'user': streamSnapshot
+                                                      .data!
+                                                      .docs[index]['uid'],
+                                                  'name': streamSnapshot
+                                                      .data!
+                                                      .docs[index]
+                                                  ['title'],
+                                                  'qty': streamSnapshot
+                                                      .data!
+                                                      .docs[index]['qty'],
+                                                  'price': streamSnapshot
+                                                      .data!
+                                                      .docs[index]
+                                                  ['price'],
+                                                  'images': streamSnapshot
+                                                      .data!
+                                                      .docs[index]
+                                                  ['images'],
+                                                  'date': DateFormat(
+                                                      "MMMM, dd, yyyy")
+                                                      .format(
+                                                      DateTime.now()),
+                                                  'time': DateFormat(
+                                                      "hh:mm a")
+                                                      .format(
+                                                      DateTime.now()),
+                                                  'msg':
+                                                  "Sorry, Your Order have been declined!",
+                                                  'shop': auth
+                                                      .currentUser?.uid,
+                                                  'ord':DateTime.now().millisecondsSinceEpoch/1000,
+                                                });
+                                                await _products
+                                                    .doc(streamSnapshot
+                                                    .data!
+                                                    .docs[index]
+                                                    .id)
+                                                    .delete();
+                                                Fluttertoast.showToast(
+                                                  msg: "Order Rejected",
+                                                  toastLength:
+                                                  Toast.LENGTH_SHORT,
+                                                  fontSize: 20,
+                                                );
+                                              },
+                                              child: Icon(
+                                                Icons.delete,
+                                                color: Colors.red,
+                                              )),
+                                        ]),
+                                      ]),
+                                    ],
+                                  ),
+                                ),
+                              );
+
                             }
                             return const Center(
                                 child: CircularProgressIndicator(
-                              color: kPrimaryColor,
-                            ));
+                                  color: kPrimaryColor,
+                                ));
                           }),
                     ],
                   ),
                 ),
                 Center(
                     child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.green, // Background color
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, Print.routeName);
-                  },
-                  child: Text("Print"),
-                ))
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.green, // Background color
+                      ),
+                      onPressed: () {
+                        Navigator.pushNamed(context, Print.routeName);
+                      },
+                      child: Text("Print"),
+                    ))
               ],
             ),
           ),
         ));
   }
+}
+void Notifya(String? a,String b)  async{
+  final _notifi = FirebaseFirestore.instance.collection('shop');
+  //String timezom = await AwesomeNotifications().getLocalTimeZoneIdentifier();
+  await AwesomeNotifications().createNotification(
+    content: NotificationContent(
+      id: 1,
+      channelKey: 'key1',
+      title: await _notifi.doc(a).get().then((value) => value.get('name')),
+      body: b,
+      //bigPicture: 'https://protocoderspoint.com/wp-content/uploads/2021/05/Monitize-flutter-app-with-google-admob-min-741x486.png',
+      //notificationLayout: NotificationLayout.BigPicture
+    ),
+    // schedule: NotificationInterval(interval: 2,timeZone: timezom,repeats: true),
+  );
+
 }
