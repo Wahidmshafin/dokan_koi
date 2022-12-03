@@ -21,32 +21,28 @@ class ShopEdit extends StatelessWidget {
             ,style: TextStyle(color: Colors.black),),
             Spacer(),
             TextButton(onPressed: (){
-              showDialog<String>(
-              context: context,
-              builder: (BuildContext context) => AlertDialog(
-              shape:  RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
+              showDialog(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  icon: Icon(Icons.warning_amber,size: 40,),
+                  iconColor: Colors.red,
+                  title: const Text('Are you sure ?',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+                  content: const Text('You will not be able to recover this shop once deleted',textAlign: TextAlign.center,),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, 'Cancel'),
+                      child: const Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        shop.doc(auth.currentUser?.uid).delete();
+                        Navigator.pushNamed(context, HomeScreen.routeName);
+                      },
+                      child: const Text('Delete',style: TextStyle(color: Colors.red),),
+                    ),
+                  ],
                 ),
-                icon: Icon(Icons.warning_amber,size: 40,),
-                iconColor: Colors.red,
-                title: const Text('Are you sure ?',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
-                content: const Text('You will not be able to recover this shop once deleted',textAlign: TextAlign.center,),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () => Navigator.pop(context, 'Cancel'),
-                    child: const Text('Cancel'),
-                  ),
-                  Spacer(),
-                  TextButton(
-                    onPressed: () {
-                            shop.doc(auth.currentUser?.uid).delete();
-                            Navigator.pushNamed(context, HomeScreen.routeName);
-                    },
-                    child: const Text('Delete',style: TextStyle(color: Colors.red),),
-                  ),
-                ],
-              ),
-            );
+              );
               },
                 child: Text("Delete",style: TextStyle(color: Colors.grey,fontSize: 15),))
           ],
