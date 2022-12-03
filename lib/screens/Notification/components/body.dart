@@ -8,36 +8,34 @@ import '../../../models/notifications.dart';
 import '../../../size_config.dart';
 
 class Body extends StatelessWidget {
-  final _notification = FirebaseFirestore.instance
-      .collection('notification');
-  final _shop= FirebaseFirestore.instance.collection('shop');
+  final _notification = FirebaseFirestore.instance.collection('notification');
+  final _shop = FirebaseFirestore.instance.collection('shop');
   final FirebaseAuth auth = FirebaseAuth.instance;
-String? b;
+  String? b;
+
   @override
   Widget build(BuildContext context) {
-
     return StreamBuilder(
-      stream: _notification.where('user', isEqualTo: auth.currentUser?.uid)
+      stream: _notification
+          .where('user', isEqualTo: auth.currentUser?.uid).orderBy("ord",descending: true)
           .snapshots(),
       builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
-
         if (streamSnapshot.hasData) {
+
           return (streamSnapshot.connectionState == ConnectionState.waiting)
               ? Center(
-            child: CircularProgressIndicator(
-              color: kPrimaryColor,
-            ),
-          )
+                  child: CircularProgressIndicator(
+                    color: kPrimaryColor,
+                  ),
+                )
               : Center(
-            child: Container(
-              width: getProportionateScreenWidth(350),
-              height: getProportionateScreenHeight(670),
-              child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount: streamSnapshot.data!.docs.length,
-                itemBuilder: (context, index) =>
-
-                    SizedBox(
+                  child: Container(
+                  width: getProportionateScreenWidth(350),
+                  height: getProportionateScreenHeight(670),
+                  child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    itemCount: streamSnapshot.data!.docs.length,
+                    itemBuilder: (context, index) => SizedBox(
                       width: getProportionateScreenWidth(200),
                       child: NotificationCard(
                         notify: Notifications(
@@ -50,17 +48,16 @@ String? b;
                           time: streamSnapshot.data!.docs[index]['time'],
                           shop: streamSnapshot.data!.docs[index]['shop'],
                           msg: streamSnapshot.data!.docs[index]['msg'],
-                      ),
-
+                        ),
                       ),
                     ),
-              ),
-            ));
-            }
-            return const Center(
+                  ),
+                ));
+        }
+        return const Center(
             child: CircularProgressIndicator(
-            color: kPrimaryColor,
-          ));
+          color: kPrimaryColor,
+        ));
       },
     );
   }

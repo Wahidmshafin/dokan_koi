@@ -91,7 +91,7 @@ class _NewcardState extends State<Newcard> {
 
   final locationSettings = const LocationSettings(
     accuracy: LocationAccuracy.best,
-    distanceFilter: 10,
+    distanceFilter: 0,
   );
 
     // final locationSettings = AndroidSettings(

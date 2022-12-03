@@ -1,3 +1,5 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dokan_koi/constants.dart';
 import 'package:dokan_koi/screens/home/home_screen.dart';
 import 'package:dokan_koi/screens/sign_in/sign_in_screen.dart';
@@ -19,6 +21,8 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   int currentPage = 0;
   final auth=FirebaseAuth.instance;
+  final _notification = FirebaseFirestore.instance.collection('notification');
+  final _shop = FirebaseFirestore.instance.collection('shop');
   List<Map<String, String>> splashData = [
     {
       "text": "Welcome to Dokan Koi, Let's find your shop",
@@ -55,64 +59,82 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     getCurrentLocation();
     return SafeArea(
-      child: SizedBox(
-        width: double.infinity,
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              flex: 3,
-              child: PageView.builder(
-                onPageChanged: (value) {
-                  setState(() {
-                    currentPage = value;
-                  });
-                },
-                itemCount: splashData.length,
-                itemBuilder: (context, index) => SplashContent(
-                  image: splashData[index]["image"],
-                  text: splashData[index]['text'],
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: getProportionateScreenWidth(20)),
-                child: Column(
-                  children: <Widget>[
-                    Spacer(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(
-                        splashData.length,
-                        (index) => buildDot(index: index),
-                      ),
+      child: StreamBuilder(
+        stream: _notification
+          .where('user', isEqualTo: auth.currentUser?.uid).orderBy("ord",descending: true)
+          .snapshots(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+          if(streamSnapshot.hasData)
+            {
+              for(int i=0;i<streamSnapshot.data!.docs.length;i++)
+                {
+                  if(streamSnapshot.data!.docs[i]["notify"]==false)
+                    {
+                      Notifya(auth.currentUser!.uid,streamSnapshot.data!.docs[i]["msg"]);
+                      _notification.doc(streamSnapshot.data!.docs[i].id).update({"notify":true});
+                    }
+                }
+            }
+          return SizedBox(
+            width: double.infinity,
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  flex: 3,
+                  child: PageView.builder(
+                    onPageChanged: (value) {
+                      setState(() {
+                        currentPage = value;
+                      });
+                    },
+                    itemCount: splashData.length,
+                    itemBuilder: (context, index) => SplashContent(
+                      image: splashData[index]["image"],
+                      text: splashData[index]['text'],
                     ),
-                    Spacer(flex: 3),
-                    DefaultButton(
-                      text: "Continue",
-                      press: () {
-                        auth.authStateChanges().listen((event) {
-                          if(event!=null)
-                          {
-                            Navigator.pushNamed(context, HomeScreen.routeName);
-                          }
-                          else
-                            {
-                              Navigator.pushNamed(context, SignInScreen.routeName);
-                            }
-                        });
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: getProportionateScreenWidth(20)),
+                    child: Column(
+                      children: <Widget>[
+                        Spacer(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: List.generate(
+                            splashData.length,
+                            (index) => buildDot(index: index),
+                          ),
+                        ),
+                        Spacer(flex: 3),
+                        DefaultButton(
+                          text: "Continue",
+                          press: () {
+                            auth.authStateChanges().listen((event) {
+                              if(event!=null)
+                              {
+                                Navigator.pushNamed(context, HomeScreen.routeName);
+                              }
+                              else
+                                {
+                                  Navigator.pushNamed(context, SignInScreen.routeName);
+                                }
+                            });
 
-                      },
+                          },
+                        ),
+                        Spacer(),
+                      ],
                     ),
-                    Spacer(),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
+          );
+        }
       ),
     );
   }
@@ -129,4 +151,19 @@ class _BodyState extends State<Body> {
       ),
     );
   }
+}
+void Notifya(String? a, String b) async {
+  final _notifi = FirebaseFirestore.instance.collection('shop');
+  //String timezom = await AwesomeNotifications().getLocalTimeZoneIdentifier();
+  await AwesomeNotifications().createNotification(
+    content: NotificationContent(
+      id: 1,
+      channelKey: 'key1',
+      title: await _notifi.doc(a).get().then((value) => value.get('name')),
+      body: b,
+      //bigPicture: 'https://protocoderspoint.com/wp-content/uploads/2021/05/Monitize-flutter-app-with-google-admob-min-741x486.png',
+      //notificationLayout: NotificationLayout.BigPicture
+    ),
+    // schedule: NotificationInterval(interval: 2,timeZone: timezom,repeats: true),
+  );
 }
