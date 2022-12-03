@@ -2,6 +2,7 @@
 
 class Store {
   final int tfo,tpo;
+  int? distance;
   final String title, district,address,description, subDistrict, id,type;
   final List<String> images;
   final double rating, lat, lon;
@@ -23,5 +24,6 @@ class Store {
     required this.tpo,
     required this.id,
     this.type="General",
+    this.distance,
   });
 }

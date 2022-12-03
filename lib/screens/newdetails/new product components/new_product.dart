@@ -10,6 +10,9 @@ import '../../home/components/section_title.dart';
 
 class NewProducts extends StatelessWidget {
   final _shop = FirebaseFirestore.instance.collection('shop');
+  List<Store>storeList;
+
+  NewProducts({super.key,required this.storeList});
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +29,9 @@ class NewProducts extends StatelessWidget {
         ),
         SizedBox(height: getProportionateScreenWidth(20)),
         StreamBuilder(
-          stream: _shop.orderBy("distance").snapshots(),
+          stream: _shop.snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
             if (streamSnapshot.hasData) {
-              print("ok");
               return (streamSnapshot.connectionState == ConnectionState.waiting)
                   ? Center(
                       child: CircularProgressIndicator(
