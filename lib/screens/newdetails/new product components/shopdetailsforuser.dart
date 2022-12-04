@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dokan_koi/screens/Shopfollow/Shop Components/roundedcontainer.dart';
 import 'package:dokan_koi/screens/Shopfollow/Shop Components/shopproduct.dart';
+import 'package:expandable/expandable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -206,10 +207,51 @@ class ProductDescription extends StatelessWidget {
                       SizedBox(
                         height: 30,
                       ),
-                      Text(
-                        store.description,
-                        style: TextStyle(fontSize: 15, color: Colors.grey),
-                        maxLines: 4,
+                      ExpandableNotifier(
+                        // <-- Provides ExpandableController to its children
+                        child: Column(
+                          children: [
+                            Expandable(
+                              // <-- Driven by ExpandableController from ExpandableNotifier
+                              collapsed: ExpandableButton(
+                                // <-- Expands when tapped on the cover photo
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(store.description,
+                                    style: TextStyle(fontSize: 15, color: Colors.grey,),maxLines: 2,),
+                                    Text(
+                                      "See more>    ",
+                                      textAlign: TextAlign.left,
+                                      style:
+                                      TextStyle(color: kPrimaryColor),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              expanded: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    store.description,
+                                    style: TextStyle(fontSize: 15, color: Colors.grey),
+                                  ),
+                                  ExpandableButton(
+                                    // <-- Collapses when tapped on
+                                    child: Text(
+                                      "See Less>",
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          color: kPrimaryColor),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                       SizedBox(
                         height: 15,

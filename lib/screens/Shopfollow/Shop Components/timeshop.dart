@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dokan_koi/components/new_card.dart';
+import 'package:dokan_koi/screens/Shopfollow/Shop%20Components/AllNewShop.dart';
 import 'package:dokan_koi/screens/Shopfollow/Shop%20Components/mostpopularshop.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +23,7 @@ class Newshops extends StatelessWidget {
           child: SectionTitle(
               title: "New Shops",
               press: () {
-                Navigator.pushNamed(context, AllPopularShop.routeName);
+                Navigator.pushNamed(context, AllNewShop.routeName);
               }),
         ),
         SizedBox(height: getProportionateScreenWidth(20)),

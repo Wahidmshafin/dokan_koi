@@ -24,10 +24,8 @@ class ShopEdit extends StatelessWidget {
               showDialog(
                 context: context,
                 builder: (BuildContext context) => AlertDialog(
-                  icon: Icon(Icons.warning_amber,size: 40,),
-                  iconColor: Colors.red,
-                  title: const Text('Are you sure ?',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
-                  content: const Text('You will not be able to recover this shop once deleted',textAlign: TextAlign.center,),
+                  title: const Text('Are you sure?'),
+                  content: const Text('You will no be able to recover once deleted'),
                   actions: <Widget>[
                     TextButton(
                       onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -38,7 +36,7 @@ class ShopEdit extends StatelessWidget {
                         shop.doc(auth.currentUser?.uid).delete();
                         Navigator.pushNamed(context, HomeScreen.routeName);
                       },
-                      child: const Text('Delete',style: TextStyle(color: Colors.red),),
+                      child:  const Text('Delete',style: TextStyle(color: Colors.red),),
                     ),
                   ],
                 ),

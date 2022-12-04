@@ -248,8 +248,8 @@ class _ShopFormState extends State<ShopForm> {
             ),
             Text("For varification purpose, you must provide\nyour current location which will be set\nas your store location.",
               style: TextStyle(
-                fontSize: getProportionateScreenHeight(20),
-                color: Colors.grey,
+                fontSize: getProportionateScreenHeight(16),
+                color: Colors.red,
               ),
               textAlign: TextAlign.center,
             ),

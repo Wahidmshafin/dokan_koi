@@ -27,12 +27,6 @@ class StoreHeader extends StatelessWidget {
               children: [
                 Title(color: Colors.red, child: Text('Dokan Koi?',
                   style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.white),),),
-                IconBtnWithCounter(
-
-                  svgSrc: "assets/icons/Bell.svg",
-                  numOfitem: 3,
-                  press: () {},
-                ),
               ],
             ),
           ],

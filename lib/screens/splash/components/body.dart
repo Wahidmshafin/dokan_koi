@@ -7,6 +7,7 @@ import 'package:dokan_koi/size_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 
 import '../../../components/default_button.dart';
@@ -66,7 +67,7 @@ class _BodyState extends State<Body> {
             if (streamSnapshot.hasData) {
               for (int i = 0; i < streamSnapshot.data!.docs.length; i++) {
                 if (streamSnapshot.data!.docs[i]["notify"] == false) {
-                  Notifya(auth.currentUser!.uid,
+                  Notifya(streamSnapshot.data!.docs[i]["shop"],
                       streamSnapshot.data!.docs[i]["msg"], c);
                   c++;
                   if (c == 20) {

@@ -1,11 +1,13 @@
 import 'package:dokan_koi/screens/Cart Splash/splash.dart';
 import 'package:dokan_koi/screens/Notification/notificationScreen.dart';
 import 'package:dokan_koi/screens/Favourite/favourite_screen.dart';
+import 'package:dokan_koi/screens/Shopfollow/Shop%20Components/AllNewShop.dart';
 import 'package:dokan_koi/screens/Shopfollow/Shop%20Components/all_products.dart';
 import 'package:dokan_koi/screens/Shopfollow/Shop%20Components/mostpopularshop.dart';
 import 'package:dokan_koi/screens/Shopfollow/Shop%20Components/timeshop.dart';
 import 'package:dokan_koi/screens/Shopfollow/shopscreen.dart';
 import 'package:dokan_koi/screens/Special%20for%20you/Specialforyouscreen.dart';
+import 'package:dokan_koi/screens/Tutorial/tutorialpage.dart';
 import 'package:dokan_koi/screens/cart/components/cartbody.dart';
 import 'package:dokan_koi/screens/complete_profile/complete_profile_screen.dart';
 import 'package:dokan_koi/screens/details/details_screen.dart';
@@ -47,6 +49,7 @@ final Map<String, WidgetBuilder> routes = {
   CompleteProfileScreen.routeName: (context) => CompleteProfileScreen(),
   OtpScreen.routeName: (context) => OtpScreen(),
   HelpScreen.routeName: (context) => HelpScreen(),
+  TutorialScreen.routeName: (context) =>TutorialScreen(),
   HomeScreen.routeName: (context) => HomeScreen(),
   DetailsScreen3.routeName: (context) => DetailsScreen3(),
   DetailsScreen2.routeName: (context) => DetailsScreen2(),
@@ -65,7 +68,7 @@ final Map<String, WidgetBuilder> routes = {
   MyProducts.routeName: (context)=>MyProducts(),
   AllCatagory.routeName: (context)=>AllCatagory(),
   Specialcreen.routeName: (context)=>Specialcreen(),
-  Allnewshops.routeName: (context)=>Allnewshops(),
+  AllNewShop.routeName: (context)=>AllNewShop(),
   AllPopularShop.routeName: (context)=>AllPopularShop(),
   favscreen.routeName: (context)=>favscreen(),
   MyApp.routeName: (context)=>MyApp(),

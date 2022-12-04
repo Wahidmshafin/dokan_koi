@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dokan_koi/components/custom_surfix_icon.dart';
 import 'package:dokan_koi/components/default_button.dart';
 import 'package:dokan_koi/components/form_error.dart';
+import 'package:dokan_koi/screens/Tutorial/tutorialpage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
@@ -73,7 +75,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                       "phone": phoneNumber,
                       "address": address
                     });
-                    Navigator.pushNamed(context, HomeScreen.routeName);
+                    Navigator.pushNamed(context, TutorialScreen.routeName).then((value) => SystemNavigator.pop());
                   }
                 else
                   {
