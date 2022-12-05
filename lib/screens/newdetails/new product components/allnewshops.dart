@@ -30,7 +30,7 @@ class Allnewshops extends StatelessWidget {
         elevation: 2,
       ),
       body: StreamBuilder(
-        stream: _shop.orderBy("distance").snapshots(),
+        stream: _shop.snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot){
           if(streamSnapshot.hasData)
           {

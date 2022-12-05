@@ -27,16 +27,13 @@ class _ProductImagesState extends State<ProductImages> {
           width: getProportionateScreenWidth(238),
           child: AspectRatio(
             aspectRatio: 1,
-            child: Hero(
-              tag: widget.product.id.toString(),
-              child: CachedNetworkImage(
-                fit: BoxFit.fitWidth,
-                height: getProportionateScreenHeight(120),
-                width: double.infinity,
-                imageUrl: widget.product.images,
-                placeholder: (context, test) => const SizedBox(
-                    child: CircularProgressIndicator(color: kPrimaryColor,)),
-              ),
+            child: CachedNetworkImage(
+              fit: BoxFit.fitWidth,
+              height: getProportionateScreenHeight(120),
+              width: double.infinity,
+              imageUrl: widget.product.images,
+              placeholder: (context, test) => const SizedBox(
+                  child: CircularProgressIndicator(color: kPrimaryColor,)),
             ),
           ),
         ),

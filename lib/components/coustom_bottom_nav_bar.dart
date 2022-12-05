@@ -60,7 +60,7 @@ class CustomBottomNavBar extends StatelessWidget {
                         ? kPrimaryColor
                         : inActiveIconColor),//SvgPicture.asset("assets/icons/Heart Icon.svg"),
                 onPressed: () {
-                  Navigator.pushNamed(context, favscreen.routeName).whenComplete(() => Navigator.popUntil(context,ModalRoute.withName(SplashScreen.routeName)));
+                  Navigator.pushNamed(context, favscreen.routeName).whenComplete(() => Navigator.popUntil(context,ModalRoute.withName(HomeScreen.routeName)));
                 },
               ),
               IconButton(
@@ -69,7 +69,7 @@ class CustomBottomNavBar extends StatelessWidget {
                       ? kPrimaryColor
                       : inActiveIconColor),
                 onPressed:  () =>
-                    Navigator.pushNamed(context, MyStore.routeName).whenComplete(() => Navigator.popUntil(context,ModalRoute.withName(SplashScreen.routeName))),
+                    Navigator.pushNamed(context, MyStore.routeName).whenComplete(() => Navigator.popUntil(context,ModalRoute.withName(HomeScreen.routeName))),
               ),
               IconButton(
                 icon:Icon(Icons.person,
@@ -83,7 +83,7 @@ class CustomBottomNavBar extends StatelessWidget {
                 //       : inActiveIconColor,
                 // ),
                 onPressed: () =>
-                    Navigator.pushNamed(context, ProfileScreen.routeName).whenComplete(() => Navigator.popUntil(context,ModalRoute.withName(SplashScreen.routeName))),
+                    Navigator.pushNamed(context, ProfileScreen.routeName).whenComplete(() => Navigator.popUntil(context,ModalRoute.withName(HomeScreen.routeName))),
               ),
             ],
           )),

@@ -75,99 +75,96 @@ class Favcard extends StatelessWidget {
                 color: kSecondaryColor.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: Hero(
-                tag: store.id.toString(),
-                child: Column(
-                  children: [
-                    Stack(children: <Widget>[
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: CachedNetworkImage(
-                          fit: BoxFit.fitWidth,
-                          height: getProportionateScreenHeight(120),
-                          width: double.infinity,
-                          imageUrl: store.images[0],
-                          placeholder: (context, test) => const SizedBox(
-                              child: LinearProgressIndicator()),
+              child: Column(
+                children: [
+                  Stack(children: <Widget>[
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: CachedNetworkImage(
+                        fit: BoxFit.fitWidth,
+                        height: getProportionateScreenHeight(120),
+                        width: double.infinity,
+                        imageUrl: store.images[0],
+                        placeholder: (context, test) => const SizedBox(
+                            child: LinearProgressIndicator()),
+                      ),
+                    ),
+                    Starrating(rating: store.rating),
+                  ]),
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white70,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(15),
+                          bottomRight: Radius.circular(15),
                         ),
                       ),
-                      Starrating(rating: store.rating),
-                    ]),
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white70,
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(15),
-                            bottomRight: Radius.circular(15),
+                      child: Column(
+                        children: [
+                          Spacer(),
+                          Text(
+                            store.title,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
+                            maxLines: 2,
                           ),
-                        ),
-                        child: Column(
-                          children: [
-                            Spacer(),
-                            Text(
-                              store.title,
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20),
-                              maxLines: 2,
-                            ),
-                            Text(
-                              "${store.address}, ${store.subDistrict}",
-                              textAlign: TextAlign.center,
-                              maxLines: 2,
-                            ),
-                            Spacer(),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "   890m away",
-                                  style: TextStyle(
-                                    fontSize: getProportionateScreenWidth(14),
-                                    //fontWeight: FontWeight.w600,
-                                    color: kPrimaryColor,
-                                  ),
+                          Text(
+                            "${store.address}, ${store.subDistrict}",
+                            textAlign: TextAlign.center,
+                            maxLines: 2,
+                          ),
+                          Spacer(),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "   890m away",
+                                style: TextStyle(
+                                  fontSize: getProportionateScreenWidth(14),
+                                  //fontWeight: FontWeight.w600,
+                                  color: kPrimaryColor,
                                 ),
-                                StreamBuilder(
-                                  stream: FirebaseFirestore.instance.collection("favourite").doc(FirebaseAuth.instance.currentUser?.uid)
-                                      .collection("items").where("user",isEqualTo: store.id).snapshots(),
-                                  builder: (BuildContext context, AsyncSnapshot snapshot){
-                                    if(snapshot.data==null){
-                                      return Text("");
-                                    }
-                                    return (snapshot.connectionState == ConnectionState.waiting)? Center(child: CircularProgressIndicator(color: kPrimaryColor,),): Padding(
-                                      padding:  EdgeInsets.all(getProportionateScreenWidth(8)),
-                                      child: CircleAvatar(
-                                        radius: 19.0,
-                                        backgroundColor: kPrimaryColor.withOpacity(0.1),
-                                        child: Center(
-                                          child: IconButton(
-                                            onPressed: () => snapshot.data.docs.length==0?addToFavourite():removeFromFavourite(),
-                                            icon: snapshot.data.docs.length==0? Icon(
-                                              Icons.favorite,
-                                              color: kSecondaryColor.withOpacity(0.1),
-                                            ):Icon(
-                                              Icons.favorite,
-                                              color: Colors.red,
-                                            ),
+                              ),
+                              StreamBuilder(
+                                stream: FirebaseFirestore.instance.collection("favourite").doc(FirebaseAuth.instance.currentUser?.uid)
+                                    .collection("items").where("user",isEqualTo: store.id).snapshots(),
+                                builder: (BuildContext context, AsyncSnapshot snapshot){
+                                  if(snapshot.data==null){
+                                    return Text("");
+                                  }
+                                  return (snapshot.connectionState == ConnectionState.waiting)? Center(child: CircularProgressIndicator(color: kPrimaryColor,),): Padding(
+                                    padding:  EdgeInsets.all(getProportionateScreenWidth(8)),
+                                    child: CircleAvatar(
+                                      radius: 19.0,
+                                      backgroundColor: kPrimaryColor.withOpacity(0.1),
+                                      child: Center(
+                                        child: IconButton(
+                                          onPressed: () => snapshot.data.docs.length==0?addToFavourite():removeFromFavourite(),
+                                          icon: snapshot.data.docs.length==0? Icon(
+                                            Icons.favorite,
+                                            color: kSecondaryColor.withOpacity(0.1),
+                                          ):Icon(
+                                            Icons.favorite,
+                                            color: Colors.red,
                                           ),
                                         ),
                                       ),
-                                    );
-                                  },
+                                    ),
+                                  );
+                                },
 
-                                ),
-                              ],
+                              ),
+                            ],
 
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
