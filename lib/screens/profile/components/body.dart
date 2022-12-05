@@ -34,6 +34,11 @@ class Body extends StatelessWidget {
             press: () {Navigator.pushNamed(context, Notify.routeName);},
           ),
           ProfileMenu(
+            text: "Tutorials",
+            icon: "assets/icons/play.svg",
+            press: () {Navigator.pushNamed(context, TutorialScreen.routeName);},
+          ),
+          ProfileMenu(
             text: "Help Center",
             icon: "assets/icons/Question mark.svg",
             press: () {Navigator.pushNamed(context, HelpScreen.routeName);},
