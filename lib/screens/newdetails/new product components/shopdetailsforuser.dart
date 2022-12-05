@@ -67,6 +67,16 @@ class ProductDescription extends StatelessWidget {
         .doc(store.id).delete();
 
   }
+  Future<bool> checkIfDocExists(String docId) async {
+    try {
+      var collectionRef = _shop.doc(store.id).collection('ureview');
+
+      var doc = await collectionRef.doc(docId).get();
+      return doc.exists;
+    } catch (e) {
+      throw e;
+    }
+  }
   openMapsSheet(context) async {
     try {
       final coords = Coords(store.lat, store.lon);
@@ -114,7 +124,7 @@ class ProductDescription extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return StreamBuilder(
-        stream: _shop.doc(store.id).collection('ureview').snapshots(includeMetadataChanges: true),
+        stream: _shop.doc(store.id).collection('ureview').snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
           int totalFollower=0;
           if(streamSnapshot.connectionState == ConnectionState.waiting){
@@ -362,12 +372,24 @@ class ProductDescription extends StatelessWidget {
                         Icons.star,
                         color: Colors.amber,
                       ),
-                      onRatingUpdate: (rating) {
+                      onRatingUpdate: (rating) async {
+                        String? p = auth.currentUser?.uid;
+                        bool docExists = await checkIfDocExists(p!);
+                        if(!docExists)
+                          {
+                            total=total+rating;
+                            cnt=cnt+1;
+                          }
+                        else{
+                          double ar= await _shop.doc(store.id).collection('ureview').doc(auth.currentUser?.uid).get().then((value) => value.get('rating'));
+                          total=total+rating-ar;
+                        }
                         _shop
                             .doc(store.id)
                             .collection('ureview')
                             .doc(auth.currentUser?.uid)
                             .set({"rating": rating});
+
                         var c = double.parse((total/cnt).toStringAsPrecision(3));
 
                         _shop.doc(store.id).update({"rating":c});
