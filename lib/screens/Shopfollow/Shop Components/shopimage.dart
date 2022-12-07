@@ -25,10 +25,7 @@ class _ProductImagesState extends State<ProductImages> {
           width: getProportionateScreenWidth(238),
           child: AspectRatio(
             aspectRatio: 1,
-            child: Hero(
-              tag: widget.product.id.toString(),
-              child: Image.asset(widget.product.images[0]),
-            ),
+            child: Image.asset(widget.product.images[0]),
           ),
         ),
         // SizedBox(height: getProportionateScreenWidth(20)),

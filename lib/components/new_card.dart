@@ -196,7 +196,7 @@ class _NewcardState extends State<Newcard> {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      snapshot.data!=null? " ${Geolocator.distanceBetween(snapshot.data!.latitude, snapshot.data!.longitude, widget.store.lat, widget.store.lon).floor()}m away":"...",
+                                      snapshot.data!=null? " ${Geolocator.distanceBetween(snapshot.data!.latitude, snapshot.data!.longitude, widget.store.lat, widget.store.lon).floor()>10000?Geolocator.distanceBetween(snapshot.data!.latitude, snapshot.data!.longitude, widget.store.lat, widget.store.lon)/1000:Geolocator.distanceBetween(snapshot.data!.latitude, snapshot.data!.longitude, widget.store.lat, widget.store.lon).floor()}m away":"...",
                                       style: TextStyle(
                                         fontSize: getProportionateScreenWidth(14),
                                         //fontWeight: FontWeight.w600,
