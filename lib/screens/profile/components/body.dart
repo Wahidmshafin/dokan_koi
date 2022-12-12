@@ -3,6 +3,7 @@ import 'package:dokan_koi/screens/Tutorial/tutorialpage.dart';
 import 'package:dokan_koi/screens/splash/splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import '../../../helper/helpscreen.dart';
@@ -48,8 +49,9 @@ class Body extends StatelessWidget {
             icon: "assets/icons/Log out.svg",
             press: () async {
               await auth.signOut();
-              Navigator.popUntil(
-                  context, ModalRoute.withName(SplashScreen.routeName));
+              // Navigator.popUntil(
+              //     context, ModalRoute.withName(SplashScreen.routeName));
+              Navigator.pushNamed(context, SplashScreen.routeName).then((value) => SystemNavigator.pop());
             },
           ),
         ],

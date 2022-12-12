@@ -46,7 +46,7 @@ class NewProducts extends StatelessWidget {
           child: SectionTitle(
               title: "Nearest Shops",
               press: () {
-                Navigator.pushNamed(context, Allnewshops.routeName,arguments: ProductList(storeList: storeList));
+                Navigator.pushNamed(context, Allnewshops.routeName,arguments: ProductList(storeList: storeList.toSet().toList()));
               }),
         ),
         SizedBox(height: getProportionateScreenWidth(20)),
@@ -116,7 +116,7 @@ class NewProducts extends StatelessWidget {
                           itemBuilder: (context, index) => SizedBox(
                             width: getProportionateScreenWidth(300),
                             child: Newcard(
-                                store:storeList.elementAt(index),
+                                store:storeList.toSet().toList().elementAt(index),
                             ),
                           ),
                         ),
