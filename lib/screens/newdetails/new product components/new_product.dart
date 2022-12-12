@@ -87,7 +87,7 @@ class NewProducts extends StatelessWidget {
                       type: streamSnapshot.data!.docs[index]['type'],
                       tpo: streamSnapshot.data!.docs[index]['tpo'],
                       tfo: streamSnapshot.data!.docs[index]['tfo'],
-                      distance: distance,
+                      distance: distance, phone: streamSnapshot.data!.docs[index]['phone'],
                     )
                 );
               }

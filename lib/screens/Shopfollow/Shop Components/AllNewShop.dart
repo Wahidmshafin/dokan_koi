@@ -54,7 +54,7 @@ class AllNewShop extends StatelessWidget {
                       district: streamSnapshot.data!.docs[index]['district'],
                       subDistrict: streamSnapshot.data!.docs[index]['subDistrict'],
                       tpo: streamSnapshot.data!.docs[index]['tpo'],
-                      tfo: streamSnapshot.data!.docs[index]['tfo'],
+                      tfo: streamSnapshot.data!.docs[index]['tfo'], phone: streamSnapshot.data!.docs[index]['phone'],
                     ),
                     ),
                   ),

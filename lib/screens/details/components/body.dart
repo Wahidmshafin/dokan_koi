@@ -59,6 +59,7 @@ class Body extends StatelessWidget {
                             title: "${data!["name"]}",
                             district: "${data!["district"]}",
                             subDistrict: "${data!["subDistrict"]}",
+                            phone: "${data!["phone"]}",
                           ),
                           SizedBox(
                             height: getProportionateScreenHeight(30),

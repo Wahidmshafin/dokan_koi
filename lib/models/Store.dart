@@ -3,13 +3,14 @@
 class Store {
   final int tfo,tpo;
   int? distance;
-  final String title, district,address,description, subDistrict, id,type;
+  final String title, district,address,description, subDistrict, id,type,phone;
   final List<String> images;
   final double rating, lat, lon;
   final bool isFavourite, isPopular;
 
   Store({
     required this.description,
+    required this.phone,
     required this.address,
     required this.images,
     required this.rating,
