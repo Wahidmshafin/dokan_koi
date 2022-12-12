@@ -58,7 +58,7 @@ class Body extends StatelessWidget {
                         lat: streamSnapshot.data!.docs[index]['lat'].toDouble(),
                         lon: streamSnapshot.data!.docs[index]['lon'].toDouble(),
                         tfo: streamSnapshot.data!.docs[index]['tfo'],
-                        tpo: streamSnapshot.data!.docs[index]['tpo']),
+                        tpo: streamSnapshot.data!.docs[index]['tpo'], phone: streamSnapshot.data!.docs[index]['phone']),
                       ),
                     ),
                   ),

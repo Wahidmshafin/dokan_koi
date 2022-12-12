@@ -22,11 +22,12 @@ class ProductDescription extends StatelessWidget {
     required this.title,
     required this.district,
     required this.subDistrict,
+    required this.phone,
     this.pressOnSeeMore,
   }) : super(key: key);
   final Product product;
   final GestureTapCallback? pressOnSeeMore;
-  final String images,
+  final String images,phone,
       name,
       type,
       description,
@@ -107,7 +108,7 @@ class ProductDescription extends StatelessWidget {
                   lon: lon,
                   title: title,
                   district: district,
-                  subDistrict: subDistrict, tfo: 0, tpo: 0),
+                  subDistrict: subDistrict, tfo: 0, tpo: 0, phone: phone),
             ),
           ),
           child: Container(

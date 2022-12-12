@@ -52,6 +52,7 @@ dependencies:
   fluttertoast: ^8.1.1
   intl: ^0.17.0
   awesome_notifications: ^0.7.4+1
+  url_launcher: ^6.1.5
   expandable: ^5.0.1
   map_launcher: ^2.4.0
   uuid: ^3.0.7

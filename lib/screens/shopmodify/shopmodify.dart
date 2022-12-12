@@ -45,7 +45,7 @@ class ShopModify extends StatelessWidget {
                         lat: data['lat'].toDouble(),
                         lon: data['lon'].toDouble(),
                         tfo: data['tfo'],
-                        tpo: data['tpo'],
+                        tpo: data['tpo'], phone: data['phone'],
                       ),
                     ),
                   );
