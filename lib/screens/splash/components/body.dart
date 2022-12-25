@@ -82,7 +82,7 @@ class _BodyState extends State<Body> {
             }
             return StreamBuilder(
             stream: _orders
-                .where('uid', isEqualTo: auth.currentUser?.uid).snapshots(),
+                .where('sid', isEqualTo: auth.currentUser?.uid).snapshots(),
     builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
       if (streamSnapshot.hasData) {
         for (int i = 0; i < streamSnapshot.data!.docs.length; i++) {
