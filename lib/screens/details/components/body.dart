@@ -116,6 +116,8 @@ class Body extends StatelessWidget {
                                             "sid": product.id,
                                             "uid": auth.currentUser?.uid,
                                             "user": auth.currentUser?.email,
+                                            "notify": false,
+                                            "msg": "You have Received a new order"
                                           });
                                         } else {
                                           var v = value.docs.first.data()

@@ -24,6 +24,7 @@ class _BodyState extends State<Body> {
   int currentPage = 0;
   final auth = FirebaseAuth.instance;
   final _notification = FirebaseFirestore.instance.collection('notification');
+  final _orders = FirebaseFirestore.instance.collection('Orders');
   final _shop = FirebaseFirestore.instance.collection('shop');
   int c = 1;
   List<Map<String, String>> splashData = [
@@ -79,63 +80,84 @@ class _BodyState extends State<Body> {
                 }
               }
             }
-            return SizedBox(
-              width: double.infinity,
-              child: Column(
-                children: <Widget>[
-                  Expanded(
-                    flex: 3,
-                    child: PageView.builder(
-                      onPageChanged: (value) {
-                        setState(() {
-                          currentPage = value;
+            return StreamBuilder(
+            stream: _orders
+                .where('uid', isEqualTo: auth.currentUser?.uid).snapshots(),
+    builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+      if (streamSnapshot.hasData) {
+        for (int i = 0; i < streamSnapshot.data!.docs.length; i++) {
+          if (streamSnapshot.data!.docs[i]["notify"] == false) {
+            Notifya(streamSnapshot.data!.docs[i]["sid"],
+                streamSnapshot.data!.docs[i]["msg"], c);
+            c++;
+            if (c == 20) {
+              c = 1;
+            }
+            _orders
+                .doc(streamSnapshot.data!.docs[i].id)
+                .update({"notify": true});
+          }
+        }
+      }
+      return SizedBox(
+        width: double.infinity,
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              flex: 3,
+              child: PageView.builder(
+                onPageChanged: (value) {
+                  setState(() {
+                    currentPage = value;
+                  });
+                },
+                itemCount: splashData.length,
+                itemBuilder: (context, index) =>
+                    SplashContent(
+                      image: splashData[index]["image"],
+                      text: splashData[index]['text'],
+                    ),
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenWidth(20)),
+                child: Column(
+                  children: <Widget>[
+                    Spacer(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(
+                        splashData.length,
+                            (index) => buildDot(index: index),
+                      ),
+                    ),
+                    Spacer(flex: 3),
+                    DefaultButton(
+                      text: "Continue",
+                      press: () {
+                        auth.authStateChanges().listen((event) {
+                          if (event != null) {
+                            Navigator.pushNamed(
+                                context, HomeScreen.routeName);
+                          } else {
+                            Navigator.pushNamed(
+                                context, SignInScreen.routeName);
+                          }
                         });
                       },
-                      itemCount: splashData.length,
-                      itemBuilder: (context, index) => SplashContent(
-                        image: splashData[index]["image"],
-                        text: splashData[index]['text'],
-                      ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: getProportionateScreenWidth(20)),
-                      child: Column(
-                        children: <Widget>[
-                          Spacer(),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: List.generate(
-                              splashData.length,
-                              (index) => buildDot(index: index),
-                            ),
-                          ),
-                          Spacer(flex: 3),
-                          DefaultButton(
-                            text: "Continue",
-                            press: () {
-                              auth.authStateChanges().listen((event) {
-                                if (event != null) {
-                                  Navigator.pushNamed(
-                                      context, HomeScreen.routeName);
-                                } else {
-                                  Navigator.pushNamed(
-                                      context, SignInScreen.routeName);
-                                }
-                              });
-                            },
-                          ),
-                          Spacer(),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+                    Spacer(),
+                  ],
+                ),
               ),
-            );
+            ),
+          ],
+        ),
+      );
+    } );
           }),
     );
   }
