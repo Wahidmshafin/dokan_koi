@@ -2,9 +2,11 @@
 
 A Flutter based e-commerce app which finds the best stores near customers and let sellers attract more customers in his area.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- It uses Firebase Cloud Firestore for storing user data, Firebase Authentication for user authentications and Firebase storage for storing Image and files.
+- Geolocator, awesome_notifications, map launcher etc various Flutter packages used.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
+
+https://github.com/Wahidmshafin/dokan_koi/assets/65916726/d2ff3929-0084-455c-b642-32717a7d1848
+
